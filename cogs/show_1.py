@@ -118,6 +118,12 @@ class S_1(commands.Cog):
 				if ctx.guild.id not in guilds:
 					await ctx.send("No channel of this server is set as **Announcement Command Channel**.\n Please set one using this command `.o set announce_ch (channel)`")
 
+	@show.command(aliases = ['anch','announcements','announce'])
+	async def announcement(self,ctx,*,msg):
+		if msg.lower() == 'command channels' or msg.lower() == 'command channel':
+			
+
+
 
 
 def setup(client):
