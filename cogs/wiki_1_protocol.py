@@ -94,7 +94,7 @@ class W1(commands.Cog):
 					ch = self.client.get_channel(ch)
 					await message.channel.send(f"Please use this {ch.mention} channel.")
 			else:
-				await message.channel.send("No channel of this server is set as **Wikipedia Channel**.\n Please set one using this command `.o set wiki (channel)`")
+				await message.channel.send("No channel of this server is set as **Wikipedia Channel**.\nPlease set one using this command `.o set wiki (channel)`")
 
 										###########################
 										##  Wikipedia Search 2.0 ##
@@ -181,7 +181,7 @@ class W1(commands.Cog):
 					ch = self.client.get_channel(ch)
 					await message.channel.send(f"Please use this {ch.mention} channel.")
 			else:
-				await message.channel.send("No channel of this server is set as **Wikipedia Channel**.\n Please set one using this command `.o set wiki (channel)`")
+				await message.channel.send("No channel of this server is set as **Wikipedia Channel**.\nPlease set one using this command `.o set wiki (channel)`")
 			
 		
 
