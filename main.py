@@ -242,18 +242,19 @@ async def userinfo(ctx, *, name=""):
             if role.name=="@everyone":
                 roles.remove(role)
                 break
-    voice_state = None if not user.voice else user.voice.channel
-    em = discord.Embed(timestamp=ctx.message.created_at, colour=user.top_role.color)
-    em.add_field(name="Discriminator:",value=user.discriminator, inline=True)
+    
+    em = discord.Embed(timestamp=ctx.message.created_at, title='= = = = = |:notepad_spiral: User Info :notepad_spiral:| = = = = =',description = "-----------------------------------------------")
     em.add_field(name="User Name:",value=user.name, inline=True)
+    em.add_field(name="Discriminator:",value=user.discriminator, inline=True)
+    
     if user.nick==None:
         nn=user.name
     else:
         nn=user.nick
     em.add_field(name='Nickname', value=nn, inline=True)
-    dic={"online":":green_circle: ","dnd":":red_circle: ","offline":":black_circle: ","idle":":yellow_circle: "}
+    dic={"online":"<:online:814161343426199622> ","dnd":"<:dnd:814161369892257842> ","offline":":black_circle: ","idle":"<:idle:814161403271184426> "}
     dic1={"online":"Online","dnd":"Do Not Disturb","offline":"Offline","idle":"Idle"}
-    em.add_field(name='Presence', value=dic[str(user.status)]+dic1[str(user.status)], inline=True)
+    em.add_field(name='Presence', value=dic[str(user.status)] + dic1[str(user.status)], inline=True)
     
     st="None"
     activ=""
@@ -289,8 +290,6 @@ async def userinfo(ctx, *, name=""):
 
 
 
-
-
     em.add_field(name='Activity', value=activ if activ!="" else "None", inline=False)
     devices=[]
     if str(user.desktop_status)!='offline':
@@ -299,17 +298,20 @@ async def userinfo(ctx, *, name=""):
         devices.append(":spider_web: Web")
     if str(user.mobile_status)!='offline':
         devices.append(":mobile_phone: Mobile App")
+
     if len(devices)>0:
         em.add_field(name='Active on', value=", \n".join(devices), inline=True)
+
     elif len(devices)==0:
         em.add_field(name='Active on', value="None", inline=True)
-    em.add_field(name='Voice Channel', value=voice_state, inline=True)
+
     if len(roles)>0:
         em.add_field(name=f"Roles ({len(roles)})", 
                     value=" ,\n ".join([role.name for role in roles]), inline=True)
     elif len(roles)==0:
         em.add_field(name=f"Roles ({len(roles)})", 
                     value="No Roles", inline=True)
+
     form='*Date:* %A, %d %B %Y \n*Time:* %H:%M:%S'
     em.add_field(name='Account Created', 
                 value=user.created_at.__format__(form),inline=True)
@@ -320,7 +322,7 @@ async def userinfo(ctx, *, name=""):
                 value='Hasn\'t boosted yet.' if nitro==None else nitro.__format__(form),inline=False)
     em.set_thumbnail(url=avi)
     av=ctx.author.avatar_url_as(static_format='png')
-    em.set_author(name= f"{user} ({user.id})", icon_url=avi)
+    em.set_author(name= "User Information", icon_url= client.user.avatar_url)
     em.set_footer(text=f"Requested by: {ctx.author}", icon_url=av)
     await ctx.send(embed=em)
 
@@ -361,6 +363,7 @@ async def on_message(message):
             au = int(exact_txt_splitted[1])
             au_o = client.get_user(au)
             await au_o.send(" ".join(exact_txt_spl[2:]))
+    print(message.content)
 
 #######################################################################################################
 #######################################################################################################
