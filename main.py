@@ -20,6 +20,8 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
+from discord import ActivityType as AT
+
 
 #database loads
 base = sqlite3.connect("all.db")
@@ -242,7 +244,6 @@ async def userinfo(ctx, *, name=""):
                 break
     voice_state = None if not user.voice else user.voice.channel
     em = discord.Embed(timestamp=ctx.message.created_at, colour=user.top_role.color)
-    em.add_field(name='ID', value=user.id, inline=True)
     em.add_field(name="Discriminator:",value=user.discriminator, inline=True)
     em.add_field(name="User Name:",value=user.name, inline=True)
     if user.nick==None:
@@ -319,12 +320,9 @@ async def userinfo(ctx, *, name=""):
                 value='Hasn\'t boosted yet.' if nitro==None else nitro.__format__(form),inline=False)
     em.set_thumbnail(url=avi)
     av=ctx.author.avatar_url_as(static_format='png')
-    em.set_author(name=user, icon_url=avi)
+    em.set_author(name= f"{user} ({user.id})", icon_url=avi)
     em.set_footer(text=f"Requested by: {ctx.author}", icon_url=av)
     await ctx.send(embed=em)
-
-
-
 
 
 #######################################################################################################
