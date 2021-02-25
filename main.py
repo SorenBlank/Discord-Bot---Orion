@@ -440,7 +440,6 @@ async def on_message(message):
 
 with open('token.txt','r') as f:
     content = f.read()
-    print(content)
 
 #Token
 client.run(content)
