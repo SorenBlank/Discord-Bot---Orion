@@ -49,7 +49,7 @@ au = 0
 async def on_ready():
     await client.change_presence(status=discord.Status.online, 
                                  activity = discord.Activity(type = discord.ActivityType.watching, 
-                                                             name = '.o')
+                                                             name = '.o help')
                                    )
     print("Bot is ready!")
 
@@ -220,6 +220,22 @@ async def wanted(ctx, member : discord.Member = None):
     pic.save("profile.jpg")
     await ctx.send(file = discord.File("profile.jpg"))
 
+@client.command()
+async def invite(ctx):
+    embed = discord.Embed(title= "= = = = = = = =| :mailbox_with_mail: Invite :mailbox_with_mail:  |= = = = = = = =")
+    embed.set_author(name='Invite',icon_url=f'{client.user.avatar_url}')
+    embed.add_field(name=":large_blue_diamond: BOT INVITATION LINK",
+                    value=":small_blue_diamond: [Click here](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) to invite me in your server.\n឵឵",
+                    inline = False)
+    embed.add_field(name=":large_blue_diamond: SERVER INVITATION LINK",
+                    value = ":small_blue_diamond: [Click here](https://discord.gg/JJtUtgMjBv) to join my creator's server.",
+                    inline = False)
+    embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Thank you very much {ctx.author.name}")
+    if isinstance(ctx.channel, discord.DMChannel):
+        await ctx.author.send(embed = embed)
+    else:
+        await ctx.send(f"{ctx.author.mention} Please check your DM.")
+        await ctx.author.send(embed = embed)
 
 #######################################################################################################
                                     #ALL MESSAGE RELATED ACTIVITIES#

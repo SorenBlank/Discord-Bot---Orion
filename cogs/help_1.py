@@ -35,7 +35,7 @@ class H_1(commands.Cog):
 	@commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["h"])
 	async def help(self,ctx):
 
-		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\nInvite Link = `.o invite`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 		help_embed.set_author(name='Help Commands',icon_url=f'{self.client.user.avatar_url}')
 		help_embed.add_field(name=":gear:PROTOCOLS/SERVER UTILITIES:gear:",
 							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`",
