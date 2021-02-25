@@ -37,12 +37,12 @@ class H_1(commands.Cog):
 
 		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 		help_embed.set_author(name='Help Commands',icon_url=f'{self.client.user.avatar_url}')
-		help_embed.add_field(name=":gear:PROTOCOLS:gear:",
-							 value="--------- :arrow_down_small: ---------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`",
+		help_embed.add_field(name=":gear:PROTOCOLS/SERVER UTILITIES:gear:",
+							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`",
 							 inline = False)
 		help_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-		help_embed.add_field(name=":card_box:SERVER UTILITIES:card_box:",
-							 value="------------ :arrow_down_small: ------------\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help utility`",
+		help_embed.add_field(name=":card_box:UTILITIES:card_box:",
+							 value="------- :arrow_down_small: -------\n:white_small_square: This section includes all **Utility** infos which are easily accessable to everyone.\n**__Command:__** `.o help utility`",
 							 inline=False)
 		help_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
 		help_embed.add_field(name=":video_game:GAMES:video_game:",
@@ -192,22 +192,38 @@ class H_1(commands.Cog):
 		deactivator_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed = deactivator_embed)
 
-	@help.command(aliases=["u","utility","announce","announcement"])
+
+
+	@help.command(aliases=["su","s u","server utility","announce","announcement"])
 	async def Utilities(self,ctx):
-		u_embed = discord.Embed(title="= = = = = = |:card_box: Utilities :card_box:| = = = = =",description="Aliases = `u`,`utility`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
+		u_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `su`,`server utility`,`server utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
 		u_embed.set_author(name='Utility Commands',icon_url=f'{self.client.user.avatar_url}')
-		u_embed.add_field(name=":large_blue_diamond: Announce",
-						  value=":small_blue_diamond: You can announce announce with your bot now. You can also attach file with the announcement.\n__**Requirements:**__\n1) An **Announcement Command Channel**\n2) At least one **Announcement Channel** set for the bot.\n\nFirst execute the command written below in **Announcement Command Channel**. Then send your announcement in that same channel. You can also set a timer for when you want the bot to announce your announcement.\n__Example:__\nType `1s` at the place of `(time)` in order to announce after 1 second. In the same way, `1m` for after 1 minute, `1h` for after 1 hour.\n__**Command:**__ `.o announce [channel] (time)`",
+		u_embed.add_field(name=":large_orange_diamond: ANNOUNCE",
+						  value=":small_orange_diamond: You can announce announce with your bot now. You can also attach file with the announcement.\n__**Requirements:**__\n1) An *Announcement Command Channel*\n2) At least one *Announcement Channel* set for the bot.\n\nFirst execute the command written below in *Announcement Command Channel*. Then send your announcement in that same channel. You can also set a timer for when you want the bot to announce your announcement.\n__Example:__\nType `1s` at the place of `(time)` in order to announce after 1 second. In the same way, `1m` for after 1 minute, `1h` for after 1 hour.\n__**Command:**__ `.o announce [channel] (time)`\n឵឵",
 						  inline=False)
+		u_embed.add_field(name = ":crossed_swords: KICK",
+						  value = ":small_orange_diamond: This command is used for kicking someone out of the server.\n__**Command:**__ `.o kick [member]`\n឵឵",
+						  inline=False)
+		u_embed.add_field(name = ":crossed_swords: BAN",
+						  value = ":small_orange_diamond: This command is used for banning someone from the server.\n__**Command:**__ `.o ban [member]`\n឵឵")
+		u_embed.add_field(name = ":crossed_swords: UNBAN",
+						  value = ":small_orange_diamond: This command is used for unbanning someone.\n__**Command:**__ `.o unban [member]`\n឵឵")
+		u_embed.add_field(name = ":crossed_swords: PURGE",
+						  value = ":small_orange_diamond: This command is used for deleting messages of current channel.\n__**Command:**__ `.o purge [number of messages]`",
+						  inline = False)
 		u_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed= u_embed)
-	@help.command(aliases=['philosophy'])
+
+
+	@help.command(aliases=['philosophy','wiki','wikipedia'])
 	async def philo(self,ctx):
 		ph_embed = discord.Embed(title="= = = = = = |:card_box: Philosophy :card_box:| = = = = =",description="Aliases = `philo`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
 		ph_embed.set_author(name='Philosophy Commands',icon_url=f'{self.client.user.avatar_url}')
-		ph_embed.add_field(name=":notebook: Wikipedia",value="Using Wikipedia command you can search for any thing's summary on Wikipedia.\n__**Command:**__ `.o wiki [subject]`",
+		ph_embed.add_field(name=":notebook: WIKIPEDIA",value="Using Wikipedia command you can search for any thing's summary on Wikipedia.\n__**Command:**__ `.o wiki [subject]`",
 							inline=False)
 		ph_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed = ph_embed)
+
+
 def setup(client):
 	client.add_cog(H_1(client))
