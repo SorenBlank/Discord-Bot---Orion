@@ -116,7 +116,7 @@ class S_1(commands.Cog):
                         await ctx.send(f"You are giving command on wrong channel. Please type command here, {ch.mention}")
 
                 if ctx.guild.id not in guilds:
-                    await ctx.send("No channel of this server is set as **Announcement Command Channel**.\n Please set one using this command `.o set announce_ch (channel)`")
+                    await ctx.send("No channel of this server is set as **Announcement Command Channel**.\nPlease set one using this command `.o set announce_ch (channel)`")
 
 
 def setup(client):
