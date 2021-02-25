@@ -230,15 +230,18 @@ class H_1(commands.Cog):
 							  value=":small_blue_diamond: You can announce announce with your bot now. You can also attach file with the announcement.\n__**Requirements:**__\n1) An *Announcement Command Channel*\n2) At least one *Announcement Channel* set for the bot.\n\nFirst execute the command written below in *Announcement Command Channel*. Then send your announcement in that same channel. You can also set a timer for when you want the bot to announce your announcement.\n__Example:__\nType `1s` at the place of `(time)` in order to announce after 1 second. In the same way, `1m` for after 1 minute, `1h` for after 1 hour.\n__**Command:**__ `.o announce [channel] (time)`\n឵឵",
 							  inline=False)
 			su_embed.add_field(name = ":crossed_swords: KICK",
-							  value = ":small_orange_diamond: This command is used for kicking someone out of the server.\n__**Command:**__ `.o kick [member]`\n឵឵",
+							  value = ":small_orange_diamond: This command is used for kicking an account out of the server.\n__**Command:**__ `.o kick [member]`\n឵឵",
 							  inline=False)
 			su_embed.add_field(name = ":crossed_swords: BAN",
-							  value = ":small_orange_diamond: This command is used for banning someone from the server.\n__**Command:**__ `.o ban [member]`\n឵឵")
+							  value = ":small_orange_diamond: This command is used for banning an account from the server.\n__**Command:**__ `.o ban [member]`\n឵឵")
 			su_embed.add_field(name = ":crossed_swords: UNBAN",
-							  value = ":small_orange_diamond: This command is used for unbanning someone.\n__**Command:**__ `.o unban [member]`\n឵឵")
+							  value = ":small_orange_diamond: This command is used for unbanning an account.\n__**Command:**__ `.o unban [member]`\n឵឵")
 			su_embed.add_field(name = ":crossed_swords: PURGE",
-							  value = ":small_orange_diamond: This command is used for deleting messages of current channel.\n__**Command:**__ `.o purge [number of messages]`",
+							  value = ":small_orange_diamond: This command is used for deleting messages of current channel.\n__**Command:**__ `.o purge [number of messages]`\n឵឵",
 							  inline = False)
+			su_embed.add_field(name = ":crossed_swords: CHANGE NICKNAME",
+							   value = ":small_orange_diamond: This command is used to change nickname of a specific account.\n__**Command:**__ `.o chnick [user] [nickname]`\n឵឵",
+							   inline = False)
 			su_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 			await ctx.send(embed= su_embed)
 
@@ -246,8 +249,12 @@ class H_1(commands.Cog):
 	async def utilities(self,ctx):
 		u_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `u`,`utility`,`utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
 		u_embed.set_author(name='Utility Commands',icon_url=f'{self.client.user.avatar_url}')
+		u_embed.add_field(name=":large_blue_diamond: AVATAR",
+						  value = ":small_blue_diamond: This command is used for seeing avatar of your account's or a specific account's.\n__**Command:**__ `.o avatar (member)` or `.o av (member)`\n឵឵",
+						  inline = False)
 		u_embed.add_field(name=":large_blue_diamond: USER INFO",
-						   value= ":small_blue_diamond: This command is used for getting user info of your account's or a specific account's.\n__**Command:**__ `.o userinfo (member)`")
+						   value= ":small_blue_diamond: This command is used for getting user info of your account's or a specific account's.\n__**Command:**__ `.o userinfo (member)`",
+						   inline = False)
 		u_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed= u_embed)
 
