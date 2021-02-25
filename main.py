@@ -278,7 +278,7 @@ async def userinfo(ctx, *, name=""):
     for act in vits:
         print(act.type)
     if listen != "" and hasattr(listen,"title") and hasattr(listen,"artists"):
-        ACT.append(f'Listening to *{listen.title}*  by **{", ".join(listen.artists)}**') 
+        ACT.append(f'<:spotify:814185511655964682> Listening to *{listen.title}*  by **{", ".join(listen.artists)}**') 
     if playy != "":
         ACT.append(f"Playing {playy.name}")
     if watch != "":
