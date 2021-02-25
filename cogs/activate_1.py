@@ -281,7 +281,7 @@ class A_1(commands.Cog):
 					except:
 						pass
 					
-					if len(a_channels) <2:
+					if len(a_channels) <10:
 						if channel_id not in a_channels:
 							cur.execute("INSERT INTO Announce_ch (Guild, Channel) VALUES(?,?)",(guild_id,channel_id))
 							base.commit()
@@ -292,8 +292,8 @@ class A_1(commands.Cog):
 						await text[0].add_reaction("❎")
 						await ctx.send(f"{channel.mention} is already set as an announcement channel.")
 
-					if len(a_channels) == 2:
-						await ctx.send("You dont have more slots left to add announcement channels.")
+					if len(a_channels) == 10:
+						await ctx.send("You can only have 10 announcement channels.")
 				
 				elif ctx.guild.id in guilds:
 					m_ch = []
@@ -501,7 +501,7 @@ class A_1(commands.Cog):
 
 			if ctx.guild.id in guilds:
 				if ctx.channel.id not in channels:
-					cur.execute("UPDATE WC SET Channel = ? WHERE Guild = ?",(ctx.channel.id,guild.id))
+					cur.execute("UPDATE WC SET Channel = ? WHERE Guild = ?",(ctx.channel.id,ctx.guild.id))
 					base.commit()
 					await ctx.send(f"**Wikipedia** channel has been updated to {ctx.channel.mention}.")
 

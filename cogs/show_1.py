@@ -37,9 +37,6 @@ class S_1(commands.Cog):
         show_embed = discord.Embed(title='= = = = = = = =| Help - [Show] |= = = = = = = =',description= "-------------------------------------------------------------")
         show_embed.set_author(name='Show Commands',icon_url=f'{self.client.user.avatar_url}')
 
-
-
-
         show_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
         await ctx.send(embed = show_embed)
 
@@ -56,23 +53,26 @@ class S_1(commands.Cog):
             if ctx.guild.id in an_guilds:
                 cur.execute("SELECT*FROM Announce_ch WHERE Guild Like ?",(ctx.guild.id,))
                 all = cur.fetchall()
+                dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":"nine","10":":one::zero:"}
 
                 channels = ""
+
                 num = 1
+
                 for i in all:
-                    channels = channels + f"0{num}| <#{i[1]}>\n "
+                    sym = dic[str(num)] if len(str(num)) > 1 else dic["0"]+dic[str(num)]
+                    channels = channels + f"{sym} <#{i[1]}>\n "
                     num = num + 1
 
                 if len(all) != 0:
-                    embed = discord.Embed(title = "= = = = =| All Announcement Channels |= = = = =")
+                    embed = discord.Embed(title = "= = = =| All Announcement Channels |= = = =")
                     embed.set_author(name='Announcement Channels',icon_url=f'{self.client.user.avatar_url}')
-                    embed.add_field(name = "------------------ 📃 __Channels__ 📃 -------------------",value = channels, inline= True)
+                    embed.add_field(name = "---------------- 📃 __Channels__ 📃 -----------------",value = channels, inline= True)
                     embed.set_footer(icon_url=ctx.author.avatar_url, text= f"Requested by {ctx.author.name}")
                     await ctx.send(embed = embed)
                     
             if ctx.guild.id not in an_guilds:
                 await ctx.send("This server has no announcement channel set for me.")
-            
 
 
 def setup(client):
