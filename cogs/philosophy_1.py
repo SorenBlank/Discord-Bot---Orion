@@ -11,14 +11,14 @@ import sqlite3
 base = sqlite3.connect("all.db")
 cur = base.cursor()
 
-class W1(commands.Cog):
+class P1(commands.Cog):
 
 	def __init__(self, client):
 		self.client = client
 	
 	@commands.Cog.listener()
 	async def on_ready(self):
-		print("W1 is Loaded ----")
+		print("P1 is Loaded ----")
 
 	au = 0
 	@commands.Cog.listener()
@@ -186,4 +186,4 @@ class W1(commands.Cog):
 		
 
 def setup(client):
-	client.add_cog(W1(client))
+	client.add_cog(P1(client))
