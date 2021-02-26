@@ -16,11 +16,52 @@ class P1(commands.Cog):
 	def __init__(self, client):
 		self.client = client
 	
+	au = 0
 	@commands.Cog.listener()
 	async def on_ready(self):
 		print("P1 is Loaded ----")
 
-	au = 0
+	@commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["r","re","resources"])
+	async def resource(self,ctx):
+		rs = discord.Embed(title = "= = = = = | 📚 Learning Resources 📚 | = = = =", description= "Aliases = `re`,`resource`,`resources`\nFor more info: `.o help`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+		
+		rs.set_author(name = "Resources",icon_url=f'{self.client.user.avatar_url}')
+
+		rs.add_field(name = "―――――――――――――――――――――――――\n<:python:814811189241970718> PYTHON LEARNING RESOURCES",
+					 value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
+					 inline = False)
+		rs.add_field(name = "―――――――――――――――――――――――――\n<:HTML:814843918582939688> WEB DEVELOPMENT RESOURCES",
+					 value = ":small_orange_diamond: Here you will find useful web development learning resources for any code newbie who is trying to learn web development.\n**__Command:__** `.o resource web`",
+					 inline = False)
+
+		rs.add_field(name = "―――――――――――――――――――――――――\n<:android:814849449570205736> ANDROID DEVELOPMENT RESOURCES",
+					 value = ":small_orange_diamond: Here you will find some useful resources if you are interested in Android development.\n**__Command:__** `.o resource android`",
+					 inline = False)
+
+		rs.add_field(name = "―――――――――――――――――――――――――\n<:iOS:814846523128676372> iOS DEVELOPMENT RESOURCES",
+					 value = ":white_small_square: Here you will find some useful iOS development learning resources to quick-start your iOS development journey.\n**__Command:__** `.o resource ios`",
+					 inline = False)
+
+		rs.add_field(name = "―――――――――――――――――――――――――\n:gear: MACHINE LEARNING RESOURCES",
+					 value = ":small_orange_diamond: Here is a brief overview of the magnificent world of machine learning. Hope you find something useful or interesting!\n**__Command:__** `.o resource ml`",
+					 inline = False)
+
+		rs.add_field(name = "―――――――――――――――――――――――――\n:keyboard: GENERAL PROGRAMMING RESOURCES",
+					 value = ":small_orange_diamond: Here are some general resources that you all will find useful, they aren't based on one specific topic. So there should be something here for everyone.\n**__Command:__** `.o resource programming`",
+					 inline = False)
+
+		rs.add_field(name = "―――――――――――――――――――――――――\n<:linux:814863906756624384> LINUX GUIDE",
+					 value = ":small_orange_diamond: Here is a guide to getting started with linux. Hope everyone will find it very useful.\n__**Command:**__ `.o resource linux`",
+					 inline = False)
+
+		
+
+		rs.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
+		await ctx.send(embed = rs)
+
+
+	
+
 	@commands.Cog.listener()
 	async def on_message(self, message):
 
