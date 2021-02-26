@@ -83,7 +83,7 @@ value = "\
 :small_orange_diamond: [Learn Python Programming Masterclass](https://www.codecademy.com/learn/learn-python-3)\n឵឵",
 					 inline = False)
 
-		py.add_field(name = "<:youtube:814913080357027861> YouTube RESOURCES",
+		py.add_field(name = "<:youtube:814913080357027861> YOUTUBE RESOURCES",
 value = "\
 :small_blue_diamond: [Learn Python - Full Course for beginners by FreeCodeCamp](https://www.youtube.com/watch?v=rfscVS0vtbw&feature=emb_title)\n\
 :small_blue_diamond: [Python Tutorial - Python for Beginners 2020 by Programming With Mosh](https://www.youtube.com/watch?v=kqtD5dpn9C8)\n\
@@ -113,6 +113,74 @@ value = "\
 					 inline = False)
 		await ctx.send(embed = py)
 
+	@resource.command()
+	async def web(self,ctx):
+		web = discord.Embed(title = "= ==|<:HTML:814843918582939688>Web Dev Learning Resources<:css:814941650849759282>|== =",
+				  description = "Here you will find useful web development learning resources for any code newbie who is trying to learn web development, below is a list of resources you can use to start your journey.\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+		web.add_field(name = "🌐 ONLINE COURSES & BOOT CAMPS",
+					  value = "\
+:small_blue_diamond:[W3Schools](https://www.w3schools.com/)\n\
+W3Schools is optimized for learning, testing, and training.\n\
+:small_blue_diamond:[freeCodeCamp](https://www.freecodecamp.org/)\n\
+Learn how to code from scratch, build projects and earn certificates.\n\
+:small_orange_diamond:[Udemy](https://www.udemy.com/)\n\
+Learn by following courses, build projects and earn certificates. Has over 10+ million students yearly.\n\
+:small_orange_diamond:[Codecademy](https://www.codecademy.com/)\n\
+Learn by doing, get instant feedback and put your learning into practice.\n\
+:small_orange_diamond:[Coursera](https://www.coursera.org/)\n\
+Build skills with courses from top universities like Yale, Michigan, Stanford or Harvard. Get certs on paid courses.\n\
+:small_blue_diamond:[Khan Academy](https://www.khanacademy.org/)\n\
+Free trusted online classes and practice at your own pace.\n឵឵",
+					 inline = False)
+
+		web.add_field(name = "<:udemy:814951952022110258> UDEMY RESOURCES",
+			value = "\
+:small_orange_diamond: [Build Responsive Real World Websites with HTML5 and CSS3](https://www.udemy.com/course/design-and-develop-a-killer-website-with-html5-and-css3/)\n\
+:small_orange_diamond: [Advanced CSS and Sass: Flexbox, Grid, Animations and More](https://www.udemy.com/course/advanced-css-and-sass/)\n\
+:small_orange_diamond: [The Complete JavaScript Course 2020: From Zero to Expert!](https://www.udemy.com/course/the-complete-javascript-course/)\n\
+:small_orange_diamond: [Colt steele course](https://www.udemy.com/course/the-web-developer-bootcamp/)\n឵឵",
+			inline = False)
+
+		web.add_field(name = "<:react:814959323599077436> REACT LEARNING RESOURCES",
+			value = "\
+:small_blue_diamond:[Full React Course 2020 by freeCodeCamp](https://www.youtube.com/watch?v=4UZrsTqkcW4)\n\
+:small_blue_diamond:[React Js tutorial by Brian Design](https://www.youtube.com/watch?v=9ohK7CapmIs&list=PLs1fqgQpnCmJSkrDA2wTsSsLnYpE8jpVy&index=10)\n\
+:small_orange_diamond:[React - The Complete Guide by Max](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)\n\
+:small_orange_diamond:[Modern React with Redux](https://www.udemy.com/course/react-redux/)\n឵឵",
+			inline = False)
+
+		web.add_field(name = "<:youtube:814913080357027861> YOUTUBE RESOURCES",
+			value = "\
+:small_blue_diamond: [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA)\n\
+:small_blue_diamond: [The Net Ninja](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg)\n\
+:small_blue_diamond: [Dev Ed](https://www.youtube.com/channel/UClb90NQQcskPUGDIXsQEz5Q)\n\
+:small_blue_diamond: [Florin Pop](https://www.youtube.com/channel/UCeU-1X402kT-JlLdAitxSMA)\n\
+:small_blue_diamond: [Fun Fun Function](https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q)\n\
+:small_blue_diamond: [Web Dev Simplified](https://www.youtube.com/channel/UCFbNIlppjAuEX4znoulh0Cw)\n\
+:small_blue_diamond: [Academind](https://www.youtube.com/channel/UCSJbGtTlrDami-tDGPUV9-w)\n\
+:small_blue_diamond: [Kevin Powell](https://www.youtube.com/channel/UCJZv4d5rbIKd4QHMPkcABCw)\n឵឵",
+			inline = False)
+
+		web.add_field(name = ":blue_book: BOOKS",
+			value = "\
+:small_orange_diamond:[You dont know Js](https://github.com/getify/You-Dont-Know-JS)\n\
+:small_orange_diamond:[Eloquent Js](https://www.amazon.com/Eloquent-JavaScript-3rd-Introduction-Programming/dp/1593279507)\n឵឵",
+			inline = False)
+
+		web.add_field(name = ":boxing_glove: FRONT END PRACTICE SITES",
+			value = "\
+:small_blue_diamond:[Front End Mentors](https://www.frontendmentor.io/)\n\
+:small_blue_diamond:[Dev Challenges](https://devchallenges.io/)\n឵឵",
+			inline = False)
+
+		web.add_field(name = ":map: ROADMAPS",
+			value = "\
+:white_small_square:[Frontend Roadmap](https://www.freecodecamp.org/news/2019-web-developer-roadmap/)\n\
+:white_small_square:[Backend Roadmap](https://www.freecodecamp.org/news/2019-web-developer-roadmap/)\n\
+:white_small_square:[Full Stack Roadmap](https://levelup.gitconnected.com/the-2020-web-developer-roadmap-76503ddfb327)")
+
+		await ctx.send(embed = web)
 
 
 	@commands.Cog.listener()
