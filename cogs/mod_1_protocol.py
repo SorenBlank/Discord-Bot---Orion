@@ -99,12 +99,6 @@ class M1(commands.Cog):
 
     @commands.command()
     async def purge(self,ctx,number=None):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
-        guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
-
         if ctx.author.guild_permissions.manage_messages:
             if number != None:
                 if number.isdigit():
@@ -123,7 +117,6 @@ class M1(commands.Cog):
                 await ctx.send(f'Nickname was changed for {member.mention} ')
             except:
                 await ctx.send(f"Access Denied!")
-
 
 
 def setup(client):

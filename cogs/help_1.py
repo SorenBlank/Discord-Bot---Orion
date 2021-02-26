@@ -99,7 +99,7 @@ class H_1(commands.Cog):
 		p_embed = discord.Embed(title="= = = = = = |:gear: Protocol :gear:| = = = = =",description="Aliases = `p`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 		p_embed.set_author(name="Protocol Help",icon_url=f'{self.client.user.avatar_url}')
 		p_embed.add_field(name=":crossed_swords: M1 :crossed_swords:",
-						  value=":small_orange_diamond: M1 Protocol includes moderation commands. After activating the **M1** you can use the following moderation commands-\n**1) **__Kick__\n__**Command:**__ `.o kick [member]`\n\n**2) **__Ban__\n__**Command:**__ `.o ban [member]`\n\n**3) **__Unban__\n__**Command:**__ `.o unabn [member]`\n\n**4) **__Purge__\n__**Command:**__ `.o purge [value]`",
+						  value=":small_orange_diamond: M1 Protocol includes moderation commands. After activating the **M1** you can use the following moderation commands-\n**1) **__Kick__\n__**Command:**__ `.o kick [member]`\n\n**2) **__Ban__\n__**Command:**__ `.o ban [member]`\n\n**3) **__Unban__\n__**Command:**__ `.o unabn [member]`",
 						  inline=False)
 		p_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
 		p_embed.add_field(name=":robot: C1 :robot:",
@@ -267,7 +267,6 @@ class H_1(commands.Cog):
 							inline=False)
 		ph_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed = ph_embed)
-
 
 def setup(client):
 	client.add_cog(H_1(client))
