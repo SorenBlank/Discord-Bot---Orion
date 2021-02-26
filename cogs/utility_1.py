@@ -202,11 +202,9 @@ class U_1(commands.Cog):
                         value='❎ No Boost' if nitro==None else nitro.__format__(form),inline=False)
         em.set_thumbnail(url=avi)
         av=ctx.author.avatar_url_as(static_format='png')
-        em.set_author(name= "User Information", icon_url= self.client.user.avatar_url)
+
         em.set_footer(text=f"Requested by {ctx.author.name}", icon_url=av)
         await ctx.send(embed=em)
-
-
 
 
     @commands.command(aliases = ["avatar"])

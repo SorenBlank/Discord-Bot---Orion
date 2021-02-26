@@ -39,7 +39,7 @@ class D_1(commands.Cog):
 	@commands.group(aliases = ["stop","eliminate","remove"],invoke_without_command = True,case_insensitive = True)
 	async def deactivate(self,ctx):
 		deactivator_embed = discord.Embed(title = "= = = = = = =| Help - [Deactivate] |= = = = = = =",description= "Aliases = `stop` , `eliminate`, `remove`\nFor more info: `.o help`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-		deactivator_embed.set_author(name='Deactivate Commands',icon_url=f'{self.client.user.avatar_url}')
+		
 
 		deactivator_embed.add_field(name=":octagonal_sign: Deactivate Commands :octagonal_sign:",value="-:arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down:-\n\n:one: `.o deactivate m1`\nThis command will turn off **M1 protocol**.\n\n:two: `.o deactivate c1 (channel)` or `deactivate all c1`\nThis command will eliminate **C1 Protocol** from a specific channel or all channels.\n\n:three: `.o remove announce_ch`\nThis command removes **Announcement Command Channel**.\n\n:four: `.o remove announce (channel)`\nThis command removes bot **Announcement Channel**.\n\n:five: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:six: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:seven: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:eight: `.o deactivate wiki`\nThis command removes **Wikipedia Channel**.")
 		deactivator_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")

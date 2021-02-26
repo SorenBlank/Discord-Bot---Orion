@@ -31,7 +31,6 @@ class M1(commands.Cog):
         else:
             await ctx.send("Access denied")
 
-    
 
     #kick_command
     @commands.command()

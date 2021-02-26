@@ -24,8 +24,6 @@ class P1(commands.Cog):
 	@commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["r","re","resources"])
 	async def resource(self,ctx):
 		rs = discord.Embed(title = "= = = = = | 📚 Learning Resources 📚 | = = = =", description= "Aliases = `re`,`resource`,`resources`\nFor more info: `.o help`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-		
-		rs.set_author(name = "Resources",icon_url=f'{self.client.user.avatar_url}')
 
 		rs.add_field(name = "―――――――――――――――――――――――――\n<:python:814811189241970718> PYTHON LEARNING RESOURCES",
 					 value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
@@ -60,7 +58,62 @@ class P1(commands.Cog):
 		await ctx.send(embed = rs)
 
 
-	
+	@resource.command(aliases = ["py"])
+	async def python(self,ctx):
+		py = discord.Embed(title = "= = =|<:python:814811189241970718> Python Learning Resources <:python:814811189241970718>|= = =",
+						   color = 0xffd43b,
+						   description = "Here are some python learning resources that will help you go master or advance your python skills.\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n\
+:free: **FREE RESOURCES**\n\
+:small_blue_diamond: [Python course by AlphaCodingSkills](https://www.alphacodingskills.com/python/python-introduction.php)\n\
+:small_blue_diamond: [Python course for beginners by Tultlane](https://www.tutlane.com/tutorial/python/python-data-types)\n\
+:small_blue_diamond: [Learn Python from basics to Advanced by TechBeamers](https://www.techbeamers.com/python-data-types-learn-basic-advanced/)\n\
+:small_blue_diamond: [Google's Python Class](https://developers.google.com/edu/python/)\n\
+:small_blue_diamond: [A Byte of Python](https://python.swaroopch.com/)\n\
+:small_blue_diamond: [Free Interactive Python Tutorial](https://www.learnpython.org/)\n\
+:small_blue_diamond: [Free Interactive Python Tutorial by DataCamp](https://www.datacamp.com/courses/intro-to-python-for-data-science?utm_source=learnpython_com&utm_campaign=learnpython_tutorials)\n\
+:small_blue_diamond: [Python for everybody Specialization by Coursera](https://www.coursera.org/specializations/python)\n\
+:small_blue_diamond: [Python Track from Basics to Advanced by Exercism](https://exercism.io/tracks/python)\n឵឵")
+
+
+		py.add_field(name = ":dollar: PAID RESOURCES",
+value = "\
+:small_orange_diamond: [Learn Python Programming Masterclass from Udemy](https://www.udemy.com/course/python-the-complete-python-developer-course/)\n\
+:small_orange_diamond: [Learn Python The hard way](https://learnpythonthehardway.org/python3/)\n\
+:small_orange_diamond: [Learn Python Programming Masterclass](https://www.codecademy.com/learn/learn-python-3)\n឵឵",
+					 inline = False)
+
+		py.add_field(name = "<:youtube:814913080357027861> YouTube RESOURCES",
+value = "\
+:small_blue_diamond: [Learn Python - Full Course for beginners by FreeCodeCamp](https://www.youtube.com/watch?v=rfscVS0vtbw&feature=emb_title)\n\
+:small_blue_diamond: [Python Tutorial - Python for Beginners 2020 by Programming With Mosh](https://www.youtube.com/watch?v=kqtD5dpn9C8)\n\
+:small_blue_diamond: [Python Tutorial for Absolute Beginners by CS Dojo](https://www.youtube.com/watch?v=Z1Yd7upQsXY&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg)\n\
+:small_blue_diamond: [Python Tutorial for Beginners by Corey Schafer](https://www.youtube.com/watch?v=YYXdXT2l-Gg&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU)\n\
+:small_blue_diamond: [Python Tutorial for Beginners by Clever Programmer](https://www.youtube.com/watch?v=4F2m91eKmts)\n\
+:small_blue_diamond: [Python Programming Tutorial for Beginners by Telusko](https://www.youtube.com/watch?v=4F2m91eKmts)\n\
+:small_blue_diamond: [Python Full Course - Learn Python in 12 Hours by Edureka!](https://www.youtube.com/watch?v=WGJJIrtnfpk)\n឵឵",
+					 inline = False)
+
+		py.add_field(name = ":orange_book: BOOKS",
+value = "\
+:small_orange_diamond: [Python Python Crash Course](https://www.amazon.com/dp/1593276036/?tag=devdetailpage02-20)\n\
+:small_orange_diamond: [Learn Python 3 the Hard Way](https://www.amazon.com/dp/0134692888/?tag=devdetailpage02-20)\n\
+:small_orange_diamond: [Head First Python](https://www.amazon.com/dp/1491919531/?tag=devdetailpage02-20)\n\
+:small_orange_diamond: [Invent Your Own Computer Games with Python](https://www.amazon.com/dp/1593277954/?tag=devdetailpage02-20)\n\
+:small_orange_diamond: [Python Tricks: A Buffet of Awesome Python Features](https://www.amazon.com/dp/1775093301/?tag=devdetailpage02-20)\n\
+:small_orange_diamond: [Effective Python: 59 Specific Ways to Write Better Python](https://www.amazon.com/dp/0134034287/?tag=devdetailpage02-20)\n\
+:small_orange_diamond: [Learning Python by Mark Lutz](https://www.amazon.com/Learning-Python-5th-Mark-Lutz/dp/1449355730/ref=sr_1_3?dchild=1&keywords=python&qid=1607516757&sr=8-3)\n឵឵",
+					 inline = False)
+
+		py.add_field(name = ":boxing_glove: PYTHON EXERCISES/CHALLENGES",
+					 value = "\
+:small_blue_diamond: [Python Challenges on HackerRank](https://www.codewars.com/)\n\
+:small_blue_diamond: [Python Challenges on CodeWars](https://www.codewars.com/)\n\
+:small_blue_diamond: [Python Challenges on Exercism](https://exercism.io/tracks/python)",
+					 inline = False)
+		await ctx.send(embed = py)
+
+
 
 	@commands.Cog.listener()
 	async def on_message(self, message):

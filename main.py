@@ -223,7 +223,6 @@ async def wanted(ctx, member : discord.Member = None):
 @client.command()
 async def invite(ctx):
     embed = discord.Embed(title= "= = = = = = = =| :mailbox_with_mail: Invite :mailbox_with_mail:  |= = = = = = = =")
-    embed.set_author(name='Invite',icon_url=f'{client.user.avatar_url}')
     embed.add_field(name=":large_blue_diamond: BOT INVITATION LINK",
                     value=":small_blue_diamond: [Click here](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) to invite me in your server.\n឵឵",
                     inline = False)

@@ -39,8 +39,13 @@ class A_1(commands.Cog):
 
 	@commands.group(invoke_without_command = True,aliases = ["initiate","start","set","setup"],case_insensitive=True)
 	async def activate(self,ctx):
-		activator_embed = discord.Embed(title='= = = = = = =| Help - [Activate] |= = = = = = =',description='Aliases = `initiate`, `start`, `set`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -')
-		activator_embed.set_author(name='Activate Commands',icon_url=f'{self.client.user.avatar_url}')
+		activator_embed = discord.Embed(title='\
+= = = = = = =| Help - [Activate] |= = = = = = =',description="Aliases = `initiate`, `start`, `set`\nFor more info: `.o help`\n\n\
+__**:warning:Disclaimer:warning:**__\n\
+:white_small_square: The `[` and `]` around the argument mean it’s required.\n\
+:white_small_square: The `(` and `)` around the argument mean it’s optional.\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+
 
 
 		#FIRST FIELD

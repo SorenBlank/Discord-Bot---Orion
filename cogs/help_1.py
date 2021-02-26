@@ -36,19 +36,18 @@ class H_1(commands.Cog):
 	async def help(self,ctx):
 
 		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\nInvite Link = `.o invite`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-		help_embed.set_author(name='Help Commands',icon_url=f'{self.client.user.avatar_url}')
+		
 		help_embed.add_field(name=":gear:PROTOCOLS/SERVER UTILITIES:gear:",
-							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`",
+							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`\n ឵឵ \n ឵឵ ",
 							 inline = False)
-		help_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
+
 		help_embed.add_field(name=":card_box:UTILITIES:card_box:",
-							 value="------- :arrow_down_small: -------\n:white_small_square: This section includes all **Utility** infos which are easily accessable to everyone.\n**__Command:__** `.o help utility`",
+							 value="------- :arrow_down_small: -------\n:white_small_square: This section includes all **Utility** infos which are easily accessable to everyone.\n**__Command:__** `.o help utility`\n ឵឵ \n ឵឵",
 							 inline=False)
-		help_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
+
 		help_embed.add_field(name=":video_game:GAMES:video_game:",
-							 value="------ :arrow_down_small: -----\n:white_small_square: This section includes all **Games** infos.\n**__Command:__** `.o help game`",
+							 value="------ :arrow_down_small: -----\n:white_small_square: This section includes all **Games** infos.\n**__Command:__** `.o help game`\n ឵឵ \n ឵឵",
 							 inline=False)
-		help_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
 
 		help_embed.add_field(name=":book:PHILOSOPHY:book:",
 							 value="---------- :arrow_down_small: ---------\n:white_small_square: If you are not a nerd then this section is not for you.\n**__Command:__** `.o help philosophy`",
@@ -58,8 +57,7 @@ class H_1(commands.Cog):
 
 	@help.command(aliases=["games","g","tictactoe","tic","tac","fibo","Fibonacci"])
 	async def game(self,ctx):
-		game_embed = discord.Embed(title="= = = = = = = |🎮 Game 🎮| = = = = = = =",description="឵឵")
-		game_embed.set_author(name='Game Commands',icon_url=f'{self.client.user.avatar_url}')
+		game_embed = discord.Embed(title="= = = = = = = = |🎮 Game 🎮| = = = = = = = =",description="឵឵")
 		game_embed.add_field(name=':1234: Fibonacci/Fibo :1234:',
 							 value="This is a **Fibonacci Count Up** game. In mathematics, the Fibonacci numbers, commonly denoted `Fn`, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from `0` and `1`.\nSequence Example: `1, 1, 2, 3, 5, 8, 13, 21, 55........`. Just start the game by typing `1` in the Fibonacci channel.\n:notepad_spiral:__**Rules:**__:notepad_spiral:\n**1)** A channel has to be specified/set before playing **Fibonacci Countup**.\n__**Activation Command**__: `.o activate fibo (channel)`\n**2)** The count starts from 1.\n**3)** One player can not count twice on a row.",
 							 inline=False)
@@ -90,14 +88,12 @@ class H_1(commands.Cog):
 						   value="The opponent responds with `hit` or `miss` as appropriate. Both players boards will be marked with `X`. `Red X` for hit, `White X` for miss. For example, if you call out F6 and your opponent does not have any ship located at F6, your opponent would respond with `miss`.  Your board will record the miss F6 by placing a `White X` of your board's F6. Your opponent records the miss by placing. You can check this [tutorial](https://www.youtube.com/watch?v=4gHJlYLomrs&ab_channel=GatherTogetherGames 'https://www.youtube.com/watch?v=4gHJlYLomrs&ab_channel=GatherTogetherGames') or read this [article](https://www.thesprucecrafts.com/the-basic-rules-of-battleship-411069 'https://www.thesprucecrafts.com/the-basic-rules-of-battleship-411069')",
 						   inline=False)
 		bs_embed.set_image(url="https://cdn.discordapp.com/attachments/753509805238517802/805099326317396037/bs2.jpg")
-		bs_embed.set_author(name='Battleship Help',icon_url=f'{self.client.user.avatar_url}')
 		bs_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed=bs_embed)
 
 	@help.command(aliases=["p","c1","m1"])
 	async def protocol(self,ctx):
 		p_embed = discord.Embed(title="= = = = = = |:gear: Protocol :gear:| = = = = =",description="Aliases = `p`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-		p_embed.set_author(name="Protocol Help",icon_url=f'{self.client.user.avatar_url}')
 		p_embed.add_field(name=":crossed_swords: M1 :crossed_swords:",
 						  value=":small_orange_diamond: M1 Protocol includes moderation commands. After activating the **M1** you can use the following moderation commands-\n**1) **__Kick__\n__**Command:**__ `.o kick [member]`\n\n**2) **__Ban__\n__**Command:**__ `.o ban [member]`\n\n**3) **__Unban__\n__**Command:**__ `.o unabn [member]`",
 						  inline=False)
@@ -110,7 +106,6 @@ class H_1(commands.Cog):
 	@help.command(aliases = ["initiate","start","set","setup"])
 	async def Activate(self,ctx):
 		activator_embed = discord.Embed(title='= = = = = = =| Help - [Activate] |= = = = = = =',description='Aliases = `initiate`, `start`, `set`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -')
-		activator_embed.set_author(name='Activate Commands',icon_url=f'{self.client.user.avatar_url}')
 
 
 		#FIRST FIELD
@@ -174,7 +169,6 @@ class H_1(commands.Cog):
 	@help.command(aliases = ["stop","eliminate","remove"])
 	async def Deactivate(self,ctx):
 		deactivator_embed = discord.Embed(title = "= = = = = = =| Help - [Deactivate] |= = = = = = =",description= "Aliases = `stop` , `eliminate`, `remove`\nFor more info: `.o help`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-		deactivator_embed.set_author(name='Deactivate Commands',icon_url=f'{self.client.user.avatar_url}')
 
 		deactivator_embed.add_field(name=":octagonal_sign: Deactivate Commands :octagonal_sign:",value="-:arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down:-\n\n:one: `.o deactivate m1`\nThis command will turn off **M1 protocol**.\n\n:two: `.o deactivate c1 (channel)` or `deactivate all c1`\nThis command will eliminate **C1 Protocol** from a specific channel or all channels.\n\n:three: `.o remove announce_ch`\nThis command removes **Announcement Command Channel**.\n\n:four: `.o remove announce (channel)`\nThis command removes bot **Announcement Channel**.\n\n:five: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:six: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:seven: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:eight: `.o deactivate wiki`\nThis command removes **Wikipedia Channel**.")
 		deactivator_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
@@ -187,7 +181,7 @@ class H_1(commands.Cog):
 		try:
 			if msg.lower() == "utility" or msg.lower() == "utilities" or msg.lower() == "u":
 				su_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `su`,`server utility`,`server utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-				su_embed.set_author(name='Server Utility Commands',icon_url=f'{self.client.user.avatar_url}')
+
 				su_embed.add_field(name="= = __:link:ACTIVATION / DEACTIVATION:link:__ = =",
 									 value="- - - - - - - - - :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - - - - - - - - -\n:white_small_square: **Activation/Deactivation** commands are the most important commands in order to use all features properly.",
 									 inline=False)
@@ -215,7 +209,7 @@ class H_1(commands.Cog):
 				await ctx.send(embed= su_embed)
 		except:
 			su_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `su`,`server utility`,`server utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-			su_embed.set_author(name='Server Utility Commands',icon_url=f'{self.client.user.avatar_url}')
+			
 			su_embed.add_field(name="= = __:link:ACTIVATION / DEACTIVATION:link:__ = =",
 								 value="- - - - - - - - - :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - - - - - - - - -\n:white_small_square: **Activation/Deactivation** commands are the most important commands in order to use all features properly.",
 								 inline=False)
@@ -248,7 +242,7 @@ class H_1(commands.Cog):
 	@help.command(aliases = ["utility","u"])
 	async def utilities(self,ctx):
 		u_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `u`,`utility`,`utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-		u_embed.set_author(name='Utility Commands',icon_url=f'{self.client.user.avatar_url}')
+		
 		u_embed.add_field(name=":large_blue_diamond: AVATAR",
 						  value = ":small_blue_diamond: This command is used for seeing avatar of your account's or a specific account's.\n__**Command:**__ `.o avatar (member)` or `.o av (member)`\n឵឵",
 						  inline = False)
@@ -262,7 +256,7 @@ class H_1(commands.Cog):
 	@help.command(aliases=['philosophy','wiki','wikipedia'])
 	async def philo(self,ctx):
 		ph_embed = discord.Embed(title="= = = = = = |:card_box: Philosophy :card_box:| = = = = =",description="Aliases = `philo`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-		ph_embed.set_author(name='Philosophy Commands',icon_url=f'{self.client.user.avatar_url}')
+	
 		ph_embed.add_field(name=":notebook: WIKIPEDIA",value="Using Wikipedia command you can search for any thing's summary on Wikipedia.\n__**Command:**__ `.o wiki [subject]`",
 							inline=False)
 		ph_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")

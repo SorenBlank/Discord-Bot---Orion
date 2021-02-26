@@ -35,7 +35,6 @@ class S_1(commands.Cog):
     @commands.group(invoke_without_command = True,case_insensitive=True)
     async def show(self,ctx):
         show_embed = discord.Embed(title='= = = = = = = =| Help - [Show] |= = = = = = = =',description= "-------------------------------------------------------------")
-        show_embed.set_author(name='Show Commands',icon_url=f'{self.client.user.avatar_url}')
 
         show_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
         await ctx.send(embed = show_embed)
@@ -66,7 +65,6 @@ class S_1(commands.Cog):
 
                 if len(all) != 0:
                     embed = discord.Embed(title = "= = = =| All Announcement Channels |= = = =")
-                    embed.set_author(name='Announcement Channels',icon_url=f'{self.client.user.avatar_url}')
                     embed.add_field(name = "---------------- 📃 __Channels__ 📃 -----------------",value = channels, inline= True)
                     embed.set_footer(icon_url=ctx.author.avatar_url, text= f"Requested by {ctx.author.name}")
                     await ctx.send(embed = embed)
