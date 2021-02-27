@@ -224,6 +224,56 @@ If you need a collection of open-source apps, library and frameworks, you can ch
 		await ctx.send(embed = an)
 
 
+
+	@resource.command()
+	async def ios(self,ctx):
+		ios = discord.Embed(title = "= = = = =|<:iOS:814846523128676372> iOS Dev Resources <:iOS:814846523128676372>|= = = = =",
+			color = 0xea1e5d,
+			description = "Here you will find some useful iOS development learning resources to quick-start your iOS development journey. \
+The majority of resources and recommendations are geared towards native iOS development. Many may apply to cross-platform development as well.\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+
+		ios.add_field(name = ":green_book: GENERAL RESOURCES",
+			value = "\
+:small_blue_diamond:[Apple Developer](https://developer.apple.com/)\n\
+:small_blue_diamond:[Ray Wenderlich](https://www.raywenderlich.com/)\n\
+:small_blue_diamond:[HackingWithSwift](https://www.hackingwithswift.com/)\n\
+:small_blue_diamond:[Medium](https://medium.com/)\n឵឵",
+			inline = False)
+
+		ios.add_field(name = "<:udemy:814951952022110258> UDEMY RESOURCES",
+			value = "\
+:small_orange_diamond:[iOS 13 & Swift 5 - The Complete iOS App Development Bootcamp](https://www.udemy.com/course/ios-13-app-development-bootcamp/)\n\
+:small_orange_diamond:[iOS 14, Swift 5 & SwiftUI - The iOS Development Starter Kit](https://www.udemy.com/course/swift-starter-kit/)\n឵឵",
+			inline = False)
+
+		ios.add_field(name = "<:swift:815125486560608266> SWIFT LEARNING RESOURCES",
+			value = "\
+:small_blue_diamond:[Apple Developer - SwiftUI Tutorials](https://developer.apple.com/tutorials/swiftui/)\n\
+:small_blue_diamond:[HackingWithSwift - SwiftUI Quick-Start](https://www.hackingwithswift.com/quick-start/swiftui)\n\
+:small_blue_diamond:[Ray Wenderlich - Getting Started](https://www.raywenderlich.com/3715234-swiftui-getting-started)\n\
+:small_blue_diamond:[Medium - You got this! Learn to build your first app](https://medium.com/swift-programming/swiftui-you-got-this-learn-to-build-your-first-app-part-1-of-3-56c8b918dc0a)\n឵឵")
+
+		ios.add_field(name = ":question: Q&A",
+			value = ":large_blue_diamond:[StackOverflow](http://stackoverflow.com/)\n\
+:small_blue_diamond:- [iOS](https://stackoverflow.com/questions/tagged/ios)\n\
+:small_blue_diamond:- [Swift](https://stackoverflow.com/questions/tagged/swift)/[Swift5](https://stackoverflow.com/questions/tagged/swift5)\n\
+:small_blue_diamond:- [Objective-C](https://stackoverflow.com/questions/tagged/objective-c)\n\
+:small_blue_diamond:- [Xcode](https://stackoverflow.com/questions/tagged/xcode)\n\
+:small_blue_diamond:- [Core-Data](https://stackoverflow.com/questions/tagged/core-data)\n\
+:small_blue_diamond:- [Apple Developer Forums](https://developer.apple.com/forums/)\n឵឵",
+			inline = False)
+
+		ios.add_field(name = ":pencil: EDITORIALS",
+			value = "\
+:white_small_square:[Open Source Learning ~ iOS Programming - by Greyson Murray](https://gist.github.com/greysonDEV/add089a24ea0392414a415ab3f081db6)\n\
+:white_small_square:[Quick-start guide create apps in Swift without storyboards - by Greyson Murray](https://gist.github.com/greysonDEV/25d5347f2f708715934706dfe09a8686)",
+			inline = False)
+
+		await ctx.send(embed = ios)
+
+
+
 	@commands.Cog.listener()
 	async def on_message(self, message):
 
