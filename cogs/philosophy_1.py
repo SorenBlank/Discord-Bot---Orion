@@ -343,9 +343,47 @@ If you want to follow the newest research I suggest reading some of the [papers 
 		await ctx.send(embed = ml)
 
 
-	@resource.command()
+	@resource.command(aliases = ["pro"])
 	async def programming(self,ctx):
-		pro = discord.Embed(title = "= = = =|PROGRAMMING RESOURCES|= = = =")
+		pro = discord.Embed(title = "= =|:keyboard: PROGRAMMING RESOURCES :keyboard:|= =",
+							description = "Here are some general resources that you all will find useful, they aren't based on one specific topic. So there should be something here for everyone.\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+
+		pro.add_field(name = ":pencil: TEXT EDITORS",
+			value = "Text Editors are what allow us to write the code for our program. There are currently many great text editors in the market. Here are some options for you to choose from:\n\n\
+<:vscode:814499769065799741> **VS Code**\n\
+[Official website](https://code.visualstudio.com/) | [Tutorial](https://flaviocopes.com/vscode/)\n\n\
+<:sublime:814475264330694746> **Sublime Text**\n\
+[Official website](https://www.sublimetext.com/) | [Tutorial](https://www.tutorialspoint.com/sublime_text/index.htm)\n\n\
+<:atom:814811145088008212> **Atom**\n\
+[Official website](https://atom.io/) | [Tutorial](https://flight-manual.atom.io/getting-started/)\n\n\
+<:vim:815301084473720832> **Vim**\n\
+[Official website](https://www.vim.org/) | [Tutorial](https://danielmiessler.com/study/vim/)\n\n\
+There are many more text editors, but these are some of the most popular ones.\n឵឵",
+			inline = False)
+
+		pro.add_field(name = ":books: FREE PROGRAMMING BOOKS",
+			value = "Here you can find a total of 48 books, each of them covering a specific language. \n\
+And then one extra book covering competitive programming. All of these can be downloaded in the form of a pdf:\n\n\
+:small_blue_diamond:[48 Free Programming Books](https://books.goalkicker.com/)\n\
+:small_blue_diamond:[Competitive Programmer's Handbook by Antti Laaksonen](https://github.com/pllk/cphb)\n឵឵",
+			inline = False)
+
+		pro.add_field(name = ":bulb: PROBLEM SOLVING",
+			value = "\
+Having problem solving skills is an invaluable asset everyone should know in general life also, not just in programming. \
+Here is an article which should help you get an idea of what problem-solving skills are:\n\n\
+:small_blue_diamond:[Problem-solving skills by Richard Reis](https://www.freecodecamp.org/news/how-to-think-like-a-programmer-lessons-in-problem-solving-d1d8bf1de7d2/)\n឵឵",
+			inline = False)
+
+		pro.add_field(name = ":art: DESIGN RESOURCES",
+			value = "\
+Here you will find lots of designing stuff, including but not limited to, UI Graphics, Fonts, Icons/Logos, CSS Animations, CSS Frameworks, and many more resources. Check it out for yourself:\n\n\
+:small_blue_diamond:[Design resources for Developers by Bradtraversy](https://github.com/bradtraversy/design-resources-for-developers#css-animations)",
+			inline = False)
+
+		await ctx.send(embed = pro)
+
 
 
 	@commands.Cog.listener()
