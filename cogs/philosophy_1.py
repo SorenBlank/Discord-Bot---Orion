@@ -116,6 +116,7 @@ value = "\
 	@resource.command()
 	async def web(self,ctx):
 		web = discord.Embed(title = "= ==|<:HTML:814843918582939688>Web Dev Learning Resources<:css:814941650849759282>|== =",
+				  color = 0xf16524,
 				  description = "Here you will find useful web development learning resources for any code newbie who is trying to learn web development, below is a list of resources you can use to start your journey.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 		web.add_field(name = "🌐 ONLINE COURSES & BOOT CAMPS",
@@ -182,6 +183,46 @@ Free trusted online classes and practice at your own pace.\n឵឵",
 
 		await ctx.send(embed = web)
 
+	@resource.command(aliases = ["an"])
+	async def android(self,ctx):
+		an = discord.Embed(title = "===| <:android:814849449570205736> Android Dev Resources <:android:814849449570205736> |===",
+			color = 0x3ddb86,
+			description = "Here you will find some useful resources if you are interested in Android development.\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+		an.add_field(name = ":dollar: PAID RESOURCES",
+			value = "\
+:small_orange_diamond:[The Complete Android Developer Course: Beginner To Advanced](https://www.udemy.com/course/androidcourse/?LSNPUBID=JVFxdTr9V80&ranEAID=JVFxdTr9V80&ranMID=39197&ranSiteID=JVFxdTr9V80-mBac39g5jAR5YrHl6Bl4dA&utm_medium=udemyads&utm_source=aff-campaign)\n\
+:small_orange_diamond:[Coding with Mitch](https://codingwithmitch.com/)\n\
+:small_orange_diamond:[Udacity: Become an Android Developer by Google](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801)\n឵឵",
+			inline = False)
+
+		an.add_field(name = "<:youtube:814913080357027861> YOUTUBE RESOURCES",
+			value = "\
+:small_blue_diamond:[Android developers](https://www.youtube.com/user/androiddevelopers)\n\
+:small_blue_diamond:[Goobar](https://www.youtube.com/channel/UCVysWoMPvvHQMEJvRkslbAQ)\n\
+:small_blue_diamond:[Coding with Mitch](https://www.youtube.com/channel/UCoNZZLhPuuRteu02rh7bzsw)\n\
+:small_blue_diamond:[Raywenderlich](https://www.raywenderlich.com/android/videos)\n឵឵",
+			inline = False)
+
+		an.add_field(name = ":microphone2: PRODCAST & COMMUNITIES AND BLOGS",
+			value = "\
+:small_blue_diamond:[The official Android Developers publication on Medium](https://medium.com/androiddevelopers)\n\
+:small_blue_diamond:[Android developers blog by Nick Rout](https://android-developers.googleblog.com/)\n\
+:small_blue_diamond:[Fragmented](https://fragmentedpodcast.com/)\n\
+:small_blue_diamond:[MindOrks](https://mindorks.com/)\n\
+:small_blue_diamond:[Raywenderlich](https://www.raywenderlich.com/android/articles)\n឵឵",
+			inline = False)
+
+		an.add_field(name = "<:git:814810927748218934> LIBRARIES & FRAMEWORKS & APPS",
+			value = "\
+If you need a collection of open-source apps, library and frameworks, you can checkout this awesome person's [GitHub](https://github.com/moeindev?tab=stars) stars.\n឵឵")
+
+		an.add_field(name = ":map: ROADMAP",
+			value = ":small_blue_diamond: [Android Developer Roadmap by MindOrks](https://github.com/MindorksOpenSource/android-developer-roadmap)",
+			inline = False)
+
+		await ctx.send(embed = an)
+
 
 	@commands.Cog.listener()
 	async def on_message(self, message):
@@ -189,7 +230,7 @@ Free trusted online classes and practice at your own pace.\n឵឵",
 		#making the message.content lower case in order to make the commands case insensitive
 		ex_1 = message.content.lower().replace(',','')
 		ex_2 = ex_1.replace("?","")
-		etxt = ex_2 
+		etxt = ex_2
 		
 		#splitting the exact_txt
 		exact_txt_splitted = etxt.split(" ")
