@@ -269,9 +269,78 @@ The majority of resources and recommendations are geared towards native iOS deve
 :white_small_square:[Open Source Learning ~ iOS Programming - by Greyson Murray](https://gist.github.com/greysonDEV/add089a24ea0392414a415ab3f081db6)\n\
 :white_small_square:[Quick-start guide create apps in Swift without storyboards - by Greyson Murray](https://gist.github.com/greysonDEV/25d5347f2f708715934706dfe09a8686)",
 			inline = False)
-
 		await ctx.send(embed = ios)
+	
 
+	@resource.command(aliases = ["ml"])
+	async def machine(self,ctx):
+		ml = discord.Embed(title = "= = =|:gear:Machine Learning Resources:gear:|= = =",
+						   color = 0x1cb1c2,
+						   description = "Here is a brief overview of the magnificent world of machine learning. Hope you find something useful or interesting!\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+
+		ml.add_field(name = ":globe_with_meridians: WEBSITES",
+			value = "\
+:small_blue_diamond:[List of papers](https://paperswithcode.com/)\n\
+:small_blue_diamond:[Easy to read articles](https://towardsdatascience.com/)\n\
+:small_blue_diamond:[Description of terms you might encounter in machine learning](https://www.investopedia.com/financial-term-dictionary-4769738)\n឵឵",
+			inline = False)
+
+		ml.add_field(name = "<:youtube:814913080357027861> YOUTUBE RESOURCES",
+			value = "\
+:small_blue_diamond:[Jeff Heaton](https://www.youtube.com/c/HeatonResearch/)\n\
+:small_blue_diamond:[StatQuest](https://www.youtube.com/c/joshstarmer/)\n\
+:small_blue_diamond:[3Blue1Brown](https://www.youtube.com/c/3blue1brown/)\n\
+:small_blue_diamond:[Tensorflow](https://www.youtube.com/c/TensorFlow/)\n\
+:small_blue_diamond:[Two Minute Papers](https://www.youtube.com/user/keeroyz)\n\
+:small_blue_diamond:[Computerphile](https://www.youtube.com/user/Computerphile)\n឵឵",
+			inline = False)
+
+		ml.add_field(name = ":tools: MACHINE LEARNING FRAMEWORKS",
+			value = "\
+:one: [Scikit-learn](https://scikit-learn.org/stable/)\n\
+This framework is really good if you don't need the performance boost from using a GPU and you're not interested in designing your own neural networks. \
+The documentation explains every topic and there are a lot of examples to learn from.\n\n\
+:two: [Tensorflow](https://www.tensorflow.org/)\n\
+Machine learning framework by Google.\n\n\
+:three: [Pytorch](https://pytorch.org/)\n\
+Machine learning framework by Facebook.\n឵឵",
+			inline = False)
+
+		ml.add_field(name = ":card_box: DATA SOURCES",
+			value = ":one: [Public Datasets on Github](https://github.com/awesomedata/awesome-public-datasets)\n\
+:two: [Public Datasets on Kaggle](https://www.kaggle.com/datasets)\n឵឵",
+			inline = False)
+
+		ml.add_field(name = ":blue_book: BOOKS",
+			value = "\
+:one: [Python for Data Analysis - Wes McKinney](https://amzn.to/37TahYG)\n\
+This is a really good starting point if you are new to the field.\n\
+:two: [Introduction to Data Mining - University of Minnesota](https://amzn.to/3qZZ9kf)\n\
+This is a good resource if you already know some computer science. It introduces these topics: classification, association analysis, clustering, and anomaly detection.\n\
+:three: [Machine Learning: A Bayesian and Optimization Perspective - Sergios](https://amzn.to/2ZSrsVM)\n\
+This is the book to get if you love linear algebra and calculus. You will learn the math behind the most important parts of machine learning.\n\
+:four: [Deep Learning - Goodfellow, Bengio, Courville](https://amzn.to/3dR5g6x)\n\
+This is the book to read to learn deep learning.\n\
+:five: [An Introduction to Statistical Learning](https://amzn.to/3syK7lW)\n\
+This is the book to get if you love statistics.\n឵឵",
+			inline = False)
+
+		ml.add_field(name = ":bookmark_tabs: RELATED TOPICS",
+			value = ":small_blue_diamond:[Apache Hadoop](https://hadoop.apache.org/) and [Apache Spark](https://spark.apache.org/)\n\
+:small_blue_diamond:[Information retrieval](https://en.wikipedia.org/wiki/Information_retrieval)\n\
+:small_blue_diamond:[Natural Language Processing](https://towardsdatascience.com/your-guide-to-natural-language-processing-nlp-48ea2511f6e1)\n\
+:small_blue_diamond:[Databases](https://www.w3schools.in/dbms/database/)\n\
+:small_blue_diamond:[Genetic Algorithms](https://www.geeksforgeeks.org/genetic-algorithms/)\n\
+:small_blue_diamond:[Computer Vision](https://www.sciencedirect.com/science/article/pii/S1877050920308218)\n឵឵",
+			inline = False)
+
+		ml.add_field(name = ":notepad_spiral: FINAL NOTE",
+			value = "\
+The limit of what we think it is possible to do in the field of artificial intelligence is constantly moving forwards. \
+If you want to follow the newest research I suggest reading some of the [papers published on the arXiv website by Cornell University](https://arxiv.org/corr/subjectclasses).",
+			inline = False)
+		await ctx.send(embed = ml)
 
 
 	@commands.Cog.listener()
