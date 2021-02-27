@@ -28,7 +28,7 @@ class P1(commands.Cog):
 		rs.add_field(name = "―――――――――――――――――――――――――\n<:python:814811189241970718> PYTHON LEARNING RESOURCES",
 					 value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
 					 inline = False)
-		rs.add_field(name = "―――――――――――――――――――――――――\n<:HTML:814843918582939688> WEB DEVELOPMENT RESOURCES",
+		rs.add_field(name = "―――――――――――――――――――――――――\n<:html:815225352958771210> WEB DEVELOPMENT RESOURCES",
 					 value = ":small_orange_diamond: Here you will find useful web development learning resources for any code newbie who is trying to learn web development.\n**__Command:__** `.o resource web`",
 					 inline = False)
 
@@ -115,7 +115,7 @@ value = "\
 
 	@resource.command()
 	async def web(self,ctx):
-		web = discord.Embed(title = "= ==|<:HTML:814843918582939688>Web Dev Learning Resources<:css:814941650849759282>|== =",
+		web = discord.Embed(title = "= ==|<:html:815225352958771210>Web Dev Learning Resources<:css:815225369040519168>|== =",
 				  color = 0xf16524,
 				  description = "Here you will find useful web development learning resources for any code newbie who is trying to learn web development, below is a list of resources you can use to start your journey.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
@@ -341,6 +341,11 @@ The limit of what we think it is possible to do in the field of artificial intel
 If you want to follow the newest research I suggest reading some of the [papers published on the arXiv website by Cornell University](https://arxiv.org/corr/subjectclasses).",
 			inline = False)
 		await ctx.send(embed = ml)
+
+
+	@resource.command()
+	async def programming(self,ctx):
+		pro = discord.Embed(title = "= = = =|PROGRAMMING RESOURCES|= = = =")
 
 
 	@commands.Cog.listener()

@@ -155,6 +155,8 @@ class U_1(commands.Cog):
             elif playy.name == "League of Legends":
                 ACT.append(f"<:lol:814619672975638559> Playing **{playy.name}**")
 
+            elif playy.name == "Overwatch":
+                ACT.append(f"<:overwatch:814483380321910784> Playing **{playy.name}**")
 
             else:
                 ACT.append(f":grey_question: Playing **{playy.name}**")
