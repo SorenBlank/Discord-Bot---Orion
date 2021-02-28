@@ -279,8 +279,8 @@ async def on_message(message):
 #######################################################################################################
 #######################################################################################################
 
-with open('token.txt','r') as f:
-    content = f.read()
+#with open('token.txt','r') as f:
+    #content = f.read()
 
 #Token
-client.run(content)
+client.run(os.environ['TOKEN'])
