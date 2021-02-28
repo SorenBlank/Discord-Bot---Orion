@@ -52,6 +52,8 @@ async def on_ready():
                                                              name = '.o help')
                                    )
     print("Bot is ready!")
+    async for guild in client.fetch_guilds(limit=150):
+        print(guild.name)
 
 #connecting cogs
 client.load_extension('cogs.help_1')
