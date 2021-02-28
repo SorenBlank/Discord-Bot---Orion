@@ -384,6 +384,41 @@ Here you will find lots of designing stuff, including but not limited to, UI Gra
 
 		await ctx.send(embed = pro)
 
+	@resource.command(aliases = ["li"])
+	async def linux(self,ctx):
+
+		li = discord.Embed(title = "= = = = =| <:linux:814863906756624384> Linux Guide <:linux:814863906756624384>|= = = = =",
+			description = "Here is a guide to getting started with linux. Hope everyone will find it very useful.\n\
+-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+
+		li.add_field(name = ":page_facing_up: STARTER",
+			value = ":white_small_square:[What is Linux?](https://www.youtube.com/watch?v=6gqLWTSz6ck)\n\
+:white_small_square:[What distribution to choose?](https://distrochooser.de/en)\n឵឵",
+			inline = False)
+
+		li.add_field(name = ":children_crossing: WAYS TO USE LINUX",
+			value = "\
+:one: Virtual Machine - [Article](https://www.addictivetips.com/ubuntu-linux-tips/set-up-linux-virtual-machine-on-windows/)/[Video](https://www.youtube.com/watch?v=lzRMYTf6X2o)\n\
+:two: WSL(Windows Subsystem for Linux) - [Article](https://christitus.com/wsl2/)/[Video](https://youtu.be/VUW2pIjDpEk)\n\
+:three: Full Installation\n឵឵",
+			inline = False)
+
+		li.add_field(name = ":cd: BOOTABLE MEDIA CREATION GUIDE",
+			value = "\
+:small_blue_diamond:[Guide](https://fossbytes.com/create-bootable-usb-media-rufus-install-windows-linux/) for using [Rufus](https://rufus.ie/) in a Windows desktop.\n\
+:small_blue_diamond:[Guide](https://recalbox.gitbook.io/tutorials/utility/flashing-an-image/balena-etcher-tutorial) for using [Balena Etcher](https://www.balena.io/etcher/) in a Windows/Linux/MacOS desktop.\n឵឵",
+			inline = False)
+
+		li.add_field(name = ":tools: INSTALLATION GUIDES",
+			value = "\
+Here are installation guides for some popular Linux distributions\n\n\
+:one: <:ubuntu:814858579222724618> Ubuntu - [Article](https://ubuntu.com/tutorials/install-ubuntu-desktop1-overview)/[Video](https://www.youtube.com/watch?v=G7ffzC4S0A4)\n\n\
+:two: <:debian:814859002780581899> Debian - [Article](https://www.debian.org/releases/stable/installmanual)/[Video](https://www.youtube.com/watch?v=P4J_99cS7Bg)\n\n\
+:three: <:arch:814858893993705542> Arch Linux - [Article](https://wiki.archlinux.org/index.php/Installation_guide)/[Video](https://www.youtube.com/watch?v=PQgyW10xD8s)\n\n\
+:four: <:manjaro:814857561252823090> Manjaro - [Article](https://itsfoss.com/install-manjaro-linux/)/[Video](https://www.youtube.com/watch?v=4tGK9OCcSPk)\n឵឵")
+
+		await ctx.send(embed = li)
+
 
 
 	@commands.Cog.listener()
