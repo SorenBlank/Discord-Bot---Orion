@@ -38,15 +38,15 @@ class H_1(commands.Cog):
 		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\nInvite Link = `.o invite`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 		
 		help_embed.add_field(name=":gear:PROTOCOLS/SERVER UTILITIES:gear:",
-							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`\n ឵឵ \n ឵឵ ",
+							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`\n\n ឵឵ ",
 							 inline = False)
 
 		help_embed.add_field(name=":card_box:UTILITIES:card_box:",
-							 value="------- :arrow_down_small: -------\n:white_small_square: This section includes all **Utility** infos which are easily accessable to everyone.\n**__Command:__** `.o help utility`\n ឵឵ \n ឵឵",
+							 value="------- :arrow_down_small: -------\n:white_small_square: This section includes all **Utility** infos which are easily accessable to everyone.\n**__Command:__** `.o help utility`\n\n ឵឵",
 							 inline=False)
 
 		help_embed.add_field(name=":video_game:GAMES:video_game:",
-							 value="------ :arrow_down_small: -----\n:white_small_square: This section includes all **Games** infos.\n**__Command:__** `.o help game`\n ឵឵ \n ឵឵",
+							 value="------ :arrow_down_small: -----\n:white_small_square: This section includes all **Games** infos.\n**__Command:__** `.o help game`\n\n ឵឵",
 							 inline=False)
 
 		help_embed.add_field(name=":book:PHILOSOPHY:book:",
@@ -230,12 +230,15 @@ class H_1(commands.Cog):
 							  value = ":small_orange_diamond: This command is used for banning an account from the server.\n__**Command:**__ `.o ban [member]`\n឵឵")
 			su_embed.add_field(name = ":crossed_swords: UNBAN",
 							  value = ":small_orange_diamond: This command is used for unbanning an account.\n__**Command:**__ `.o unban [member]`\n឵឵")
+			
 			su_embed.add_field(name = ":crossed_swords: PURGE",
 							  value = ":small_orange_diamond: This command is used for deleting messages of current channel.\n__**Command:**__ `.o purge [number of messages]`\n឵឵",
 							  inline = False)
+
 			su_embed.add_field(name = ":crossed_swords: CHANGE NICKNAME",
-							   value = ":small_orange_diamond: This command is used to change nickname of a specific account.\n__**Command:**__ `.o chnick [user] [nickname]`\n឵឵",
+							   value = ":small_orange_diamond: This command is used to change nickname of a specific account.\n__**Command:**__ `.o chnick [user] [nickname]`",
 							   inline = False)
+
 			su_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 			await ctx.send(embed= su_embed)
 
@@ -259,6 +262,34 @@ class H_1(commands.Cog):
 	
 		ph_embed.add_field(name=":notebook: WIKIPEDIA",value="Using Wikipedia command you can search for any thing's summary on Wikipedia.\n__**Command:**__ `.o wiki [subject]`",
 							inline=False)
+
+		ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:python:814811189241970718> PYTHON LEARNING RESOURCES",
+					 value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
+					 inline = False)
+		ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:html:815225352958771210> WEB DEVELOPMENT RESOURCES",
+					 value = ":small_orange_diamond: Here you will find useful web development learning resources for any code newbie who is trying to learn web development.\n**__Command:__** `.o resource web`",
+					 inline = False)
+
+		ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:android:814849449570205736> ANDROID DEVELOPMENT RESOURCES",
+					 value = ":small_orange_diamond: Here you will find some useful resources if you are interested in Android development.\n**__Command:__** `.o resource android`",
+					 inline = False)
+
+		ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:iOS:814846523128676372> iOS DEVELOPMENT RESOURCES",
+					 value = ":white_small_square: Here you will find some useful iOS development learning resources to quick-start your iOS development journey.\n**__Command:__** `.o resource ios`",
+					 inline = False)
+
+		ph_embed.add_field(name = "―――――――――――――――――――――――――\n:gear: MACHINE LEARNING RESOURCES",
+					 value = ":small_orange_diamond: Here is a brief overview of the magnificent world of machine learning. Hope you find something useful or interesting!\n**__Command:__** `.o resource ml`",
+					 inline = False)
+
+		ph_embed.add_field(name = "―――――――――――――――――――――――――\n:keyboard: GENERAL PROGRAMMING RESOURCES",
+					 value = ":small_orange_diamond: Here are some general resources that you all will find useful, they aren't based on one specific topic. So there should be something here for everyone.\n**__Command:__** `.o resource programming`",
+					 inline = False)
+
+		ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:linux:814863906756624384> LINUX GUIDE",
+					 value = ":small_orange_diamond: Here is a guide to getting started with linux. Hope everyone will find it very useful.\n__**Command:**__ `.o resource linux`",
+					 inline = False)
+
 		ph_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed = ph_embed)
 
