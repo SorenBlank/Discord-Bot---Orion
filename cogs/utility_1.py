@@ -292,7 +292,7 @@ class U_1(commands.Cog):
 
             em.add_field(name='DEVELOPER TEAM', value=f":small_blue_diamond:{underline(mem1)} \n-Worked on design and development\n\n:small_blue_diamond:{underline(mem2)}\n-Worked on development\n\n:small_blue_diamond:{underline(mem3)}\n-Helped with ideas and suggestions\n―", inline=False)
 
-            dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":"nine","10":":one::zero:"}
+            dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":":nine:","10":":one::zero:"}
             num = str(len(self.client.guilds))
 
             if len(num) > 1:
