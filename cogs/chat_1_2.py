@@ -4,6 +4,8 @@ import random
 import sqlite3
 import asyncio
 import random
+import psycopg2
+import os
 
 base = psycopg2.connect(user="yyflmbmssbqvcl",
                         password="f3f1c4a58fedf11450c7cf60d7a0e9d5564600cac78d867a3db59688f0bf88b6",
