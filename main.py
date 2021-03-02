@@ -21,11 +21,12 @@ from io import BytesIO
 import numpy as np
 import re
 from discord import ActivityType as AT
-
+import psycopg2
 
 #database loads
-base = sqlite3.connect("all.db")
+base = psycopg2.connect(os.environ['DATABASE_URL'])
 cur = base.cursor()
+
 cur.execute("CREATE TABLE IF NOT EXISTS M1guilds (Guild INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS C1channels (Guild INTEGER,Channel INTEGER, Createtime TEXT, Timegap INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS Announce_ch (Guild INTEGER, Channel INTEGER)")
