@@ -39,7 +39,7 @@ cur.execute("CREATE TABLE IF NOT EXISTS ANC (Guild INTEGER, Channel INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS FC (Guild INTEGER, Channel INTEGER, Past_Number INTEGER, Last_Number INTEGER, Author INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS TC (Guild INTEGER, Channel INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS BC (Guild INTEGER, Channel INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS Tic (User INTEGER, Wins INTEGER, Loses INTEGER, Draws INTEGER)")
+cur.execute("CREATE TABLE IF NOT EXISTS Tic (Users INTEGER, Wins INTEGER, Loses INTEGER, Draws INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS TimerAnnounce (Guild INTEGER,Channel INTEGER, TimeLeft INTEGER, Announcement TEXT)")
 cur.execute("CREATE TABLE IF NOT EXISTS WC (Guild INTEGER, Channel INTEGER)")
 
