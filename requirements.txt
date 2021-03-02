@@ -7,5 +7,5 @@ numpy
 Pillow==8.1.0
 requests==2.25.1
 wikipedia==1.4.0
-psycopg2-binary
+psycopg2
 
