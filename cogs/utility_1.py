@@ -16,6 +16,7 @@ from io import BytesIO
 import numpy as np
 import re
 from discord import ActivityType as AT
+import psycopg2
 
 class U_1(commands.Cog):
     def __init__(self, client):
