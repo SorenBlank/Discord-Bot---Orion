@@ -22,12 +22,7 @@ import numpy as np
 import re
 import psycopg2
 
-base = psycopg2.connect(user="yyflmbmssbqvcl",
-                        password="f3f1c4a58fedf11450c7cf60d7a0e9d5564600cac78d867a3db59688f0bf88b6",
-                        host="ec2-3-224-251-47.compute-1.amazonaws.com",
-                        port="5432",
-                        database="dda86padcqcfo8"
-                        )
+base = sqlite3.connect("all.db")
 cur = base.cursor()
 
 class D_1(commands.Cog):
