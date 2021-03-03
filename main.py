@@ -282,5 +282,5 @@ async def on_message(message):
     #content = f.read()
 
 #Token
-#client.run(os.environ['TOKEN'])
-client.run("TOKEN")
+client.run(os.environ['TOKEN'])
+#client.run("TOKEN")
