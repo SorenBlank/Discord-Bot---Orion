@@ -21,11 +21,17 @@ from io import BytesIO
 import numpy as np
 import re
 from discord import ActivityType as AT
-
+import psycopg2
 
 #database loads
-base = sqlite3.connect("all.db")
+base = psycopg2.connect(user="yyflmbmssbqvcl",
+                        password="f3f1c4a58fedf11450c7cf60d7a0e9d5564600cac78d867a3db59688f0bf88b6",
+                        host="ec2-3-224-251-47.compute-1.amazonaws.com",
+                        port="5432",
+                        database="dda86padcqcfo8"
+                        )
 cur = base.cursor()
+
 cur.execute("CREATE TABLE IF NOT EXISTS M1guilds (Guild INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS C1channels (Guild INTEGER,Channel INTEGER, Createtime TEXT, Timegap INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS Announce_ch (Guild INTEGER, Channel INTEGER)")
@@ -33,7 +39,6 @@ cur.execute("CREATE TABLE IF NOT EXISTS ANC (Guild INTEGER, Channel INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS FC (Guild INTEGER, Channel INTEGER, Past_Number INTEGER, Last_Number INTEGER, Author INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS TC (Guild INTEGER, Channel INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS BC (Guild INTEGER, Channel INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS Tic (User INTEGER, Wins INTEGER, Loses INTEGER, Draws INTEGER)")
 cur.execute("CREATE TABLE IF NOT EXISTS TimerAnnounce (Guild INTEGER,Channel INTEGER, TimeLeft INTEGER, Announcement TEXT)")
 cur.execute("CREATE TABLE IF NOT EXISTS WC (Guild INTEGER, Channel INTEGER)")
 
@@ -282,4 +287,5 @@ async def on_message(message):
     #content = f.read()
 
 #Token
-client.run(os.environ['TOKEN'])
+#client.run(os.environ['TOKEN'])
+client.run("TOKEN")
