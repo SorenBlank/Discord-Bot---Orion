@@ -6,10 +6,13 @@ import random
 import asyncio
 import wikipedia as wiki
 import math
-import sqlite3
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+base = cluster["OrionDB"]
+
+wc_cur = base["wc"]
 
 class P1(commands.Cog):
 
@@ -438,17 +441,9 @@ Here are installation guides for some popular Linux distributions\n\n\
 										##   Wikipedia Command   ##
 										###########################
 		if etxt.startswith(".o wiki") or etxt.startswith(".o wikipedia"):
-			cur.execute("SELECT*FROM WC")
-			all = cur.fetchall()
-
-			guilds = []
-			channels = []
-			ch = 0
-			for i in all:
-				guilds.append(i[0])
-				channels.append(i[1])
-				if i[0] == message.guild.id:
-					ch = i[1]
+			raw = wc_cur.find({})
+			guilds = [x["guild"] for x in raw]
+			channels = [x["channel"] for x in raw]
 
 			if message.guild.id in guilds:
 				if message.channel.id in channels:
@@ -491,6 +486,8 @@ Here are installation guides for some popular Linux distributions\n\n\
 								await msgg.channel.send('This page cannot be shown for some unknown reason.')
 
 				if message.channel.id not in channels:
+					raw = wc_cur.find_one({"guild":ctx.guild.id})
+					ch = raw["channel"]
 					ch = self.client.get_channel(ch)
 					await message.channel.send(f"Please use this {ch.mention} channel.")
 			else:
@@ -515,17 +512,9 @@ Here are installation guides for some popular Linux distributions\n\n\
 				break
 
 		if (etxt.startswith("hey orion") or etxt.startswith("orion"))  and x == 3:
-			cur.execute("SELECT*FROM WC")
-			all = cur.fetchall()
-
-			guilds = []
-			channels = []
-			ch = 0
-			for i in all:
-				guilds.append(i[0])
-				channels.append(i[1])
-				if i[0] == message.guild.id:
-					ch = i[1]
+			raw = wc_cur.find({})
+			guilds = [x["guild"] for x in raw]
+			channels = [x["channel"] for x in raw]
 
 			if message.guild.id in guilds:
 				if message.channel.id in channels:
@@ -578,6 +567,8 @@ Here are installation guides for some popular Linux distributions\n\n\
 								except:
 									await msgg.channel.send('This page cannot be shown for some unknown reason.')
 				if message.channel.id not in channels:
+					raw = wc_cur.find_one({"guild":ctx.guild.id})
+					ch = raw["channel"]
 					ch = self.client.get_channel(ch)
 					await message.channel.send(f"Please use this {ch.mention} channel.")
 			else:

@@ -13,10 +13,14 @@ import os
 import numpy as np
 from threading import Thread
 from multiprocessing import Process
-import sqlite3
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+base = cluster["OrionDB"]
+
+bc_cur = base["bc"]
+
 
 class Battleship(commands.Cog):
     def __init__(self, client):
@@ -28,17 +32,9 @@ class Battleship(commands.Cog):
     
     @commands.command(aliases = ["bs"])
     async def battleship(self,ctx,member:discord.Member=None):
-        cur.execute("SELECT*FROM BC")
-        all = cur.fetchall()
-        guilds = []
-        channels = []
-        try:
-            for i in all:
-                guilds.append(i[0])
-            for i in all:
-                channels.append(i[1])
-        except:
-            pass
+        raw = bc_cur.find({})
+        guild = [x["guild"] for x in raw]
+        channel = [x["channel"] for x in raw]
 
         if ctx.guild.id in guilds:
             if ctx.channel.id in channels:

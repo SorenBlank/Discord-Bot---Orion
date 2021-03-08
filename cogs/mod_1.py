@@ -1,9 +1,14 @@
 import discord
 from discord.ext import commands
 import sqlite3
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+base = cluster["OrionDB"]
+
+m1_cur = base["m1guilds"]
+
 
 class M1(commands.Cog):
 
@@ -16,11 +21,9 @@ class M1(commands.Cog):
 
     @commands.command()
     async def purge(self, ctx, number = 2, channel:discord.TextChannel=None):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
-        guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
+        raw = m1_cur.find({})
+        guilds = [x["guild"] for x in raw]
+
         if ctx.author.guild_permissions.administrator:
             if ctx.guild.id in guilds:
                 if channel == None:
@@ -35,11 +38,9 @@ class M1(commands.Cog):
     #kick_command
     @commands.command()
     async def kick(self, ctx, member: discord.Member, reason = None):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
-        guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
+        raw = m1_cur.find({})
+        guilds = [x["guild"] for x in raw]
+        
 
         if ctx.author.guild_permissions.kick_members:
             if ctx.guild.id in guilds:
@@ -54,11 +55,9 @@ class M1(commands.Cog):
     #ban_command
     @commands.command()
     async def ban(self, ctx, member: discord.Member, reason = None):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
-        guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
+        raw = m1_cur.find({})
+        guilds = [x["guild"] for x in raw]
+        
         if ctx.author.guild_permissions.ban_members:
             if ctx.guild.id in guilds:
                 await member.ban(reason=reason)
@@ -74,11 +73,8 @@ class M1(commands.Cog):
     #unban_command
     @commands.command()
     async def unban(self, ctx, *, member):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
-        guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
+        raw = m1_cur.find({})
+        guilds = [x["guild"] for x in raw]
         
         banned_entries = await ctx.guild.bans()
         member_name, member_tag = member.split("#")

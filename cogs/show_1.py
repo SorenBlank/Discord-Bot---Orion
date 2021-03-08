@@ -20,9 +20,21 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+base = cluster["OrionDB"]
+
+m1_cur = base["m1guilds"]
+c1_cur = base["c1channels"]
+anch_cur = base["anch"]
+anc_cur = base["anc"]
+fc_cur = base["fc"] #Formation = [Guild, Channel, Past_Number, Last_Number, Author]
+tc_cur = base["tc"]
+bc_cur = base["bc"]
+ta_cur = base["ta"]
+wc_cur = base["wc"]
 
 class S_1(commands.Cog):
     def __init__(self, client):
@@ -43,15 +55,11 @@ class S_1(commands.Cog):
     @show.command(aliases = ['announcement','announce'])
     async def announcements(self,ctx,msg):
         if msg.lower() == 'channels' or msg.lower() == 'channel':
-            cur.execute("SELECT*FROM Announce_ch")
-            all = cur.fetchall()
-            an_guilds = []
-            for i in all:
-                an_guilds.append(i[0])
+            raw = anch_cur.find({})
+            guilds = [x["guild"] for x in raw]
+            all = [x for x in raw]
             
             if ctx.guild.id in an_guilds:
-                cur.execute("SELECT*FROM Announce_ch WHERE Guild Like ?",(ctx.guild.id,))
-                all = cur.fetchall()
                 dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":"nine","10":":one::zero:"}
 
                 channels = ""
@@ -60,7 +68,7 @@ class S_1(commands.Cog):
 
                 for i in all:
                     sym = dic[str(num)] if len(str(num)) > 1 else dic["0"]+dic[str(num)]
-                    channels = channels + f"{sym} <#{i[1]}>\n "
+                    channels = channels + f"{sym} <#{i["channel"]}>\n "
                     num = num + 1
 
                 if len(all) != 0:

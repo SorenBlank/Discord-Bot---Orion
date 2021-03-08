@@ -12,10 +12,12 @@ import numpy as np
 import re
 import os
 import asyncio
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
-
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+base = cluster["OrionDB"]
+tc_cur = base["tc"]
 class Tic(commands.Cog):
 
     def __init__(self, client):
@@ -27,19 +29,10 @@ class Tic(commands.Cog):
 
     @commands.command(aliases = ["tictactoe","tic"])
     async def tictac(self, ctx, member:discord.Member=None):
-        cur.execute("SELECT*FROM TC")
-        all = cur.fetchall()
-        guilds = []
-        channels = []
-        ch = 0
-        try:
-            for i in all:
-                guilds.append(i[0])
-                channels.append(i[1])
-                if ctx.guild.id == i[0]:
-                    ch = i[1]
-        except:
-            pass
+        raw = tc_cur.find({})
+        guilds = [x["guild"] for x in raw]
+        channels = [x["channel"] for x in raw]
+        
 
         if ctx.guild.id in guilds:
             if ctx.channel.id in channels:
@@ -279,6 +272,8 @@ class Tic(commands.Cog):
                         return
             
             elif ctx.channel.id not in channels:
+                raw = tc_cur.find_one({"guild":ctx.guild.id})
+                ch = raw["channel"]
                 ch = self.client.get_channel(ch)
                 await ctx.send(f"Please use this {ch.mention} channel.")
 

@@ -20,9 +20,10 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+base = cluster["OrionDB"]
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+ta_cur = base["ta"]
 
 class A_T_C_1(commands.Cog):
     def __init__(self, client):
@@ -34,27 +35,24 @@ class A_T_C_1(commands.Cog):
     	while True:
     		await asyncio.sleep(1)
     		try:
-	    		cur.execute("SELECT*FROM TimerAnnounce")
-	    		channels = cur.fetchall()
+	    		raw = ta_cur.find({})
+	    		lists = [x for x in raw]
 	    	except:
 	    		pass
 
-	    	for i in channels:
-	    		if i[2] <= 2:
+	    	for i in lists:
+	    		if i["time"] <= 2:
 
 	    			try:
-	    				ch = self.client.get_channel(i[1])
-	    				await ch.send(i[3])
-	    				cur.execute("DELETE FROM TimerAnnounce WHERE Announcement = ?",(i[3],))
-	    				base.commit()
+	    				ch = self.client.get_channel(i["channel"])
+	    				await ch.send(i["announcement"])
+	    				ta_cur.delete_one({"_id":i["_id"]})
 
 	    			except:
 	    				pass
 
-	    		elif i[2] > 2:
-	    			time_left = i[2] - 1
-	    			cur.execute("UPDATE TimerAnnounce SET TimeLeft = ? WHERE Channel = ?",(time_left,i[1]))
-	    			base.commit()
+	    		elif i["time"] > 2:
+	    			ta_cur.update_one({"_id":i["_id"]},{"$inc":{"time":-1}})
 
 def setup(client):
     client.add_cog(A_T_C_1(client))

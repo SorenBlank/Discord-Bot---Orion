@@ -20,9 +20,22 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+base = cluster["OrionDB"]
+
+m1_cur = base["m1guilds"]
+c1_cur = base["c1channels"]
+anch_cur = base["anch"]
+anc_cur = base["anc"]
+fc_cur = base["fc"]
+tc_cur = base["tc"]
+bc_cur = base["bc"]
+tic_cur = base["tic"]
+ta_cur = base["ta"]
+wc_cur = base["wc"]
 
 class A_1(commands.Cog):
 	def __init__(self, client):
@@ -110,32 +123,26 @@ __**:warning:Disclaimer:warning:**__\n\
 	async def M1(self,ctx):
 		if ctx.author.guild_permissions.manage_channels and ctx.author.guild_permissions.manage_messages:
 			id_guild = ctx.guild.id
-			cur.execute("SELECT*FROM M1guilds")
-			raw_guilds = cur.fetchall()
-			guilds = []
-			for i in raw_guilds:
-				guilds.append(i[0])
-
+			
+			raw_guilds = m1_cur.find({"guild":id_guild})
+			guilds = [i["guild"] for i in raw_guilds]
+			
 			if ctx.guild.id in guilds:
 					await ctx.send(random.choice(["M1 is running",
 												  "M1 is active"]))
 
 			if ctx.guild.id not in guilds:
-				cur.execute("INSERT INTO M1guilds (Guild) VALUES (?)",(id_guild,))
-				base.commit()
-				cur.execute("SELECT*FROM M1guilds")
-				raw_guilds = cur.fetchall()
-				guilds = []
-				for i in raw_guilds:
-					guilds.append(i[0])
-				if ctx.guild.id in guilds:
-					await ctx.send("M1 Activated\nModeration Commands has been unlocked!")
+
+				up = {"_id":len(guilds),"guild":id_guild}
+				m1_cur.insert_one(up)
+
+				await ctx.send("M1 Activated\nModeration Commands has been unlocked!")
 		else:
 			await ctx.send("**Access Denied!** This command requires `manage_channel` and `manage_messages` permission in order to execute.")
 
+
 	@activate.command()
 	async def C1(self,ctx,channel:discord.TextChannel = None):
-
 		#This checks if the user has manage channels permission
 		if ctx.author.guild_permissions.manage_channels:
 			
@@ -143,14 +150,16 @@ __**:warning:Disclaimer:warning:**__\n\
 			if channel != None:
 				try:
 					id_channel = channel.id
-					cur.execute("SELECT*FROM C1channels")
-					raw_channels = cur.fetchall()
-					channels = []
-					for s in raw_channels:
-						channels.append(s[1])
+					raw_channels = c1_cur.find("channel":id_channel)
+					channels = [i["channel"] for i in raw_channels ]
+					
 					if id_channel not in channels:
-						cur.execute("INSERT INTO C1channels (Guild,Channel,Createtime,Timegap) VALUES (?,?,?,?)",(ctx.guild.id,id_channel,"",0))
-						base.commit()
+						up = {"_id":len(channels),
+							  "guild":ctx.guild.id,
+							  "channel":id_channel,
+							  "createtime":"",
+							  "timegap":0}
+						c1_cur.insert_one(up)
 						await ctx.send(f"C1 has been activated in {channel.mention}")
 					else:
 						await ctx.send(f"C1 is already running in {channel.mention}")
@@ -159,16 +168,22 @@ __**:warning:Disclaimer:warning:**__\n\
 
 			#This makes the bot acts as if no channel was specified
 			elif channel == None:
-				id_channel = ctx.channel.id
-				cur.execute("SELECT*FROM C1channels")
-				raw_channels = cur.fetchall()
-				channels = []
-				for s in raw_channels:
-					channels.append(s[1])
+
+				id_channel = channel.id
+				raw_channels = c1_cur.find("channel":id_channel)
+				channels = [i["channel"] for i in raw_channels ]
+				
 				if id_channel not in channels:
-					cur.execute("INSERT INTO C1channels (Guild,Channel,Createtime,Timegap) VALUES (?,?,?,?)",(ctx.guild.id,id_channel,"",0))
-					base.commit()
+					up = {"_id":len(channels),
+						  "guild":ctx.guild.id,
+						  "channel":id_channel,
+						  "createtime":"",
+						  "timegap":0}
+
+					c1_cur.insert_one(up)
+					
 					await ctx.send(f"C1 has been activated in {ctx.channel.mention}")
+
 				else:
 					await ctx.send(f"C1 is already running in {ctx.channel.mention}")
 
@@ -181,116 +196,99 @@ __**:warning:Disclaimer:warning:**__\n\
 	async def Announcement_ch(self,ctx, channel:discord.TextChannel = None):
 	    au = ctx.author.id
 	    ch = ctx.channel.id
-	    cur.execute("SELECT*FROM ANC")
-	    all = cur.fetchall()
-	    guilds = []
 
-	    try:
-	        for i in all:
-	            guilds.append(i[0])
-	    except:
-	        pass
+	    raw = anc_cur.find({"guild":au})
+	    guilds = [x["guild"] for x in raw]
 	    
-	    channel_id = 0
-	    if ctx.guild.id in guilds:
-	        for i in all:
-	            if i[0] == ctx.guild.id:
-	                channel_id = i[1]
+	    channel_id = [x["channel"] for x in raw]
 
-	        channel_set = self.client.get_channel(channel_id)
-	        await ctx.send(f"{channel_set.mention} is already set as the **Announcement Command Channel**. Would you like to change it? (Type: Y/N)")
-	        text = await self.client.wait_for("message")
-	        while text.author.id != au:
-	            text = await self.client.wait_for("message")
-	            pass
+        channel_set = self.client.get_channel(channel_id[0])
+        await ctx.send(f"{channel_set.mention} is already set as the **Announcement Command Channel**. Would you like to change it? (Type: Y/N)")
+        text = await self.client.wait_for("message")
+        while text.author.id != au:
+            text = await self.client.wait_for("message")
+            pass
 
-	        if text.author.id == au and text.channel.id ==ch:
-	            answer = text.content.lower()
-	            y_matches = ["yes","y"]
-	            n_matches = ["no","n"]
-	            m = ["yes","y","no","n"]
+        if text.author.id == au and text.channel.id ==ch:
+            answer = text.content.lower()
+            y_matches = ["yes","y"]
+            n_matches = ["no","n"]
+            m = ["yes","y","no","n"]
 
-	            if answer in y_matches:
-	                await ctx.send("Please mention the channel below_")
-	                mention = await self.client.wait_for("message")
-	                while not (text.author.id == au and text.channel.id == ch):
-	                    mention = await self.client.wait_for("message")
-	                    pass
+            if answer in y_matches:
+                await ctx.send("Please mention the channel below_")
+                mention = await self.client.wait_for("message")
+                while not (text.author.id == au and text.channel.id == ch):
+                    mention = await self.client.wait_for("message")
+                    pass
 
-	                ch1 = mention.content.split("#")
-	                print(ch1)
-	                ch2 = ch1[1].split(">")
-	                ch3 = int(ch2[0])
-	                print(ch3)
-	                lower = mention.content.lower()
+                ch1 = mention.content.split("#")
+                print(ch1)
+                ch2 = ch1[1].split(">")
+                ch3 = int(ch2[0])
+                lower = mention.content.lower()
 
-	                if lower != "eliminate":
-	                    try:
-	                        channel1 = self.client.get_channel(ch3)
-	                        cur.execute("UPDATE ANC SET Channel = ? WHERE Guild = ?",(channel1.id,ctx.guild.id))
-	                        base.commit()
-	                        await ctx.send(f"**Announcement Command Channel** has been updated to {channel1.mention}.")
-	                    except:
-	                        await ctx.send("Argument ERROR!")
+                if lower != "eliminate":
+                    try:
+                        channel1 = self.client.get_channel(ch3)
+                        anc_cur.update_one({"guild":ctx.guild.id},{"$set":{"channel":ch3}})
+                        await ctx.send(f"**Announcement Command Channel** has been updated to {channel1.mention}.")
+                    except:
+                        await ctx.send("Argument ERROR!")
 
-	            if answer in n_matches:
-	            	await ctx.send("Granted!")
+            if answer in n_matches:
+            	await ctx.send("Granted!")
 
-	            if answer not in m:
-	            	await ctx.send("Input ERROR")
+            if answer not in m:
+            	await ctx.send("Input ERROR")
 
 	    if ctx.guild.id not in guilds:
 	    	if channel == None:
-	    		cur.execute("INSERT INTO ANC (Guild,Channel) VALUES(?,?)",(ctx.guild.id,ctx.channel.id))
-	    		base.commit()
+	    		raw = anc_cur.find({})
+	    		leng = [x for x in raw]
+	    		anc_cur.insert_one({"_id": len(leng),
+	    							"guild":ctx.guild.id},
+	    							"channel": ctx.channel.id)
 	    		await ctx.send(f"{ctx.channel.mention} has been set as an **Announcement Command Channel**")
 
 	    	if channel != None:
-	        	cur.execute("INSERT INTO ANC (Guild,Channel) VALUES(?,?)",(ctx.guild.id,channel.id))
-	        	base.commit()
+	        	raw = anc_cur.find({})
+	    		leng = [x for x in raw]
+	    		anc_cur.insert_one({"_id": len(leng),
+	    							"guild":ctx.guild.id},
+	    							"channel": channel.id)
 	        	await ctx.send(f"{channel.mention} has been set as an **Announcement Command Channel**")
 
 	#this is the command using which you are going to set the announcement channel
-	@activate.command(aliases = ["announce"])
+	@activate.command(aliases = ["announce","announcement_channel"])
 	async def announcement(self,ctx,channel:discord.TextChannel = None):
-		cur.execute("SELECT*FROM ANC")
-		all = cur.fetchall()
-		guilds = []
-		channels = []
-		try:
-			for i in all:
-				guilds.append(i[0])
-			for i in all:
-				channels.append(i[1])
-		except:
-			pass
+
+		raw = anch_cur.find({"guild":ctx.guild.id})
+
+		guilds = [x["guild"] for x in raw]
+		channels = [x["channel"] for x in raw]
 
 		if ctx.author.guild_permissions.administrator or ctx.author.guild_permissions.manage_channels:
 
 			if channel.id in channels:
-				await ctx.send(f"{channel.mention} is set as an **Announcement Command Channel**.")
+				await ctx.send(f"{channel.mention} is already set as an **Announcement Command Channel**.")
 
 			else:
 				if ctx.channel.id in channels:
 					channel_id = channel.id
 					guild_id = ctx.guild.id
+
 					ctx_channel = self.client.get_channel(ctx.channel.id)
 					text = await ctx_channel.history(limit = 2).flatten()
-					cur.execute("SELECT*FROM Announce_ch WHERE Guild Like ?",(ctx.guild.id,))
-					all = cur.fetchall()
-					a_channels = []
-
-					try:
-						for i in all:
-							a_channels.append(i[1])
-					except:
-						pass
 					
-					if len(a_channels) <10:
+					if len(channels) <10:
 						if channel_id not in a_channels:
-							cur.execute("INSERT INTO Announce_ch (Guild, Channel) VALUES(?,?)",(guild_id,channel_id))
-							base.commit()
-							await text[0].add_reaction("✅")
+							raw_count = anch_cur.find({"guild":ctx.guild.id})
+							up = {"_id":len(raw_count),
+								  "guild":ctx.guild.id,
+								  "channel":channel_id}
+							
+							await text[0].add_reaction("✅")	
 							await ctx.send("Channel Added!")
 
 					if channel_id in a_channels:
@@ -298,13 +296,11 @@ __**:warning:Disclaimer:warning:**__\n\
 						await ctx.send(f"{channel.mention} is already set as an announcement channel.")
 
 					if len(a_channels) == 10:
-						await ctx.send("You can only have 10 announcement channels.")
+						await ctx.send("You can have up to 10 announcement channels.")
 				
 				elif ctx.guild.id in guilds:
-					m_ch = []
-					for i in all:
-						if i[0] == ctx.guild.id:
-							m_ch.append(i[1])
+					raw = anc_cur.find({"guild":ctx.guild.id})
+					m_ch = [i["channel"] for i in raw]
 					
 					if len(m_ch) > 1:
 						ch = client.get_channel(m_ch[0])
@@ -318,51 +314,61 @@ __**:warning:Disclaimer:warning:**__\n\
 				elif ctx.guild.id not in guilds:
 					await ctx.send("No channel of this server is set as **Announcement Command Channel**.\nPlease set one using this command `.o set announce_ch 'channel mention'`")
 
+		else:
+			await ctx.send(f"**Access Denied!** \nThis command requires `manage_channel` permission in order to execute.")
+
 
 	@activate.command(aliases = ["fibo"])
 	async def fibonacci(self,ctx, channel:discord.TextChannel = None):
 		cur.execute("SELECT*FROM FC")
-		all = cur.fetchall()
-		guilds = []
-		channels = []
-		try:
-			for i in all:
-				guilds.append(i[0])
-			for i in all:
-				channels.append(i[1])
-		except:
-			pass
+		raw = fc_cur.find_one({})
+		guilds = [x["guild"] for x in raw]
+		channels = [x["channel"] for x in raw]
 
 		if ctx.author.guild_permissions.manage_channels:
 			if channel == None:
 				id_channel = ctx.channel.id
 				if ctx.guild.id not in guilds:
-					cur.execute("INSERT INTO FC (Guild, Channel, Past_Number, Last_Number, Author) VALUES (?,?,?,?,?)",(ctx.guild.id,id_channel,0,0,0))
-					base.commit()
+					up = {"_id":len(guilds),
+						  "guild":ctx.guild.id,
+						  "channel":id_channel,
+						  "past":0,
+						  "last":0,
+						  "author":0}
+					fc_cur.insert_one(up)
 					await ctx.send(f"Fibonacci Counting channel has been updated to {ctx.channel.mention}")
 				
 				if ctx.guild.id in guilds and id_channel in channels:
 					await ctx.send("This channel is already set as Fibonacci Counting channel.")
 				
 				if ctx.guild.id in guilds and id_channel not in channels:
-					cur.execute("UPDATE FC SET Channel = ? WHERE Guild = ?",(id_channel,ctx.guild.id))
-					base.commit()
+					up = {"_id":len(guilds),
+						  "guild":ctx.guild.id,
+						  "channel":id_channel,
+						  "past":0,
+						  "last":0,
+						  "author":0}
+					fc_cur.insert_one(up)
 					await ctx.send(f"Fibonacci Counting channel has been update to {ctx.channel.mention}")
 
 			else:
 				try:
 					id_channel = channel.id
 					if ctx.guild.id not in guilds:
-						cur.execute("INSERT INTO FC (Guild, Channel, Past_Number, Last_Number, Author) VALUES (?,?,?,?,?)",(ctx.guild.id,id_channel,0,0,0))
-						base.commit()
+						up = {"_id":len(guilds),
+						  "guild":ctx.guild.id,
+						  "channel":id_channel,
+						  "past":0,
+						  "last":0,
+						  "author":0}
+						fc_cur.insert_one(up)
 						await ctx.send(f"Fibonacci Counting channel has been updated to {ctx.channel.mention}")
 					
 					if ctx.guild.id in guilds and id_channel in channels:
 						await ctx.send("This channel is already set as Fibonacci Counting channel.")
 					
 					if ctx.guild.id in guilds and id_channel not in channels:
-						cur.execute("UPDATE FC SET Channel = ? WHERE Guild = ?",(id_channel,ctx.guild.id))
-						base.commit()
+						fc_cur.update_one("guild":ctx.guild.id, {"$set":{"channel":id_channel}})
 						await ctx.send(f"Fibonacci Counting channel has been update to {channel.mention}")
 				except:
 					await ctx.send(f"Argument ERROR!")
@@ -373,46 +379,41 @@ __**:warning:Disclaimer:warning:**__\n\
 
 	@activate.command(aliases = ["tictac","tictactoe"])
 	async def tic(self,ctx, channel: discord.TextChannel = None):
-		cur.execute("SELECT*FROM TC")
-		all = cur.fetchall()
-		guilds = []
-		channels = []
-		try:
-			for i in all:
-				guilds.append(i[0])
-			for i in all:
-				channels.append(i[1])
-		except:
-			pass
+		raw = tc_cur.find({})
+		guilds = [x[guild] for x in raw]
+		channels = [x[channel] for x in raw]
 
 		if ctx.author.guild_permissions.manage_channels:
 			if channel == None:
 					if ctx.guild.id not in guilds:
-						cur.execute("INSERT INTO TC (Guild, Channel) VALUES (?,?)",(ctx.guild.id,ctx.channel.id))
-						base.commit()
+						up = [{"_id":len(guilds),
+							  "guild":ctx.guild.id,
+							  "channel":ctx.channel.id}]
+						tc_cur.insert_one(up)
 						await ctx.send(f"**TicTacToe** channel has been updated to {ctx.channel.mention}")
 
 					if ctx.guild.id in guilds and ctx.channel.id in channels:
 						await ctx.send("This channel is already set as **TicTacToe** channel.")
 			
 					if ctx.guild.id in guilds and ctx.channel.id not in channels:
-						cur.execute("UPDATE TC SET Channel = ? WHERE Guild = ?",(ctx.channel.id,ctx.guild.id))
-						base.commit()
+						tc_cur.update_one("guild":ctx.guild.id, {"$set":{"channel":ctx.channel.id}})					
 						await ctx.send(f" TicTacToe channel has been updated to {ctx.channel.mention}")
 					
 			elif channel != None:
 				try:
 					if ctx.guild.id not in guilds:
-						cur.execute("INSERT INTO TC (Guild, Channel) VALUES (?,?)",(ctx.guild.id,channel.id))
-						base.commit()
+						up = [{"_id":len(guilds),
+							  "guild":ctx.guild.id,
+							  "channel":channel.id}]
+						tc_cur.insert_one(up)
+
 						await ctx.send(f"**TicTacToe** channel has been updated to {channel.mention}")
 					
 					if ctx.guild.id in guilds and channel.id in channels:
 						await ctx.send("This channel is already set as **TicTacToe** channel.")
 					
 					if ctx.guild.id in guilds and ctx.channel.id not in channels:
-						cur.execute("UPDATE TC SET Channel = ? WHERE Guild = ?",(channel.id,ctx.guild.id))
-						base.commit()
+						tc_cur.update_one("guild":ctx.guild.id, {"$set":{"channel":channel.id}})
 						await ctx.send(f" TicTacToe channel has been updated to {channel.mention}")
 				
 				except:
@@ -423,32 +424,25 @@ __**:warning:Disclaimer:warning:**__\n\
 
 	@activate.command(aliases = ["battleship"])
 	async def bs(self,ctx, channel: discord.TextChannel = None):
-		cur.execute("SELECT*FROM BC")
-		all = cur.fetchall()
-		guilds = []
-		channels = []
-		try:
-			for i in all:
-				guilds.append(i[0])
-			for i in all:
-				channels.append(i[1])
-		except:
-			pass
+		raw = bc_cur.find({})
+		guilds = [x[guild] for x in raw]
+		channels = [x[channel] for x in raw]
 
 		if ctx.author.guild_permissions.manage_channels:
 			if channel != None:
 				try:
 					if ctx.guild.id not in guilds:
-						cur.execute("INSERT INTO BC (Guild, Channel) VALUES (?,?)",(ctx.guild.id,channel.id))
-						base.commit()
+						up = {"_id":len(guilds),
+							  "guild":ctx.guild.id,
+							  "channel":channel.id}
+						bc_cur.insert_one(up)
 						await ctx.send(f"**Battleship** channel has been updated to {channel.mention}")
 
 					if ctx.guild.id in guilds and channel.id in channels:
 						await ctx.send("This channel is already set as **Battleship** channel.")
 					
 					if ctx.guild.id in guilds and channel.id not in channels:
-						cur.execute("UPDATE BC SET Channel = ? WHERE Guild = ?",(channel.id,ctx.guild.id))
-						base.commit()
+						bc_cur.update_one("guild":ctx.guild.id, {"$set":{"channel":channel.id}})
 						await ctx.send(f" **Battleship** channel has been updated to {channel.mention}")
 
 				except:
@@ -457,16 +451,17 @@ __**:warning:Disclaimer:warning:**__\n\
 
 			if channel == None:
 				if ctx.guild.id not in guilds:
-					cur.execute("INSERT INTO BC (Guild, Channel) VALUES (?,?)",(ctx.guild.id,ctx.channel.id))
-					base.commit()
+					up = {"_id":len(raw),
+							  "guild":ctx.guild.id,
+							  "channel":ctx.channel.id}
+						bc_cur.insert_one(up)
 					await ctx.send(f"**Battleship** channel has been updated to {ctx.channel.mention}")
 
 				if ctx.guild.id in guilds and ctx.channel.id in channels:
 					await ctx.send("This channel is already set as **Battleship** channel.")
 
 				if ctx.guild.id in guilds and ctx.channel.id not in channels:
-					cur.execute("UPDATE BC SET Channel = ? WHERE Guild = ?",(ctx.channel.id,ctx.guild.id))
-					base.commit()
+					bc_cur.update_one("guild":ctx.guild.id, {"$set":{"channel":ctx.channel.id}})
 					await ctx.send(f" **Battleship** channel has been updated to {ctx.channel.mention}")
 
 		else:
@@ -474,41 +469,46 @@ __**:warning:Disclaimer:warning:**__\n\
 
 	@activate.command(aliases = ["wiki"])
 	async def Wikipedia(self,ctx,channel:discord.TextChannel = None):
-		cur.execute("SELECT*FROM WC")
-		all = cur.fetchall()
-		guilds = []
-		channels = []
-		for i in all:
-			guilds.append(i[0])
-			channels.append(i[1])
+		raw = wc_cur.find({})
+		guilds = [x["guild"] for x in raw]
+		channels = [x["channel"] for x in raw]
+
+		if channel == None:
+			try:
+				if ctx.guild.id not in guilds:
+						up = {"_id":len(guilds),
+							  "guild":ctx.guild.id,
+							  "channel":ctx.channel.id}
+						wc_cur.insert_one(up)
+						await ctx.send(f"**Wikipedia** channel has been updated to {ctx.channel.mention}.")
+
+				if ctx.guild.id in guilds and ctx.channel.id in channels:
+					await ctx.send("This channel is already set as **Wikipedia** channel.")
+
+				if ctx.guild.id in guilds and ctx.channel.id not in channels:
+						wc_cur.update_one("guild":ctx.guild.id, {"$set":{"channel":ctx.channel.id}})
+						await ctx.send(f"**Wikipedia** channel has been updated to {ctx.channel.mention}.")
+			except:
+				ctx.send("Argument ERROR!")
 
 		if channel != None:
 			try:
 				if ctx.guild.id not in guilds:
-					if channel.id not in channels:
-						cur.execute("INSERT INTO WC (Guild, Channel) VALUES (?,?)",(ctx.guild.id,channel.id))
-						base.commit()
+						up = {"_id":len(guilds),
+							  "guild":ctx.guild.id,
+							  "channel":channel.id}
+						wc_cur.insert_one(up)
 						await ctx.send(f"**Wikipedia** channel has been updated to {channel.mention}.")
 
-				if ctx.guild.id in guilds:
-					if channel.id not in channels:
-						cur.execute("UPDATE WC SET Channel = ? WHERE Guild = ?",(channel.id,guild.id))
-						base.commit()
+				if ctx.guild.id in guilds and channel.id in channels:
+					await ctx.send("This channel is already set as **Wikipedia** channel.")
+
+				if ctx.guild.id in guilds and channel.id not in channels:
+						wc_cur.update_one("guild":ctx.guild.id, {"$set":{"channel":channel.id}})
 						await ctx.send(f"**Wikipedia** channel has been updated to {channel.mention}.")
+						
 			except:
 				ctx.send("Argument ERROR!")
-		if channel == None:
-			if ctx.guild.id not in guilds:
-				if ctx.channel.id not in channels:
-					cur.execute("INSERT INTO WC (Guild, Channel) VALUES (?,?)",(ctx.guild.id,ctx.channel.id))
-					base.commit()
-					await ctx.send(f"**Wikipedia** channel has been updated to {ctx.channel.mention}.")
-
-			if ctx.guild.id in guilds:
-				if ctx.channel.id not in channels:
-					cur.execute("UPDATE WC SET Channel = ? WHERE Guild = ?",(ctx.channel.id,ctx.guild.id))
-					base.commit()
-					await ctx.send(f"**Wikipedia** channel has been updated to {ctx.channel.mention}.")
 
 def setup(client):
 	client.add_cog(A_1(client))

@@ -21,9 +21,6 @@ from io import BytesIO
 import numpy as np
 import re
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
-
 class H_1(commands.Cog):
 	def __init__(self, client):
 		self.client = client
