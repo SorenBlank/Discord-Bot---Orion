@@ -53,15 +53,28 @@ class AN_1(commands.Cog):
             y = [x["guild"] for x in raw]
             try:
                 raw = anc_cur.find({})
-                channels = [x["guild"] for x in raw]
-                guilds = [x["channel"] for x in raw]
+
+                guilds = []
+                channels = []
+                try:
+                    x = [i for i in raw]
+                    guilds = [x[i]["guild"] for i in range(len(x))]
+                    channels = [x[i]["channel"] for i in range(len(x))]
+                except:
+                    pass
 
                 if ctx.channel.id in channels:
                     au = ctx.author.id
                     ch = ctx.channel.id
                     raw = anch_cur.find({})
-                    channels = [x["guild"] for x in raw]
-                    guilds = [x["channel"] for x in raw]
+                    guilds = []
+                    channels = []
+                    try:
+                        x = [i for i in raw]
+                        guilds = [x[i]["guild"] for i in range(len(x))]
+                        channels = [x[i]["channel"] for i in range(len(x))]
+                    except:
+                        pass
 
                     if ctx.guild.id in guilds:
                         if channel.id in channels:
@@ -161,8 +174,12 @@ class AN_1(commands.Cog):
                         await ctx.send(f"{channel.mention} is not set as an announcement channel.")
 
                 raw = anc_cur.find({})
-                channels = [x["channels"] for x in raw]
-                guilds = [x["guilds"] for x in raw]
+                guilds = []
+                try:
+                    x = [i for i in raw]
+                    guilds = [x[i]["guild"] for i in range(len(x))]
+                except:
+                    pass
                 
                 if ctx.guild.id not in guilds:
                     await ctx.send("No channel of this server is set as **Announcement Command Channel**.\n Please set one using this command `.o set announce_ch (channel)`")

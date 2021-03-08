@@ -56,19 +56,25 @@ class S_1(commands.Cog):
     async def announcements(self,ctx,msg):
         if msg.lower() == 'channels' or msg.lower() == 'channel':
             raw = anch_cur.find({})
-            guilds = [x["guild"] for x in raw]
-            all = [x for x in raw]
+            guilds = []
+            all = []
+            try:
+                guilds = [x[i]["guild"] for i in range(len(x))]
+                all = [x for x in raw]
+            except:
+                pass
             
-            if ctx.guild.id in an_guilds:
+            if ctx.guild.id in guilds:
                 dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":"nine","10":":one::zero:"}
 
                 channels = ""
 
                 num = 1
 
-                for i in all:
+                for i in range(len(all)):
                     sym = dic[str(num)] if len(str(num)) > 1 else dic["0"]+dic[str(num)]
-                    channels = channels + f"{sym} <#{i["channel"]}>\n "
+                    channel =  all[i]["channel"]
+                    channels = channels + f"{sym} <#{channel}>\n "
                     num = num + 1
 
                 if len(all) != 0:
@@ -77,7 +83,7 @@ class S_1(commands.Cog):
                     embed.set_footer(icon_url=ctx.author.avatar_url, text= f"Requested by {ctx.author.name}")
                     await ctx.send(embed = embed)
                     
-            if ctx.guild.id not in an_guilds:
+            if ctx.guild.id not in guilds:
                 await ctx.send("This server has no announcement channel set for me.")
 
 

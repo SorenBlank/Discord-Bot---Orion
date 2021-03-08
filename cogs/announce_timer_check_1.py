@@ -20,6 +20,9 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
+import pymongo
+from pymongo import MongoClient
+
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 

@@ -30,8 +30,14 @@ class Tic(commands.Cog):
     @commands.command(aliases = ["tictactoe","tic"])
     async def tictac(self, ctx, member:discord.Member=None):
         raw = tc_cur.find({})
-        guilds = [x["guild"] for x in raw]
-        channels = [x["channel"] for x in raw]
+        guilds = []
+        channels = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+            channels = [x[i]["channel"] for i in range(len(x))]
+        except:
+            pass
         
 
         if ctx.guild.id in guilds:

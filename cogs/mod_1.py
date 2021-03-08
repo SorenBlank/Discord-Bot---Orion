@@ -22,7 +22,12 @@ class M1(commands.Cog):
     @commands.command()
     async def purge(self, ctx, number = 2, channel:discord.TextChannel=None):
         raw = m1_cur.find({})
-        guilds = [x["guild"] for x in raw]
+        guilds = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
 
         if ctx.author.guild_permissions.administrator:
             if ctx.guild.id in guilds:
@@ -39,7 +44,13 @@ class M1(commands.Cog):
     @commands.command()
     async def kick(self, ctx, member: discord.Member, reason = None):
         raw = m1_cur.find({})
-        guilds = [x["guild"] for x in raw]
+        guilds = []
+        channels = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
         
 
         if ctx.author.guild_permissions.kick_members:
@@ -56,7 +67,12 @@ class M1(commands.Cog):
     @commands.command()
     async def ban(self, ctx, member: discord.Member, reason = None):
         raw = m1_cur.find({})
-        guilds = [x["guild"] for x in raw]
+        guilds = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
         
         if ctx.author.guild_permissions.ban_members:
             if ctx.guild.id in guilds:
@@ -74,7 +90,12 @@ class M1(commands.Cog):
     @commands.command()
     async def unban(self, ctx, *, member):
         raw = m1_cur.find({})
-        guilds = [x["guild"] for x in raw]
+        guilds = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
         
         banned_entries = await ctx.guild.bans()
         member_name, member_tag = member.split("#")

@@ -33,8 +33,14 @@ class Battleship(commands.Cog):
     @commands.command(aliases = ["bs"])
     async def battleship(self,ctx,member:discord.Member=None):
         raw = bc_cur.find({})
-        guild = [x["guild"] for x in raw]
-        channel = [x["channel"] for x in raw]
+        guilds = []
+        channels = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+            channels = [x[i]["channel"] for i in range(len(x))]
+        except:
+            pass
 
         if ctx.guild.id in guilds:
             if ctx.channel.id in channels:
