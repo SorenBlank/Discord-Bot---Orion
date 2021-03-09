@@ -5,7 +5,6 @@ from discord.ext import commands, tasks
 import random
 import asyncio
 import math
-import sqlite3
 from PIL import Image
 from io import BytesIO
 import numpy as np

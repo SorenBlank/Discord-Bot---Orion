@@ -1,7 +1,6 @@
 from discord.ext import commands
 import datetime
 import random
-import sqlite3
 import asyncio
 import random
 import pymongo

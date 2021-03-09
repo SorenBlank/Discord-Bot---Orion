@@ -10,7 +10,6 @@ import json
 import datetime
 import wikipedia as wiki
 import math
-import sqlite3
 from PIL import Image
 from io import BytesIO
 import numpy as np

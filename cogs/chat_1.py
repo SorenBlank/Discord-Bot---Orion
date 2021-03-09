@@ -3,7 +3,6 @@ import datetime
 import random
 import sqlite3
 import asyncio
-import psycopg2
 import os
 import pymongo
 from pymongo import MongoClient
