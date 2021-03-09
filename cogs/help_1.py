@@ -19,7 +19,6 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
-import psycopg2
 
 class H_1(commands.Cog):
 	def __init__(self, client):
