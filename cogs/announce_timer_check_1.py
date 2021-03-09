@@ -20,10 +20,13 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
-import psycopg2
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
+
+ta_cur = base["ta"]
 
 class A_T_C_1(commands.Cog):
     def __init__(self, client):
@@ -34,28 +37,28 @@ class A_T_C_1(commands.Cog):
     	print("Timer Announce is Loaded ----")
     	while True:
     		await asyncio.sleep(1)
+    		raw = ta_cur.find({})
+    		lists = []
+
     		try:
-	    		cur.execute("SELECT*FROM TimerAnnounce")
-	    		channels = cur.fetchall()
+	    		lists = [x for x in raw]
 	    	except:
 	    		pass
 
-	    	for i in channels:
-	    		if i[2] <= 2:
+	    	for i in range(len(lists)):
+
+	    		if int(lists[i]["time"]) <= 2:
 
 	    			try:
-	    				ch = self.client.get_channel(i[1])
-	    				await ch.send(i[3])
-	    				cur.execute("DELETE FROM TimerAnnounce WHERE Announcement = ?",(i[3],))
-	    				base.commit()
+	    				ch = self.client.get_channel(lists[i]["channel"])
+	    				await ch.send(lists[i]["announcement"])
+	    				ta_cur.delete_one({"_id":lists[i]["_id"]})
 
 	    			except:
 	    				pass
 
-	    		elif i[2] > 2:
-	    			time_left = i[2] - 1
-	    			cur.execute("UPDATE TimerAnnounce SET TimeLeft = ? WHERE Channel = ?",(time_left,i[1]))
-	    			base.commit()
+	    		elif int(lists[i]["time"]) > 2:
+	    			ta_cur.update_one({"_id":lists[i]["_id"]},{"$inc":{"time":-1}})
 
 def setup(client):
     client.add_cog(A_T_C_1(client))

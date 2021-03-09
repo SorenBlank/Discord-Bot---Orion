@@ -21,22 +21,21 @@ from io import BytesIO
 import numpy as np
 import re
 from discord import ActivityType as AT
-import psycopg2
+import pymongo
+from pymongo import MongoClient
 
-#database loads
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
 
-cur.execute("CREATE TABLE IF NOT EXISTS M1guilds (Guild INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS C1channels (Guild INTEGER,Channel INTEGER, Createtime TEXT, Timegap INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS Announce_ch (Guild INTEGER, Channel INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS ANC (Guild INTEGER, Channel INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS FC (Guild INTEGER, Channel INTEGER, Past_Number INTEGER, Last_Number INTEGER, Author INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS TC (Guild INTEGER, Channel INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS BC (Guild INTEGER, Channel INTEGER)")
-cur.execute("CREATE TABLE IF NOT EXISTS TimerAnnounce (Guild INTEGER,Channel INTEGER, TimeLeft INTEGER, Announcement TEXT)")
-cur.execute("CREATE TABLE IF NOT EXISTS WC (Guild INTEGER, Channel INTEGER)")
-
+m1_cur = base["m1guilds"] #Formation = [_id, Guild]
+c1_cur = base["c1channels"] #Formation = [_id, Guild, Channel, createtime, timegap]
+anch_cur = base["anch"] #Formation = [_id, Guild, Channel]
+anc_cur = base["anc"] #Formation = [_id, Guild, Channel]
+fc_cur = base["fc"] #Formation = [_id, Guild, Channel, Past_Number, Last_Number, Author]
+tc_cur = base["tc"] #Formation = [_id, Guild, Channel]
+bc_cur = base["bc"] #Formation = [_id, Guild, Channel]
+ta_cur = base["ta"] #Formation = [_id, Guild, Channel, time, announcement]
+wc_cur = base["wc"] #Formation = [_id, Guild, Channel]
 
 #set up of command prefix
 client = commands.Bot(command_prefix = [".o ",".O "], case_insensitive=True, intents = Intents.all())
@@ -52,8 +51,7 @@ async def on_ready():
                                                              name = '.o help')
                                    )
     print("Bot is ready!")
-    async for guild in client.fetch_guilds(limit=150):
-        print(guild.name)
+
 
 #connecting cogs
 client.load_extension('cogs.help_1')
@@ -71,103 +69,37 @@ client.load_extension('cogs.fibo_1')
 client.load_extension('cogs.show_1')
 client.load_extension('cogs.utility_1')
 
-#Texts you in the terminal if somebody enters
-@client.event
-async def on_member_join(member):
-    print(f"{member} has joined to our server")
+
 
 
 @client.event
 async def on_guild_remove(guild):
     #m1_removal
-    cur.execute("SELECT*FROM M1guilds")
-    m1_guilds = cur.fetchall()
-    m_g = []
-    for i in m1_guilds:
-        m_g.append(i[0])
-
-    if guild.id in m_g:
-        cur.execute("DELETE FROM M1guilds WHERE Guild = ?",(guild.id,))
-        base.commit()
+    m1_cur.delete_many({"guild":guild.id})
 
     #c1removal
-    cur.execute("SELECT*FROM C1channels")
-    c1_guilds = cur.fetchall()
-    c1_g = []
-    for i in c1_guilds:
-        c1_g.append(i[0])
-    if guild.id in c1_g:
-        cur.execute("DELETE FROM C1channels WHERE Guild = ?",(guild.id,))
-        base.commit()
+    c1_cur.delete_many({"guild":guild.id})
     
     #Announce_chremoval
-    cur.execute("SELECT*FROM Announce_ch")
-    an_guilds = cur.fetchall()
-    an_g = []
-    for i in an_guilds:
-        an_g.append(i[0])
-    if guild.id in an_g:
-        cur.execute("DELETE FROM Announce_ch WHERE Guild = ?",(guild.id,))
-        base.commit()
+    anch_cur.delete_many({"guild":guild.id})
 
     #ANCremoval
-    cur.execute("SELECT*FROM ANC")
-    anc_guids = cur.fetchall()
-    anc_g = []
-    for i in anc_guids:
-        anc_g.append(i[0])
-    if guild.id in anc_g:
-        cur.execute("DELETE FROM ANC WHERE Guild = ?",(guild.id,))
-        base.commit()
+    anc_cur.delete_many({"guild":guild.id})
 
     #FC Removal
-    cur.execute("SELECT*FROM FC")
-    fc_guilds = cur.fetchall()
-    fc_g = []
-    for i in fc_guilds:
-        fc_g.append(i[0])
-    if guild.id in fc_g:
-        cur.execute("DELETE FROM FC WHERE Guild = ?",(guild.id,))
-        base.commit()
+    fc_cur.delete_many({"guild":guild.id})
 
     #TC Removal
-    cur.execute("SELECT*FROM TC")
-    tc_guilds = cur.fetchall()
-    tc_g = []
-    for i in tc_guilds:
-        tc_g.append(i[0])
-    if guild.id in tc_g:
-        cur.execute("DELETE FROM TC WHERE Guild = ?",(guild.id,))
-        base.commit()
+    tc_cur.delete_many({"guild":guild.id})
 
     #BC Removal
-    cur.execute("SELECT*FROM BC")
-    bc_guilds = cur.fetchall()
-    bc_g = []
-    for i in bc_guilds:
-        bc_g.append(i[0])
-    if guild.id in bc_g:
-        cur.execute("DELETE FROM BC WHERE Guild = ?",(guild.id,))
-        base.commit()
+    bc_cur.delete_many({"guild":guild.id})
 
     #Timer Announce Removal
-    cur.execute("SELECT*FROM TimerAnnounce")
-    ta_guilds = cur.fetchall()
-    ta_g = []
-    for i in ta_guilds:
-        ta_g.append(i[0])
-    if guild.id in ta_g:
-        cur.execute("DELETE FROM TimerAnnounce WHERE Guild = ?",(guild.id,))
-        base.commit()
+    ta_cur.delete_many({"guild":guild.id})
 
     #WC
-    cur.execute("SELECT*FROM WC")
-    wc_guilds = cur.fetchall()
-    wc_g = []
-    for i in wc_guilds:
-        wc_g.append(i[0])
-    if guild.id in wc_g:
-        cur.execute("DELETE FROM WC WHERE Guild = ?",(guild.id,))
+    wc_cur.delete_many({"guild":guild.id})
 
 
 #sends you the latency
@@ -275,6 +207,9 @@ async def on_message(message):
             au_o = client.get_user(au)
             await au_o.send(" ".join(exact_txt_spl[2:]))
 
+
+
+
 #######################################################################################################
 #######################################################################################################
 
@@ -282,5 +217,7 @@ async def on_message(message):
     #content = f.read()
 
 #Token
-client.run(os.environ['TOKEN'])
+#client.run(os.environ['TOKEN'])
 #client.run("TOKEN")
+client.run(os.environ['TOKEN'])
+#client.run("ODE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")

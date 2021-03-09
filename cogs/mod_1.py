@@ -1,11 +1,15 @@
 import discord
 from discord.ext import commands
 import sqlite3
-import os
-import psycopg2
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+import pymongo
+from pymongo import MongoClient
+
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
+
+m1_cur = base["m1guilds"]
+
 
 class M1(commands.Cog):
 
@@ -16,32 +20,19 @@ class M1(commands.Cog):
     async def on_ready(self):
         print("M1 is Loaded ----")
 
-    @commands.command()
-    async def purge(self, ctx, number = 2, channel:discord.TextChannel=None):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
-        guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
-        if ctx.author.guild_permissions.administrator:
-            if ctx.guild.id in guilds:
-                if channel == None:
-                    await ctx.channel.purge(limit = int(number)+1)
-
-                if channel != None:
-                    await channel.purge(limit= int(number) +1)
-        else:
-            await ctx.send("Access denied")
-
 
     #kick_command
     @commands.command()
     async def kick(self, ctx, member: discord.Member, reason = None):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
+        raw = m1_cur.find({})
         guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
+        channels = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
+        
 
         if ctx.author.guild_permissions.kick_members:
             if ctx.guild.id in guilds:
@@ -51,36 +42,44 @@ class M1(commands.Cog):
                 except:
                     await ctx.send(f"I dont have the power to kick {member.mention}")
         else:
-            await ctx.send("You are not a valid user.")
+            await ctx.send("**Access Denied!** This command requires `kick_members` permission in order to execute.")
     
     #ban_command
     @commands.command()
     async def ban(self, ctx, member: discord.Member, reason = None):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
+        raw = m1_cur.find({})
         guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
+        
         if ctx.author.guild_permissions.ban_members:
             if ctx.guild.id in guilds:
-                await member.ban(reason=reason)
-                if reason == None:
-                    await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}')
-                else:
-                    await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}. Reason: {reason}')
+                try:
+                    await member.ban(reason=reason)
+                    if reason == None:
+                        await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}')
+                    else:
+                        await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}. Reason: {reason}')
+                except:
+                    await ctx.send("❌ I don't have the permission.")
             else:
                 await ctx.send("M1 is deactivate")
         else:
-            await ctx.channel.send("You are not a valid user.")
+            await ctx.channel.send("**Access Denied!** This command requires `ban_members` permission in order to execute.")
     
     #unban_command
     @commands.command()
     async def unban(self, ctx, *, member):
-        cur.execute("SELECT*FROM M1guilds")
-        raw_guilds = cur.fetchall()
+        raw = m1_cur.find({})
         guilds = []
-        for i in raw_guilds:
-            guilds.append(i[0])
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
         
         banned_entries = await ctx.guild.bans()
         member_name, member_tag = member.split("#")
@@ -91,12 +90,12 @@ class M1(commands.Cog):
                     user = i.user
                     if (user.name, user.discriminator) == (member_name,member_tag):
                         await ctx.guild.unban(user)
-                        await ctx.send(f'User: {user.mention} is unbanned now.')
+                        await ctx.send(f'**User:** {user.mention} is unbanned now.')
                         return
             else:
                 ctx.send("M1 is deactivate.")
         else:
-            await ctx.send("You are not a valid user of this command.")
+            await ctx.send("**Access Denied!** This command requires `ban_members` permission in order to execute.")
 
     @commands.command()
     async def purge(self,ctx,number=None):
@@ -107,7 +106,7 @@ class M1(commands.Cog):
             if number == None:
                 await ctx.channel.purge(limit=2)
         else:
-            await ctx.send("**Access Denied!** \nThis command requires `manage_messages` permission in order to execute.")
+            await ctx.send("**Access Denied!** This command requires `manage_messages` permission in order to execute.")
 
     @commands.command()
     async def chnick(self,ctx,member:discord.Member, nick):
@@ -117,7 +116,7 @@ class M1(commands.Cog):
                 await member.edit(nick=nick)
                 await ctx.send(f'Nickname was changed for {member.mention} ')
             except:
-                await ctx.send(f"Access Denied!")
+                await ctx.send(f"**Access Denied!** This command requires `manage_nickname` permission in order to execute.")
 
 
 def setup(client):

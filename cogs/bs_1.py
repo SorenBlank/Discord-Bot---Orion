@@ -13,11 +13,13 @@ import os
 import numpy as np
 from threading import Thread
 from multiprocessing import Process
-import sqlite3
-import psycopg2
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
+
+bc_cur = base["bc"]
 
 class Battleship(commands.Cog):
     def __init__(self, client):
@@ -29,15 +31,13 @@ class Battleship(commands.Cog):
     
     @commands.command(aliases = ["bs"])
     async def battleship(self,ctx,member:discord.Member=None):
-        cur.execute("SELECT*FROM BC")
-        all = cur.fetchall()
+        raw = bc_cur.find({})
         guilds = []
         channels = []
         try:
-            for i in all:
-                guilds.append(i[0])
-            for i in all:
-                channels.append(i[1])
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+            channels = [x[i]["channel"] for i in range(len(x))]
         except:
             pass
 

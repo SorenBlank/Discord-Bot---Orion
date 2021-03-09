@@ -20,10 +20,21 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
-import psycopg2
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
+
+m1_cur = base["m1guilds"]
+c1_cur = base["c1channels"]
+anch_cur = base["anch"]
+anc_cur = base["anc"]
+fc_cur = base["fc"] #Formation = [Guild, Channel, Past_Number, Last_Number, Author]
+tc_cur = base["tc"]
+bc_cur = base["bc"] 
+ta_cur = base["ta"]
+wc_cur = base["wc"]
 
 class F_1(commands.Cog):
     def __init__(self, client):
@@ -41,17 +52,16 @@ class F_1(commands.Cog):
         exact_txt = ex_2
         #splitting the exact_txt
         exact_txt_splitted = exact_txt.split(" ")
-
-        cur.execute("SELECT*FROM FC")
-        all = cur.fetchall()
-        channels = []
-        
+        raw = 0
+        id = 0
         try:
-            for i in all:
-                channels.append(i[1])
+            raw = fc_cur.find_one({"guild":message.guild.id})
         except:
             pass
-        
+        try:
+            id = raw["channel"]
+        except:
+            pass
         r = 0
         
         try:
@@ -60,35 +70,26 @@ class F_1(commands.Cog):
             pass
         x = str(r)
         
-        if message.channel.id in channels:
+        #try:     
+        if message.channel.id == id:
             if r != 0 and x.isdigit():
                 digit = r
-                cur.execute("SELECT*FROM FC WHERE Guild LIKE ?",(message.guild.id,))
-                info = cur.fetchall()
-                past_digit = info[0][2]
-                last_digit = info[0][3]
-                last_author = info[0][4]
+                past_digit = raw["past"]
+                last_digit = raw["last"]
+                last_author = raw["author"]
                 equal = past_digit + last_digit
                 if past_digit == 0 and last_digit == 0:
                     if digit == 1:
-                        cur.execute("UPDATE FC SET Last_Number = ? WHERE Channel = ?",(digit,message.channel.id))
-                        cur.execute("UPDATE FC SET Author = ? WHERE Channel = ?",(message.author.id,message.channel.id))
-                        base.commit()
+                        fc_cur.update_one({"channel":message.channel.id},{"$set":{"last":digit,"author":message.author.id}})
                         await message.add_reaction("✅")
 
                 elif digit == equal and last_author != message.author.id:
-                    cur.execute("UPDATE FC SET Past_Number = ? WHERE Channel = ?",(last_digit,message.channel.id))
-                    cur.execute("UPDATE FC SET Last_Number = ? WHERE Channel = ?",(equal,message.channel.id))
-                    cur.execute("UPDATE FC SET Author = ? WHERE Channel = ?",(message.author.id,message.channel.id))
-                    base.commit()
+                    fc_cur.update_many({"channel":message.channel.id},{"$set":{"past":last_digit,"last":equal,"author":message.author.id}})
                     await message.add_reaction("✅")
 
                 elif last_author == message.author.id:
                     await message.add_reaction("❎")
-                    cur.execute("UPDATE FC SET Past_Number = ? WHERE Channel = ?",(0,message.channel.id))
-                    cur.execute("UPDATE FC SET Last_Number = ? WHERE Channel = ?",(0,message.channel.id))
-                    cur.execute("UPDATE FC SET Author = ? WHERE Channel = ?",(0,message.channel.id))
-                    base.commit()
+                    fc_cur.update_many({"channel":message.channel.id},{"$set":{"past":0,"last":0,"author":0}})
                     if message.author.id == 736818641907089520:
                         await message.channel.send(f"{message.author.mention} :pleading_face: Solly! You can not count 2 numbers in a row. :pleading_face: We will make it next time. ><")
 
@@ -97,17 +98,14 @@ class F_1(commands.Cog):
                         await message.channel.send(f"{message.author.mention} RUINED AT {equal}!! $#!%. You can not count 2 numbers in a row.")
 
                 elif digit != equal:
-                    cur.execute("UPDATE FC SET Past_Number = ? WHERE Channel = ?",(0,message.channel.id))
-                    cur.execute("UPDATE FC SET Last_Number = ? WHERE Channel = ?",(0,message.channel.id))
-                    cur.execute("UPDATE FC SET Author = ? WHERE Channel = ?",(0,message.channel.id))
-                    base.commit()
+                    fc_cur.update_many({"channel":message.channel.id},{"$set":{"past":0,"last":0,"author":0}})
                     await message.add_reaction("❎")
                     if message.author.id == 736818641907089520:
                         await message.channel.send(f"{message.author.mention} :pleading_face: It should be {equal}. :pleading_face: It's oki we will make it next time.")
                     else:
                         await message.channel.send(f"{message.author.mention} RUINED AT {equal}!! $#!%")
-
-
+        #except:
+            #pass
 
 def setup(client):
     client.add_cog(F_1(client))

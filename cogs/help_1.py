@@ -15,15 +15,11 @@ import json
 import datetime
 import wikipedia as wiki
 import math
-import sqlite3
 from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
 import psycopg2
-
-base = sqlite3.connect("all.db")
-cur = base.cursor()
 
 class H_1(commands.Cog):
 	def __init__(self, client):

@@ -12,11 +12,13 @@ import numpy as np
 import re
 import os
 import asyncio
-import psycopg2
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
 
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
+tc_cur = base["tc"]
 class Tic(commands.Cog):
 
     def __init__(self, client):
@@ -28,19 +30,16 @@ class Tic(commands.Cog):
 
     @commands.command(aliases = ["tictactoe","tic"])
     async def tictac(self, ctx, member:discord.Member=None):
-        cur.execute("SELECT*FROM TC")
-        all = cur.fetchall()
+        raw = tc_cur.find({})
         guilds = []
         channels = []
-        ch = 0
         try:
-            for i in all:
-                guilds.append(i[0])
-                channels.append(i[1])
-                if ctx.guild.id == i[0]:
-                    ch = i[1]
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+            channels = [x[i]["channel"] for i in range(len(x))]
         except:
             pass
+        
 
         if ctx.guild.id in guilds:
             if ctx.channel.id in channels:
@@ -178,7 +177,6 @@ class Tic(commands.Cog):
                                     template.save('qwerty.png')
                                     await ctx.send(file=discord.File("qwerty.png"))
                                     os.remove('qwerty.png')
-                                #print(AA)
 
                                 if np.count_nonzero(AA)>=5:
                                     n=num(move)
@@ -203,33 +201,6 @@ class Tic(commands.Cog):
                                             player1 = member.id
                                             player2 = ctx.author.id
                                         
-                                        cur.execute("SELECT*FROM Tic")
-                                        players_details = cur.fetchall()
-                                        players = []
-                                        for i in players_details:
-                                            players.append(i[0])
-                                        
-                                        if player1 in players:
-                                            cur.execute("SELECT*FROM Tic WHERE User = ?",(player1,))
-                                            temp1 = cur.fetchall()
-                                            latest_win = temp1[0][1] + 1
-                                            cur.execute("UPDATE Tic SET Wins = ? WHERE User = ?",(latest_win,player1))
-                                            base.commit()
-                                        
-                                        if player1 not in players:
-                                            cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player1,1,0,0))
-                                            base.commit()
-                                        
-                                        if player2 in players:
-                                            cur.execute("SELECT*FROM Tic WHERE User = ?",(player2,))
-                                            temp2 = cur.fetchall()
-                                            latest_lose = temp2[0][2] + 1
-                                            cur.execute("UPDATE Tic SET Loses = ? WHERE User = ?",(latest_lose,player2))
-                                            base.commit()
-
-                                        if player2 not in players:
-                                            cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player2,0,1,0))
-                                            base.commit()
                                         
                                         await ctx.send(f"Yay!! {move.mention} has won.")
                                         break
@@ -241,36 +212,6 @@ class Tic(commands.Cog):
                                 
                                 if np.count_nonzero(AA)==9:
                                     game_ongoing=False
-                                    
-                                    player1 = member.id
-                                    player2 = ctx.author.id
-                                    cur.execute("SELECT*FROM Tic")
-                                    players_details = cur.fetchall()
-                                    players = []
-                                    for i in players_details:
-                                        players.append(i[0])
-                                    
-                                    if player1 in players:
-                                            cur.execute("SELECT*FROM Tic WHERE User = ?",(player1,))
-                                            temp_draw1 = cur.fetchall()
-                                            latest_draw = temp_draw1[0][3] + 1
-                                            cur.execute("UPDATE Tic SET Wins = ? WHERE User = ?",(latest_draw,player1))
-                                            base.commit()
-                                    
-                                    if player1 not in players:
-                                            cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player1,0,0,1))
-                                            base.commit()
-                                    
-                                    if player2 in players:
-                                        cur.execute("SELECT*FROM Tic WHERE User = ?",(player2,))
-                                        temp_draw2 = cur.fetchall()
-                                        latest_draw = temp_draw2[0][3] + 1
-                                        cur.execute("UPDATE Tic SET Wins = ? WHERE User = ?",(latest_draw,player2))
-                                        base.commit()
-                                    
-                                    if player2 not in players:
-                                        cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player2,0,0,1))
-                                        base.commit()
 
                                     await ctx.send("The game ended up as a draw.")
                             
@@ -280,6 +221,8 @@ class Tic(commands.Cog):
                         return
             
             elif ctx.channel.id not in channels:
+                raw = tc_cur.find_one({"guild":ctx.guild.id})
+                ch = raw["channel"]
                 ch = self.client.get_channel(ch)
                 await ctx.send(f"Please use this {ch.mention} channel.")
 

@@ -20,10 +20,22 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
-import psycopg2
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
+
+m1_cur = base["m1guilds"]
+c1_cur = base["c1channels"]
+anch_cur = base["anch"]
+anc_cur = base["anc"]
+fc_cur = base["fc"]
+tc_cur = base["tc"]
+bc_cur = base["bc"]
+tic_cur = base["tic"]
+ta_cur = base["ta"]
+wc_cur = base["wc"]
 
 class AN_1(commands.Cog):
     def __init__(self, client):
@@ -34,31 +46,35 @@ class AN_1(commands.Cog):
         print("AN1 is Loaded ----")
 
     @commands.command()
-    async def announce(self,ctx, channel:discord.TextChannel = None, time = None):
+    async def announce(self,ctx, channel:discord.TextChannel, time = None):
+
         if channel != None:
+            raw = ta_cur.find({})
+            y = [x["guild"] for x in raw]
             try:
-                cur.execute("SELECT*FROM ANC")
-                all = cur.fetchall()
-                channels = []
+                raw = anc_cur.find({})
+
                 guilds = []
+                channels = []
                 try:
-                    for i in all:
-                        channels.append(i[1])
-                        guilds.append(i[0])
+                    x = [i for i in raw]
+                    guilds = [x[i]["guild"] for i in range(len(x))]
+                    channels = [x[i]["channel"] for i in range(len(x))]
                 except:
                     pass
 
                 if ctx.channel.id in channels:
                     au = ctx.author.id
                     ch = ctx.channel.id
-                    cur.execute("SELECT*FROM Announce_ch")
-                    all = cur.fetchall()
+                    raw = anch_cur.find({})
                     guilds = []
                     channels = []
-
-                    for i in all:
-                        guilds.append(i[0])
-                        channels.append(i[1])
+                    try:
+                        x = [i for i in raw]
+                        guilds = [x[i]["guild"] for i in range(len(x))]
+                        channels = [x[i]["channel"] for i in range(len(x))]
+                    except:
+                        pass
 
                     if ctx.guild.id in guilds:
                         if channel.id in channels:
@@ -91,8 +107,15 @@ class AN_1(commands.Cog):
                                             await channel.send(text.content)
 
                                     if time.isdigit():
-                                        cur.execute("INSERT INTO TimerAnnounce (Guild, Channel, TimeLeft, Announcement) VALUES (?,?,?,?)",(ctx.guild.id,channel.id,time,text.content))
-                                        base.commit()
+                                        raw = ta_cur.find({})
+                                        all = [x for x in raw]
+                                        guilds = [raw[i]["guild"] for i in range(len(all))]
+                                        up = {"_id":len(all),
+                                              "guild":ctx.guild.id,
+                                              "channel":channel.id,
+                                              "time":time,
+                                              "announcement":text.content}
+                                        ta_cur.insert_one(up)
                                         await ctx.send(f"Given input will be announced in {time} seconds.")
                                     if time.isdigit() == False:
                                         list_time = [i for i in time]
@@ -100,28 +123,39 @@ class AN_1(commands.Cog):
                                         actual_time = 0
                                         try:
                                             actual_time = int(joined_time)
-                                            print(actual_time)
                                             x = list_time[len(list_time)-1]
                                             if x.lower() == "s":
-                                                cur.execute("INSERT INTO TimerAnnounce (Guild, Channel, TimeLeft, Announcement) VALUES (?,?,?,?)",
-                                                    (ctx.guild.id,channel.id,actual_time,text.content))
-                                                base.commit()
+                                                up = {"_id":len(y),
+                                                      "guild":ctx.guild.id,
+                                                      "channel":channel.id,
+                                                      "time":actual_time,
+                                                      "announcement":text.content}
+                                                ta_cur.insert_one(up)
                                                 if actual_time == 1:
                                                     await ctx.send(f"Given input will be announced after {actual_time} second.")
                                                 else:
                                                     await ctx.send(f"Given input will be announced after {actual_time} seconds.")
                                             if x.lower() == "m":
                                                 m_time = actual_time*60
-                                                cur.execute("INSERT INTO TimerAnnounce (Guild, Channel, TimeLeft, Announcement) VALUES (?,?,?,?)",(ctx.guild.id,channel.id,m_time,text.content))
-                                                base.commit()
+                                                up = {"_id":len(y),
+                                                      "guild":ctx.guild.id,
+                                                      "channel":channel.id,
+                                                      "time":m_time,
+                                                      "announcement":text.content}
+                                                ta_cur.insert_one(up)
                                                 if actual_time == 1:
                                                     await ctx.send(f"Given input will be announced after {actual_time} minute.")
                                                 else:
                                                     await ctx.send(f"Given input will be announced after {actual_time} minute.")
                                             if x.lower() == "h":
                                                 h_time = actual_time*3600
-                                                cur.execute("INSERT INTO TimerAnnounce (Guild, Channel, TimeLeft, Announcement) VALUES (?,?,?,?)",(ctx.guild.id,channel.id,h_time,text.content))
-                                                base.commit()
+                                                
+                                                up = {"_id":len(y),
+                                                      "guild":ctx.guild.id,
+                                                      "channel":channel.id,
+                                                      "time":h_time,
+                                                      "announcement":text.content}
+                                                ta_cur.insert_one(up)
                                                 if actual_time == 1:
                                                     await ctx.send(f"Given input will be announced after {actual_time} hour.")
                                                 else:
@@ -139,15 +173,11 @@ class AN_1(commands.Cog):
                     if ctx.guild.id not in guilds:
                         await ctx.send(f"{channel.mention} is not set as an announcement channel.")
 
-                cur.execute("SELECT*FROM ANC")
-                all = cur.fetchall()
-                channels = []
+                raw = anc_cur.find({})
                 guilds = []
-                
                 try:
-                    for i in all:
-                        channels.append(i[1])
-                        guilds.append(i[0])
+                    x = [i for i in raw]
+                    guilds = [x[i]["guild"] for i in range(len(x))]
                 except:
                     pass
                 

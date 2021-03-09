@@ -5,9 +5,13 @@ import sqlite3
 import asyncio
 import psycopg2
 import os
+import pymongo
+from pymongo import MongoClient
 
-base = sqlite3.connect("all.db")
-cur = base.cursor()
+cluster = MongoClient(os.environ['DB'])
+base = cluster["OrionDB"]
+
+c1_cur = base["c1channels"]
 
 class C1_1(commands.Cog):
     def __init__(self, client):
@@ -17,11 +21,11 @@ class C1_1(commands.Cog):
         print("C1_1 is Loaded ----")
         while True:
             await asyncio.sleep(4)
-            cur.execute("SELECT*FROM C1channels")
-            loop_channels = cur.fetchall()
+            raw = c1_cur.find({})
+            loop_channels = [x for x in raw]
             if len(loop_channels) != 0:
-                for i in loop_channels:
-                    channel_id = i[1]
+                for i in range(len(loop_channels)):
+                    channel_id = loop_channels[i]["channel"]
                     try:  
                         channel = self.client.get_channel(channel_id)
                         msg = await channel.history(limit=2).flatten()
@@ -33,15 +37,10 @@ class C1_1(commands.Cog):
                         if timegap >= 86390 and timegap <=86400:
                             timegap = 0
                         
-                        cur.execute("UPDATE C1channels SET Timegap = ? WHERE Channel = ?",(timegap,channel_id))
-                        cur.execute("UPDATE C1channels SET Createtime = ? WHERE Channel = ?",(createtime,channel_id))
-                        
-                        print(channel.name, i[3])
-                        print()
-                        base.commit()
+                        c1_cur.update_one({"_id":loop_channels[i]["_id"]},{"$set":{"timegap":timegap}})
+                        c1_cur.update_one({"_id":loop_channels[i]["_id"]},{"$set":{"createtime":createtime}})
                     except:
-                        cur.execute("DELETE FROM C1channels WHERE Channel = ?",(channel_id,))
-                        base.commit()
+                        c1_cur.delete_one({"_id":loop_channels[i]["_id"]})
 
 
 def setup(client):
