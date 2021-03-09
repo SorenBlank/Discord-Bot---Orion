@@ -55,15 +55,15 @@ class S_1(commands.Cog):
     @show.command(aliases = ['announcement','announce'])
     async def announcements(self,ctx,msg):
         if msg.lower() == 'channels' or msg.lower() == 'channel':
-            raw = anch_cur.find({})
-            guilds = []
+            raw = anch_cur.find({"guild":777124925219536907})
             all = []
+            guilds = []
             try:
-                guilds = [x[i]["guild"] for i in range(len(x))]
                 all = [x for x in raw]
+                guilds = [all[i]["guild"] for i in range(len(all))]
             except:
                 pass
-            
+
             if ctx.guild.id in guilds:
                 dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":"nine","10":":one::zero:"}
 

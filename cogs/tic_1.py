@@ -201,33 +201,6 @@ class Tic(commands.Cog):
                                             player1 = member.id
                                             player2 = ctx.author.id
                                         
-                                        cur.execute("SELECT*FROM Tic")
-                                        players_details = cur.fetchall()
-                                        players = []
-                                        for i in players_details:
-                                            players.append(i[0])
-                                        
-                                        if player1 in players:
-                                            cur.execute("SELECT*FROM Tic WHERE User = ?",(player1,))
-                                            temp1 = cur.fetchall()
-                                            latest_win = temp1[0][1] + 1
-                                            cur.execute("UPDATE Tic SET Wins = ? WHERE User = ?",(latest_win,player1))
-                                            base.commit()
-                                        
-                                        if player1 not in players:
-                                            cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player1,1,0,0))
-                                            base.commit()
-                                        
-                                        if player2 in players:
-                                            cur.execute("SELECT*FROM Tic WHERE User = ?",(player2,))
-                                            temp2 = cur.fetchall()
-                                            latest_lose = temp2[0][2] + 1
-                                            cur.execute("UPDATE Tic SET Loses = ? WHERE User = ?",(latest_lose,player2))
-                                            base.commit()
-
-                                        if player2 not in players:
-                                            cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player2,0,1,0))
-                                            base.commit()
                                         
                                         await ctx.send(f"Yay!! {move.mention} has won.")
                                         break
@@ -239,36 +212,6 @@ class Tic(commands.Cog):
                                 
                                 if np.count_nonzero(AA)==9:
                                     game_ongoing=False
-                                    
-                                    player1 = member.id
-                                    player2 = ctx.author.id
-                                    cur.execute("SELECT*FROM Tic")
-                                    players_details = cur.fetchall()
-                                    players = []
-                                    for i in players_details:
-                                        players.append(i[0])
-                                    
-                                    if player1 in players:
-                                            cur.execute("SELECT*FROM Tic WHERE User = ?",(player1,))
-                                            temp_draw1 = cur.fetchall()
-                                            latest_draw = temp_draw1[0][3] + 1
-                                            cur.execute("UPDATE Tic SET Wins = ? WHERE User = ?",(latest_draw,player1))
-                                            base.commit()
-                                    
-                                    if player1 not in players:
-                                            cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player1,0,0,1))
-                                            base.commit()
-                                    
-                                    if player2 in players:
-                                        cur.execute("SELECT*FROM Tic WHERE User = ?",(player2,))
-                                        temp_draw2 = cur.fetchall()
-                                        latest_draw = temp_draw2[0][3] + 1
-                                        cur.execute("UPDATE Tic SET Wins = ? WHERE User = ?",(latest_draw,player2))
-                                        base.commit()
-                                    
-                                    if player2 not in players:
-                                        cur.execute("INSERT INTO Tic (User, Wins, Loses, Draws) VALUES (?,?,?,?)",(player2,0,0,1))
-                                        base.commit()
 
                                     await ctx.send("The game ended up as a draw.")
                             

@@ -124,7 +124,7 @@ __**:warning:Disclaimer:warning:**__\n\
         if ctx.author.guild_permissions.manage_channels and ctx.author.guild_permissions.manage_messages:
             id_guild = ctx.guild.id
             
-            raw_guilds = m1_cur.find({"guild":id_guild})
+            raw = m1_cur.find({"guild":id_guild})
             guilds = []
             try:
                 x = [i for i in raw]
@@ -173,24 +173,27 @@ __**:warning:Disclaimer:warning:**__\n\
 
             #This makes the bot acts as if no channel was specified
             elif channel == None:
-
-                id_channel = channel.id
-                raw_channels = c1_cur.find({"channel":id_channel})
-                channels = [i["channel"] for i in raw_channels ]
-                
-                if id_channel not in channels:
-                    up = {"_id":len(channels),
-                          "guild":ctx.guild.id,
-                          "channel":id_channel,
-                          "createtime":"",
-                          "timegap":0}
-
-                    c1_cur.insert_one(up)
+                try:
+                    id_channel = ctx.channel.id
+                    raw_channels = c1_cur.find({})
+                    x = [i for i in raw_channels]
+                    channels = [x[i]["channel"] for i in range(len(x))]
                     
-                    await ctx.send(f"C1 has been activated in {ctx.channel.mention}")
+                    if id_channel not in channels:
+                        up = {"_id":len(channels),
+                              "guild":ctx.guild.id,
+                              "channel":id_channel,
+                              "createtime":"",
+                              "timegap":0}
 
-                else:
-                    await ctx.send(f"C1 is already running in {ctx.channel.mention}")
+                        c1_cur.insert_one(up)
+                        
+                        await ctx.send(f"C1 has been activated in {ctx.channel.mention}")
+
+                    else:
+                        await ctx.send(f"C1 is already running in {ctx.channel.mention}")
+                except:
+                    pass
 
         else:
             await ctx.send(f"**Access Denied!** \nThis command requires `manage_channel` permission in order to execute.")
@@ -202,7 +205,7 @@ __**:warning:Disclaimer:warning:**__\n\
         au = ctx.author.id
         ch = ctx.channel.id
 
-        raw = anc_cur.find({"guild":au})
+        raw = anc_cur.find({})
         guilds = []
         channels = []
         try:
@@ -212,47 +215,51 @@ __**:warning:Disclaimer:warning:**__\n\
         except:
             pass
 
-        channel = self.client.get_channel(channel_id[0])
-        
-        await ctx.send(f"{channel.mention} is already set as the **Announcement Command Channel**. Would you like to change it? (Type: Y/N)")
-        
-        text = await self.client.wait_for("message")
-        while text.author.id != au:
+        print(guilds)
+        if ctx.guild.id in guilds:
+
+            channel_id = anc_cur.find_one({"guild":ctx.guild.id})
+            channel = self.client.get_channel(channel_id["channel"])
+            
+            await ctx.send(f"{channel.mention} is already set as the **Announcement Command Channel**. Would you like to change it? (Type: Y/N)")
+            
             text = await self.client.wait_for("message")
-            pass
+            while text.author.id != au:
+                text = await self.client.wait_for("message")
+                pass
 
-        if text.author.id == au and text.channel.id ==ch:
-            answer = text.content.lower()
-            y_matches = ["yes","y"]
-            n_matches = ["no","n"]
-            m = ["yes","y","no","n"]
+            if text.author.id == au and text.channel.id ==ch:
+                answer = text.content.lower()
+                y_matches = ["yes","y"]
+                n_matches = ["no","n"]
+                m = ["yes","y","no","n"]
 
-            if answer in y_matches:
-                await ctx.send("Please mention the channel below_")
-                mention = await self.client.wait_for("message")
-                while not (text.author.id == au and text.channel.id == ch):
+                if answer in y_matches:
+                    await ctx.send("Please mention the channel below_")
                     mention = await self.client.wait_for("message")
-                    pass
+                    while not (text.author.id == au and text.channel.id == ch):
+                        mention = await self.client.wait_for("message")
+                        pass
 
-                ch1 = mention.content.split("#")
-                print(ch1)
-                ch2 = ch1[1].split(">")
-                ch3 = int(ch2[0])
-                lower = mention.content.lower()
+                    ch1 = mention.content.split("#")
+                    print(ch1)
+                    ch2 = ch1[1].split(">")
+                    ch3 = int(ch2[0])
+                    lower = mention.content.lower()
 
-                if lower != "eliminate":
-                    try:
-                        channel1 = self.client.get_channel(ch3)
-                        anc_cur.update_one({"guild":ctx.guild.id},{"$set":{"channel":ch3}})
-                        await ctx.send(f"**Announcement Command Channel** has been updated to {channel1.mention}.")
-                    except:
-                        await ctx.send("Argument ERROR!")
+                    if lower != "eliminate":
+                        try:
+                            channel1 = self.client.get_channel(ch3)
+                            anc_cur.update_one({"guild":ctx.guild.id},{"$set":{"channel":ch3}})
+                            await ctx.send(f"**Announcement Command Channel** has been updated to {channel1.mention}.")
+                        except:
+                            await ctx.send("Argument ERROR!")
 
-            if answer in n_matches:
-                await ctx.send("Granted!")
+                if answer in n_matches:
+                    await ctx.send("Granted!")
 
-            if answer not in m:
-                await ctx.send("Input ERROR")
+                if answer not in m:
+                    await ctx.send("Input ERROR")
 
         if ctx.guild.id not in guilds:
             if channel == None:
@@ -275,37 +282,44 @@ __**:warning:Disclaimer:warning:**__\n\
     @activate.command(aliases = ["announce","announcement_channel"])
     async def announcement(self,ctx,channel:discord.TextChannel = None):
 
-        raw = anch_cur.find({"guild":ctx.guild.id})
+        raw = anch_cur.find({})
 
-        guilds = []
         channels = []
         try:
             x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
             channels = [x[i]["channel"] for i in range(len(x))]
         except:
             pass
 
+        raw = anc_cur.find({})
+        anc = [x for x in raw]
+        x = [anc[i]["guild"] for i in range(len(anc))]
+
         if ctx.author.guild_permissions.administrator or ctx.author.guild_permissions.manage_channels:
+            if ctx.guild.id in x:
 
-            if channel.id in channels:
-                await ctx.send(f"{channel.mention} is already set as an **Announcement Command Channel**.")
+                if channel.id in channels:
+                    await ctx.send(f"{channel.mention} is already set as an **Announcement Channel**.")
 
-            else:
-                if ctx.channel.id in channels:
+                else:
                     channel_id = channel.id
                     guild_id = ctx.guild.id
 
                     ctx_channel = self.client.get_channel(ctx.channel.id)
                     text = await ctx_channel.history(limit = 2).flatten()
-                    
+                    raw = anch_cur.find({})
+                    x = [i for i in raw]
+                    a_channels = [x[i]["channel"] for i in range(len(x))]
+                    print(a_channels)
                     if len(channels) <10:
                         if channel_id not in a_channels:
-                            raw_count = anch_cur.find({"guild":ctx.guild.id})
+                            raw = anch_cur.find({})
+                            raw_count = [i for i in raw]
+
                             up = {"_id":len(raw_count),
                                   "guild":ctx.guild.id,
                                   "channel":channel_id}
-                            
+                            anch_cur.insert_one(up)
                             await text[0].add_reaction("✅") 
                             await ctx.send("Channel Added!")
 
@@ -316,21 +330,21 @@ __**:warning:Disclaimer:warning:**__\n\
                     if len(a_channels) == 10:
                         await ctx.send("You can have up to 10 announcement channels.")
                 
-                elif ctx.guild.id in guilds:
-                    raw = anc_cur.find({"guild":ctx.guild.id})
-                    m_ch = [i["channel"] for i in raw]
-                    
-                    if len(m_ch) > 1:
-                        ch = client.get_channel(m_ch[0])
-                        ch2 = client.get_channel(m_ch[1])
-                        await ctx.send(f"You are giving command on wrong channel. Please type command here, {ch.mention} or {ch2.mention}")
-                    
-                    if len(m_ch) == 1:
-                        ch = self.client.get_channel(m_ch[0])
-                        await ctx.send(f"You are giving command on wrong channel. Please type command here, {ch.mention}")
+            elif ctx.guild.id not in x:
+                raw = anc_cur.find_one({"guild":ctx.guild.id})
+                m_ch = raw["channel"]
                 
-                elif ctx.guild.id not in guilds:
-                    await ctx.send("No channel of this server is set as **Announcement Command Channel**.\nPlease set one using this command `.o set announce_ch 'channel mention'`")
+                if len(m_ch) > 1:
+                    ch = client.get_channel(m_ch[0])
+                    ch2 = client.get_channel(m_ch[1])
+                    await ctx.send(f"You are giving command on wrong channel. Please type command here, {ch.mention} or {ch2.mention}")
+                
+                if len(m_ch) == 1:
+                    ch = self.client.get_channel(m_ch[0])
+                    await ctx.send(f"You are giving command on wrong channel. Please type command here, {ch.mention}")
+            
+            elif ctx.guild.id not in guilds:
+                await ctx.send("No channel of this server is set as **Announcement Command Channel**.\nPlease set one using this command `.o set announce_ch 'channel mention'`")
 
         else:
             await ctx.send(f"**Access Denied!** \nThis command requires `manage_channel` permission in order to execute.")
@@ -419,9 +433,9 @@ __**:warning:Disclaimer:warning:**__\n\
         if ctx.author.guild_permissions.manage_channels:
             if channel == None:
                     if ctx.guild.id not in guilds:
-                        up = [{"_id":len(guilds),
+                        up = {"_id":len(guilds),
                               "guild":ctx.guild.id,
-                              "channel":ctx.channel.id}]
+                              "channel":ctx.channel.id}
                         tc_cur.insert_one(up)
                         await ctx.send(f"**TicTacToe** channel has been updated to {ctx.channel.mention}")
 
@@ -490,7 +504,7 @@ __**:warning:Disclaimer:warning:**__\n\
 
             if channel == None:
                 if ctx.guild.id not in guilds:
-                    up = {"_id":len(raw),
+                    up = {"_id":len(guilds),
                               "guild":ctx.guild.id,
                               "channel":ctx.channel.id}
                     bc_cur.insert_one(up)

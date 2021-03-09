@@ -46,7 +46,7 @@ class AN_1(commands.Cog):
         print("AN1 is Loaded ----")
 
     @commands.command()
-    async def announce(self,ctx, channel:discord.TextChannel = None, time = None):
+    async def announce(self,ctx, channel:discord.TextChannel, time = None):
 
         if channel != None:
             raw = ta_cur.find({})
@@ -108,8 +108,9 @@ class AN_1(commands.Cog):
 
                                     if time.isdigit():
                                         raw = ta_cur.find({})
-                                        y = [x["guild"] for x in raw]
-                                        up = {"_id":len(y),
+                                        all = [x for x in raw]
+                                        guilds = [raw[i]["guild"] for i in range(len(all))]
+                                        up = {"_id":len(all),
                                               "guild":ctx.guild.id,
                                               "channel":channel.id,
                                               "time":time,
@@ -128,7 +129,7 @@ class AN_1(commands.Cog):
                                                 up = {"_id":len(y),
                                                       "guild":ctx.guild.id,
                                                       "channel":channel.id,
-                                                      "time":time,
+                                                      "time":actual_time,
                                                       "announcement":text.content}
                                                 ta_cur.insert_one(up)
                                                 if actual_time == 1:
@@ -149,7 +150,7 @@ class AN_1(commands.Cog):
                                                     await ctx.send(f"Given input will be announced after {actual_time} minute.")
                                             if x.lower() == "h":
                                                 h_time = actual_time*3600
-                                                m_time = actual_time*60
+                                                
                                                 up = {"_id":len(y),
                                                       "guild":ctx.guild.id,
                                                       "channel":channel.id,

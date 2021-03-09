@@ -23,8 +23,8 @@ class C1_1(commands.Cog):
             raw = c1_cur.find({})
             loop_channels = [x for x in raw]
             if len(loop_channels) != 0:
-                for i in loop_channels:
-                    channel_id = i["channel"]
+                for i in range(len(loop_channels)):
+                    channel_id = loop_channels[i]["channel"]
                     try:  
                         channel = self.client.get_channel(channel_id)
                         msg = await channel.history(limit=2).flatten()
@@ -33,13 +33,14 @@ class C1_1(commands.Cog):
                         nowtime = datetime.datetime.now()
                         gap = nowtime-createtime
                         timegap = (gap.seconds)
+                        print(timegap)
                         if timegap >= 86390 and timegap <=86400:
                             timegap = 0
                         
-                        c1_cur.update_one({"_id":i["_id"]},{"$set":{"timegap":timegap}})
-                        c1_cur.update_one({"_id":i["_id"]},{"$set":{"createtime":createtime}})
+                        c1_cur.update_one({"_id":loop_channels[i]["_id"]},{"$set":{"timegap":timegap}})
+                        c1_cur.update_one({"_id":loop_channels[i]["_id"]},{"$set":{"createtime":createtime}})
                     except:
-                        c1_cur.delete_one({"_id":i["_id"]})
+                        c1_cur.delete_one({"_id":loop_channels[i]["_id"]})
 
 
 def setup(client):

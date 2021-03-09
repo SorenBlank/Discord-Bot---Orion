@@ -19,26 +19,6 @@ class M1(commands.Cog):
     async def on_ready(self):
         print("M1 is Loaded ----")
 
-    @commands.command()
-    async def purge(self, ctx, number = 2, channel:discord.TextChannel=None):
-        raw = m1_cur.find({})
-        guilds = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-        except:
-            pass
-
-        if ctx.author.guild_permissions.administrator:
-            if ctx.guild.id in guilds:
-                if channel == None:
-                    await ctx.channel.purge(limit = int(number)+1)
-
-                if channel != None:
-                    await channel.purge(limit= int(number) +1)
-        else:
-            await ctx.send("Access denied")
-
 
     #kick_command
     @commands.command()
@@ -61,7 +41,7 @@ class M1(commands.Cog):
                 except:
                     await ctx.send(f"I dont have the power to kick {member.mention}")
         else:
-            await ctx.send("You are not a valid user.")
+            await ctx.send("**Access Denied!** This command requires `kick_members` permission in order to execute.")
     
     #ban_command
     @commands.command()
@@ -76,15 +56,18 @@ class M1(commands.Cog):
         
         if ctx.author.guild_permissions.ban_members:
             if ctx.guild.id in guilds:
-                await member.ban(reason=reason)
-                if reason == None:
-                    await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}')
-                else:
-                    await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}. Reason: {reason}')
+                try:
+                    await member.ban(reason=reason)
+                    if reason == None:
+                        await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}')
+                    else:
+                        await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}. Reason: {reason}')
+                except:
+                    await ctx.send("❌ I don't have the permission.")
             else:
                 await ctx.send("M1 is deactivate")
         else:
-            await ctx.channel.send("You are not a valid user.")
+            await ctx.channel.send("**Access Denied!** This command requires `ban_members` permission in order to execute.")
     
     #unban_command
     @commands.command()
@@ -106,12 +89,12 @@ class M1(commands.Cog):
                     user = i.user
                     if (user.name, user.discriminator) == (member_name,member_tag):
                         await ctx.guild.unban(user)
-                        await ctx.send(f'User: {user.mention} is unbanned now.')
+                        await ctx.send(f'**User:** {user.mention} is unbanned now.')
                         return
             else:
                 ctx.send("M1 is deactivate.")
         else:
-            await ctx.send("You are not a valid user of this command.")
+            await ctx.send("**Access Denied!** This command requires `ban_members` permission in order to execute.")
 
     @commands.command()
     async def purge(self,ctx,number=None):
@@ -122,7 +105,7 @@ class M1(commands.Cog):
             if number == None:
                 await ctx.channel.purge(limit=2)
         else:
-            await ctx.send("**Access Denied!** \nThis command requires `manage_messages` permission in order to execute.")
+            await ctx.send("**Access Denied!** This command requires `manage_messages` permission in order to execute.")
 
     @commands.command()
     async def chnick(self,ctx,member:discord.Member, nick):
@@ -132,7 +115,7 @@ class M1(commands.Cog):
                 await member.edit(nick=nick)
                 await ctx.send(f'Nickname was changed for {member.mention} ')
             except:
-                await ctx.send(f"Access Denied!")
+                await ctx.send(f"**Access Denied!** This command requires `manage_nickname` permission in order to execute.")
 
 
 def setup(client):
