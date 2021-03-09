@@ -24,7 +24,7 @@ from discord import ActivityType as AT
 import pymongo
 from pymongo import MongoClient
 
-cluster = MongoClient(os.environ['DB'])
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
 m1_cur = base["m1guilds"] #Formation = [_id, Guild]
@@ -220,4 +220,4 @@ async def on_message(message):
 #client.run(os.environ['TOKEN'])
 #client.run("TOKEN")
 client.run(os.environ['TOKEN'])
-#client.run("ODE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")
+#client.run("Nzc3MDk1MjU3MjYyNTIyMzk5.X6-cWw.3Dgg1s9NTp8sdST30zqToKvlltQ")

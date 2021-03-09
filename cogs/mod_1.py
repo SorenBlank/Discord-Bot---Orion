@@ -5,7 +5,7 @@ import sqlite3
 import pymongo
 from pymongo import MongoClient
 
-cluster = MongoClient(os.environ['DB'])
+cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
 m1_cur = base["m1guilds"]
