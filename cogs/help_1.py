@@ -31,22 +31,22 @@ class H_1(commands.Cog):
 	@commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["h"])
 	async def help(self,ctx):
 
-		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 		
-		help_embed.add_field(name=":gear:PROTOCOLS/SERVER UTILITIES:gear:",
-							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`\n\n ឵឵ ",
+		help_embed.add_field(name=":gear: __PROTOCOLS/SERVER UTILITIES__ :gear:",
+							 value=":white_small_square:This section includes all **Protocol** infos.\n__Command:__ ```.o help protocol```\n:white_small_square:This section includes all **Server Utility** infos.\n__Command:__ ```.o help server utility```\n ឵឵ ",
 							 inline = False)
 
-		help_embed.add_field(name=":card_box:UTILITIES:card_box:",
-							 value="------- :arrow_down_small: -------\n:white_small_square: This section includes all **Utility** infos which are easily accessable to everyone.\n**__Command:__** `.o help utility`\n\n ឵឵",
+		help_embed.add_field(name=":card_box: __UTILITIES__ :card_box:",
+							 value=":white_small_square:This section includes all **Utility** infos which are easily accessable to everyone.\n__Command:__ ```.o help utility```\n ឵឵",
 							 inline=False)
 
-		help_embed.add_field(name=":video_game:GAMES:video_game:",
-							 value="------ :arrow_down_small: -----\n:white_small_square: This section includes all **Games** infos.\n**__Command:__** `.o help game`\n\n ឵឵",
+		help_embed.add_field(name=":video_game: __GAMES__ :video_game:",
+							 value=":white_small_square:This section includes all **Games** infos.\n__Command:__ ```.o help game```\n ឵឵",
 							 inline=False)
 
-		help_embed.add_field(name=":book:PHILOSOPHY:book:",
-							 value="---------- :arrow_down_small: ---------\n:white_small_square: If you are not a nerd then this section is not for you.\n**__Command:__** `.o help philosophy`",
+		help_embed.add_field(name=":book: __PHILOSOPHY__ :book:",
+							 value=":white_small_square:If you aren't a nerd, this section isn't for you.\n__Command:__ ```.o help philosophy```\n ឵឵",
 							 inline= False)
 		help_embed.add_field(name = ":paperclips: __LINKS__ :paperclips:",
 							 value = "**[Invite link](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) | [Official server](https://discord.gg/JJtUtgMjBv)**",
