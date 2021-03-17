@@ -31,7 +31,7 @@ class H_1(commands.Cog):
 	@commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["h"])
 	async def help(self,ctx):
 
-		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\nInvite Link = `.o invite`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+		help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`/`.O`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 		
 		help_embed.add_field(name=":gear:PROTOCOLS/SERVER UTILITIES:gear:",
 							 value="--------------------- :arrow_down_small: ---------------------\n:white_small_square: This section includes all **Protocol** infos.\n**__Command:__** `.o help protocol`\n\n:white_small_square: This section includes all **Server Utility** infos.\n**__Command:__** `.o help server utility`\n\n ឵឵ ",
@@ -48,6 +48,9 @@ class H_1(commands.Cog):
 		help_embed.add_field(name=":book:PHILOSOPHY:book:",
 							 value="---------- :arrow_down_small: ---------\n:white_small_square: If you are not a nerd then this section is not for you.\n**__Command:__** `.o help philosophy`",
 							 inline= False)
+		help_embed.add_field(name = ":paperclips: __LINKS__ :paperclips:",
+							 value = "**[Invite link](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) | [Official server](https://discord.gg/JJtUtgMjBv)**",
+							 inline = False)
 		help_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed = help_embed)
 
@@ -65,6 +68,7 @@ class H_1(commands.Cog):
 		game_embed.add_field(name=":ship: Battleship :ship:",
 							 value="This is a **Battleship** game. Battleship (also Battleships or Sea Battle) is a strategy type guessing game for two players. It is played on ruled grids (paper or board) on which each player's fleet of ships (including battleships) are marked. The locations of the fleets are concealed from the other player.The objective of the game is to destroy the opposing player's fleet. You can check this [tutorial](https://www.youtube.com/watch?v=4gHJlYLomrs&ab_channel=GatherTogetherGames) or read this [article](https://www.thesprucecrafts.com/the-basic-rules-of-battleship-411069) or type `.o help battleship`.\n__**Command:**__ `.o battleship [player/opponent]`\n:notepad_spiral:__**Rules:**__:notepad_spiral:\n**1)** Each player places the 5 ships somewhere on their board.\n**2)** The ships can only be placed vertically or horizontally. Diagonal placement is not allowed.\n**3)** No part of a ship may hang off the edge of the board.\n**4)** Ships may not overlap each other.",
 							 inline="False")
+
 		game_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
 		await ctx.send(embed = game_embed)
 
@@ -176,7 +180,7 @@ class H_1(commands.Cog):
 	async def server_utilities(self,ctx,msg = None):
 		try:
 			if msg.lower() == "utility" or msg.lower() == "utilities" or msg.lower() == "u":
-				su_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `su`,`server utility`,`server utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
+				su_embed = discord.Embed(title="= = = = = = = =|:card_box: Utilities :card_box:|= = = = = = =",description="Aliases = `su`,`server utility`,`server utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
 
 				su_embed.add_field(name="= = __:link:ACTIVATION / DEACTIVATION:link:__ = =",
 									 value="- - - - - - - - - :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - - - - - - - - -\n:white_small_square: **Activation/Deactivation** commands are the most important commands in order to use all features properly.",
