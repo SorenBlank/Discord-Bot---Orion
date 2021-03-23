@@ -36,6 +36,8 @@ tic_cur = base["tic"]
 ta_cur = base["ta"]
 wc_cur = base["wc"]
 weclome_cur = base["welcome"]
+bye_cur = base["bye"]
+
 
 class A_1(commands.Cog):
     def __init__(self, client):
@@ -73,16 +75,25 @@ __**:warning:Disclaimer:warning:**__\n\
 
         #SECOND FIELD
         activator_embed.add_field(name=":card_box:SERVER UTILITIES:card_box:",
-                                  value = "------------ :arrow_down_small: ------------\nThis section includes all **server utility activation** commands.\n ឵឵ ",
+                                  value = "------------ :arrow_down_small: ------------\n ឵឵ ",
                                   inline= False)
 
+
+
+        activator_embed.add_field(name = ":hammer_pick: Welcome Message",
+                                  value = ":small_orange_diamond: A channel and message where Orion will welcome new comers.\nType '#member' inside the message in order to mention the member.\n**__Command:__** `.o set welcome [channel] [message]`",
+                                  inline = False)
+
+        activator_embed.add_field(name=":hammer_pick: Bye Message",
+                                  value = ":small_orange_diamond: A channel and message where Orion will send bye message.\nType '#member' inside the message in order to mention the member.\n**__Command:__** `.o set bye [channel] [message]`",
+                                  inline = False)
+
         activator_embed.add_field(name=":hammer_pick: Announcement Command Channel",
-                                  value=":small_orange_diamond: You can announce anything in your server using **Announcement Commands**. In order to use these commands you need to set a specific channel which is not visible to all members beside the server admins and moderators, where you will execute these commands.\n**__Command:__** `.o set announce_ch (channel)`",
+                                  value=":small_orange_diamond: A channel from where you will announce.\n**__Command:__** `.o set announce_ch (channel)`",
                                   inline=False)
 
-
         activator_embed.add_field(name=":hammer_pick: Announcement Channel",
-                                  value=":small_orange_diamond: After setting up **Announcement Command Channel**, you need to set your announcement channels where you will announce stuffs. You can set up to 2 channels as **Announcement Channels**. After you set a channel, you will be able to use `.o announce` command for announcing with the bot.\n**__Command:__** `.o set announce (channel)`",
+                                  value=":small_orange_diamond: A channel where you will announce.\n**__Command:__** `.o set announce (channel)`",
                                   inline=False)
 
         activator_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
@@ -93,12 +104,12 @@ __**:warning:Disclaimer:warning:**__\n\
                                   value="------ :arrow_down_small: -----",
                                   inline=False)
         activator_embed.add_field(name=":large_blue_diamond: Fibonacci/Fibo",
-                                  value=":small_blue_diamond: This is a Fibonacci Count Up game. Following command allows a specific channel to run this game. To know more about this in detail, type: `.o help game`\n**__Command:__** `.o activate fibo (channel)`",inline=False)
+                                  value=":small_blue_diamond: A channel where you can count up but in Fibonacci series.\n**__Command:__** `.o activate fibo (channel)`",inline=False)
         activator_embed.add_field(name=":large_blue_diamond: TicTacToe",
-                                  value=":small_blue_diamond: No need to tell about this game I suppose. Following command allows a specific channel to run this game. In case you don't know what this game is ( xD ) please do not hesitate to type this `.o help game`\n**__Command:__** `.o activate tic (channel)`",
+                                  value=":small_blue_diamond: A channel for playing tictactoe.\n**__Command:__** `.o activate tic (channel)`",
                                   inline=False)
         activator_embed.add_field(name=":large_blue_diamond: Battleship (BETA)",
-                                  value=':small_blue_diamond: This is a Battleship game. Following command allows a specific channel to run this game. You can [click here](https://en.wikipedia.org/wiki/Battleship_game "https://en.wikipedia.org/wiki/Battleship_game") or type `.o help game` or more specifically type `.o help battleship` in order to know about this game. \n**__Command:__** `.o activate battleship (channel)`',
+                                  value=':small_blue_diamond: A channel for playing battleship.\n**__Command:__** `.o activate battleship (channel)`',
                                   inline = False)
         
         activator_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
@@ -107,8 +118,8 @@ __**:warning:Disclaimer:warning:**__\n\
         activator_embed.add_field(name=":book:PHILOSOPHY:book:",
                                   value="---------- :arrow_down_small: ---------",
                                   inline=False)
-        activator_embed.add_field(name=":notebook: Wikipedia",
-                                  value=":small_orange_diamond: This is wikipedia. Following command allows a specific channel to use **Wikipedia** commands. To know more about this in detail, type: `.o help philosophy` \n**__Command:__** `.o activate wiki (channel)`",
+        activator_embed.add_field(name=":orange_book: Wikipedia",
+                                  value=":small_orange_diamond: A channel for wikipedia search.\n**__Command:__** `.o activate wiki (channel)`",
                                   inline=False)
 
 
@@ -573,24 +584,65 @@ __**:warning:Disclaimer:warning:**__\n\
         except:
             pass
 
-        try:
-            if ctx.guild.id not in guilds:
-                    up = {"_id":len(guilds),
-                          "guild":ctx.guild.id,
-                          "channel":channel.id,
-                          "message":message}
-                    weclome_cur.insert_one(up)
-                    await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.")
+        if ctx.author.guild_permissions.manage_guild:
+            try:
+                if ctx.guild.id not in guilds:
+                        up = {"_id":len(guilds),
+                              "guild":ctx.guild.id,
+                              "channel":channel.id,
+                              "message":message}
+                        weclome_cur.insert_one(up)
+                        await ctx.send(f"**WELCOME** channel has been set to {channel.mention}.\n**WELCOME** message is ```{message}```")
 
-            if ctx.guild.id in guilds and channel.id in channels:
-                await ctx.send("This channel is already set as **WELCOME** channel.")
-
-            if ctx.guild.id in guilds and ctx.channel.id not in channels:
-                    weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
+                if ctx.guild.id in guilds and channel.id in channels:
                     weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
-                    await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.")
+                    await ctx.send(f"**WELCOME** message is ```{message}```")
+
+                if ctx.guild.id in guilds and ctx.channel.id not in channels:
+                        weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
+                        weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
+                        await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.\n**WELCOME** message is ```{message}```")
+            except:
+                ctx.send("Argument ERROR!")
+        else:
+            await ctx.send("**Access Denied!** \nThis command requires `manage_guild` permission in order to execute.")
+
+
+    @activate.command()
+        async def bye(self,ctx,channel:discord.TextChannel = None,*,message):
+        raw = bye_cur.find({})
+        guilds = []
+        channels = []
+
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+            channels = [x[i]["channel"] for i in range(len(x))]
         except:
-            ctx.send("Argument ERROR!")
+            pass
+
+        if ctx.author.guild_permissions.manage_guild:
+            try:
+                if ctx.guild.id not in guilds:
+                        up = {"_id":len(guilds),
+                              "guild":ctx.guild.id,
+                              "channel":channel.id,
+                              "message":message}
+                        bye_cur.insert_one(up)
+                        await ctx.send(f"**BYE** channel has been set to {channel.mention}.\n**BYE** message is ```{message}```")
+
+                if ctx.guild.id in guilds and channel.id in channels:
+                    bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
+                    await ctx.send(f"**BYE** message is ```{message}```")
+
+                if ctx.guild.id in guilds and ctx.channel.id not in channels:
+                        bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
+                        bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
+                        await ctx.send(f"**BYE** channel has been updated to {channel.mention}.\n**BYE** message is ```{message}```")
+            except:
+                ctx.send("Argument ERROR!")
+        else:
+            await ctx.send("**Access Denied!** \nThis command requires `manage_guild` permission in order to execute.")
 
 def setup(client):
     client.add_cog(A_1(client))

@@ -36,6 +36,7 @@ bc_cur = base["bc"] #Formation = [_id, Guild, Channel]
 ta_cur = base["ta"] #Formation = [_id, Guild, Channel, time, announcement]
 wc_cur = base["wc"] #Formation = [_id, Guild, Channel]
 weclome_cur = base["welcome"] #Formation = [_id, Guild, Channel, Message]
+bye_cur = base["bye"] #Formation = [_id, Guild, Channel, Message]
 
 #set up of command prefix
 client = commands.Bot(command_prefix = [".o ",".O "], case_insensitive=True, intents = Intents.all())
@@ -113,17 +114,14 @@ async def on_member_join(member):
     except:
         pass
 
-    if ctx.guild.id in guilds:
-        raw = weclome_cur.find_one({"guild":ctx.guild.id})
+    if member.guild.id in guilds:
+        raw = weclome_cur.find_one({"guild":member.guild.id})
 
         channel = raw["channel"]
-        msg = raw["message"]
-        msg.replace("(member)",f"<@{member.id}>")
-
         channel = client.get_channel(channel)
-
-        await channel.send(msg)
-
+        msg = raw["message"]
+        testmsg = msg.replace("#member",member.mention)
+        await channel.send(testmsg)
 
 #sends you the latency
 @client.command(aliases = ["ping","latency"])
@@ -239,7 +237,7 @@ async def on_message(message):
     #content = f.read()
 
 #Token
-client.run(os.environ['TOKEN'])
+#client.run(os.environ['TOKEN'])
 #client.run("TOKEN")
 #client.run(str(os.environ.get('TOKEN')))
-#client.run("Nzc3MDk1MjU3MjYyNTIyMzk5.X6-cWw.3Dgg1s9NTp8sdST30zqToKvlltQ")
+client.run("ODE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")
