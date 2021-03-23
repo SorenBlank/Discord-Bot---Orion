@@ -35,6 +35,7 @@ bc_cur = base["bc"]
 tic_cur = base["tic"]
 ta_cur = base["ta"]
 wc_cur = base["wc"]
+weclome_cur = base["welcome"]
 
 class A_1(commands.Cog):
     def __init__(self, client):
@@ -559,6 +560,37 @@ __**:warning:Disclaimer:warning:**__\n\
                         
             except:
                 ctx.send("Argument ERROR!")
+
+    @activate.command()
+    async def welcome(self,ctx,channel:discord.TextChannel = None,*,message):
+        raw = weclome_cur.find({})
+        guilds = []
+        channels = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+            channels = [x[i]["channel"] for i in range(len(x))]
+        except:
+            pass
+
+        try:
+            if ctx.guild.id not in guilds:
+                    up = {"_id":len(guilds),
+                          "guild":ctx.guild.id,
+                          "channel":channel.id,
+                          "message":message}
+                    weclome_cur.insert_one(up)
+                    await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.")
+
+            if ctx.guild.id in guilds and channel.id in channels:
+                await ctx.send("This channel is already set as **WELCOME** channel.")
+
+            if ctx.guild.id in guilds and ctx.channel.id not in channels:
+                    weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
+                    weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
+                    await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.")
+        except:
+            ctx.send("Argument ERROR!")
 
 def setup(client):
     client.add_cog(A_1(client))

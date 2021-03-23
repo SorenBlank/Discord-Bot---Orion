@@ -35,6 +35,7 @@ tc_cur = base["tc"] #Formation = [_id, Guild, Channel]
 bc_cur = base["bc"] #Formation = [_id, Guild, Channel]
 ta_cur = base["ta"] #Formation = [_id, Guild, Channel, time, announcement]
 wc_cur = base["wc"] #Formation = [_id, Guild, Channel]
+weclome_cur = base["welcome"] #Formation = [_id, Guild, Channel, Message]
 
 #set up of command prefix
 client = commands.Bot(command_prefix = [".o ",".O "], case_insensitive=True, intents = Intents.all())
@@ -69,8 +70,6 @@ client.load_extension('cogs.show_1')
 client.load_extension('cogs.utility_1')
 
 
-
-
 @client.event
 async def on_guild_remove(guild):
     #m1_removal
@@ -99,6 +98,31 @@ async def on_guild_remove(guild):
 
     #WC
     wc_cur.delete_many({"guild":guild.id})
+
+    #WELCOME Removal
+    weclome_cur.delete_many({"guild":guild.id})
+
+
+@client.event
+async def on_member_join(member):
+    raw = weclome_cur.find({})
+    guilds = []
+    try:
+        x = [i for i in raw]
+        guilds = [x[i]["guild"] for i in range(len(x))]
+    except:
+        pass
+
+    if ctx.guild.id in guilds:
+        raw = weclome_cur.find_one({"guild":ctx.guild.id})
+
+        channel = raw["channel"]
+        msg = raw["message"]
+        msg.replace("(member)",f"<@{member.id}>")
+
+        channel = client.get_channel(channel)
+
+        await channel.send(msg)
 
 
 #sends you the latency
@@ -169,6 +193,7 @@ async def invite(ctx):
         await ctx.send(f"{ctx.author.mention} Please check your DM.")
         await ctx.author.send(embed = embed)
 
+
 #######################################################################################################
                                     #ALL MESSAGE RELATED ACTIVITIES#
 #######################################################################################################
@@ -205,8 +230,6 @@ async def on_message(message):
             au = int(exact_txt_splitted[1])
             au_o = client.get_user(au)
             await au_o.send(" ".join(exact_txt_spl[2:]))
-
-
 
 
 #######################################################################################################
