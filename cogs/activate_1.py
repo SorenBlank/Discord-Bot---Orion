@@ -75,7 +75,7 @@ __**:warning:Disclaimer:warning:**__\n\
 
         #SECOND FIELD
         activator_embed.add_field(name=":card_box:SERVER UTILITIES:card_box:",
-                                  value = "------------ :arrow_down_small: ------------\n ឵឵ ",
+                                  value = "------------ :arrow_down_small: ------------",
                                   inline= False)
 
 
@@ -609,7 +609,7 @@ __**:warning:Disclaimer:warning:**__\n\
 
 
     @activate.command()
-        async def bye(self,ctx,channel:discord.TextChannel = None,*,message):
+    async def bye(self,ctx,channel:discord.TextChannel = None,*,message):
         raw = bye_cur.find({})
         guilds = []
         channels = []

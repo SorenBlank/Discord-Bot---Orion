@@ -123,6 +123,25 @@ async def on_member_join(member):
         testmsg = msg.replace("#member",member.mention)
         await channel.send(testmsg)
 
+@client.event
+async def on_member_remove(member):
+    raw = bye_cur.find({})
+    guilds = []
+    try:
+        x = [i for i in raw]
+        guilds = [x[i]["guild"] for i in range(len(x))]
+    except:
+        pass
+
+    if member.guild.id in guilds:
+        raw = bye_cur.find_one({"guild":member.guild.id})
+
+        channel = raw["channel"]
+        channel = client.get_channel(channel)
+        msg = raw["message"]
+        testmsg = msg.replace("#member",member.mention)
+        await channel.send(testmsg)
+
 #sends you the latency
 @client.command(aliases = ["ping","latency"])
 async def lat(ctx):

@@ -123,7 +123,7 @@ class H_1(commands.Cog):
 
         #SECOND FIELD
         activator_embed.add_field(name=":card_box:SERVER UTILITIES:card_box:",
-                                  value = "------------ :arrow_down_small: ------------\n ឵឵ ",
+                                  value = "------------ :arrow_down_small: ------------",
                                   inline= False)
 
 

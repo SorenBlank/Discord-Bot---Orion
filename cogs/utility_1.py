@@ -233,7 +233,7 @@ class U_1(commands.Cog):
 
             dic={"online":"<:online:814161343426199622> ","dnd":"<:dnd:814161369892257842> ","offline":":black_circle: ","idle":"<:idle:814161403271184426> "}
             dic1={"online":"Online","dnd":"Do Not Disturb","offline":"Offline","idle":"Idle"}
-            em.add_field(name='VERSION', value= "`V1.2`", inline=True)
+            em.add_field(name='VERSION', value= "`V1.3`", inline=True)
             
             st="None"
             activ=""
