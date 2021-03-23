@@ -598,7 +598,7 @@ __**:warning:Disclaimer:warning:**__\n\
                     weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
                     await ctx.send(f"**WELCOME** message is ```{message}```")
 
-                if ctx.guild.id in guilds and ctx.channel.id not in channels:
+                if ctx.guild.id in guilds and channel.id not in channels:
                         weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
                         weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
                         await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.\n**WELCOME** message is ```{message}```")
@@ -635,7 +635,7 @@ __**:warning:Disclaimer:warning:**__\n\
                     bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
                     await ctx.send(f"**BYE** message is ```{message}```")
 
-                if ctx.guild.id in guilds and ctx.channel.id not in channels:
+                if ctx.guild.id in guilds and channel.id not in channels:
                         bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
                         bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
                         await ctx.send(f"**BYE** channel has been updated to {channel.mention}.\n**BYE** message is ```{message}```")
