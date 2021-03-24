@@ -107,7 +107,7 @@ class M1(commands.Cog):
             await ctx.send("**Access Denied!** This command requires `manage_messages` permission in order to execute.")
 
     @commands.command()
-    async def chnick(self,ctx,member:discord.Member, nick):
+    async def chnick(self,ctx,member:discord.Member,*, nick):
 
         if ctx.author.guild_permissions.change_nickname:
             try:
