@@ -9,3 +9,5 @@ requests==2.25.1
 wikipedia==1.4.0
 dnspython
 pymongo
+nest_asyncio
+chess.com

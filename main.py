@@ -69,6 +69,7 @@ client.load_extension('cogs.bs_1')
 client.load_extension('cogs.fibo_1')
 client.load_extension('cogs.show_1')
 client.load_extension('cogs.utility_1')
+client.load_extension('cogs.chess_all')
 
 
 @client.event
@@ -258,7 +259,7 @@ nest_asyncio.apply()
     #content = f.read()
 
 #Token
-client.run(os.environ['TOKEN'])
+#client.run(os.environ['TOKEN'])
 #client.run("TOKEN")
 #client.run(str(os.environ.get('TOKEN')))
-#client.run("DE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")
+client.run("ODE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")
