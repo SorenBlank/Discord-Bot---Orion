@@ -22,51 +22,31 @@ class M1(commands.Cog):
     #kick_command
     @commands.command()
     async def kick(self, ctx, member: discord.Member, reason = None):
-        raw = m1_cur.find({})
-        guilds = []
-        channels = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-        except:
-            pass
-        
-
         if ctx.author.guild_permissions.kick_members:
-            if ctx.guild.id in guilds:
-                try:
-                    await member.kick(reason=reason)
-                    await ctx.send(f'{member.mention} is kicked')
-                except:
-                    await ctx.send(f"I dont have the power to kick {member.mention}")
+            try:
+                await member.kick(reason=reason)
+                await ctx.send(f'{member.mention} is kicked')
+            except:
+                await ctx.send(f"I dont have the power to kick.")
         else:
-            await ctx.send("**Access Denied!** This command requires `kick_members` permission in order to execute.")
+            embed = discord.Embed(title= "**Access Denied!**",description = "This command requires `kick_members` permission in order to execute.")
+            await ctx.send(embed = embed)
     
     #ban_command
     @commands.command()
     async def ban(self, ctx, member: discord.Member, reason = None):
-        raw = m1_cur.find({})
-        guilds = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-        except:
-            pass
-        
         if ctx.author.guild_permissions.ban_members:
-            if ctx.guild.id in guilds:
-                try:
-                    await member.ban(reason=reason)
-                    if reason == None:
-                        await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}')
-                    else:
-                        await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}. Reason: {reason}')
-                except:
-                    await ctx.send("❌ I don't have the permission.")
-            else:
-                await ctx.send("M1 is deactivate")
+            try:
+                await member.ban(reason=reason)
+                if reason == None:
+                    await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}')
+                else:
+                    await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}. Reason: {reason}')
+            except:
+                await ctx.send(f"I dont have the power to ban.")
         else:
-            await ctx.channel.send("**Access Denied!** This command requires `ban_members` permission in order to execute.")
+            embed = discord.Embed(title= "**Access Denied!**",description = "This command requires `ban_members` permission in order to execute.")
+            await ctx.send(embed = embed)
     
     #unban_command
     @commands.command()
@@ -83,17 +63,15 @@ class M1(commands.Cog):
         member_name, member_tag = member.split("#")
 
         if ctx.author.guild_permissions.ban_members:
-            if ctx.guild.id in guilds:
-                for i in banned_entries:
-                    user = i.user
-                    if (user.name, user.discriminator) == (member_name,member_tag):
-                        await ctx.guild.unban(user)
-                        await ctx.send(f'**User:** {user.mention} is unbanned now.')
-                        return
-            else:
-                ctx.send("M1 is deactivate.")
+            for i in banned_entries:
+                user = i.user
+                if (user.name, user.discriminator) == (member_name,member_tag):
+                    await ctx.guild.unban(user)
+                    await ctx.send(f'**User:** {user.mention} is unbanned now.')
+                    return
         else:
-            await ctx.send("**Access Denied!** This command requires `ban_members` permission in order to execute.")
+            embed = discord.Embed(title= "**Access Denied!**",description = "This command requires `ban_members` permission in order to execute.")
+            await ctx.send(embed = embed)
 
     @commands.command()
     async def purge(self,ctx,number=None):

@@ -33,31 +33,32 @@ class A_T_C_1(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-    	print("Timer Announce is Loaded ----")
-    	while True:
-    		await asyncio.sleep(1)
-    		raw = ta_cur.find({})
-    		lists = []
+        print("Timer Announce is Loaded ----")
+        while True:
+            await asyncio.sleep(1)
+            raw = ta_cur.find({})
+            lists = []
 
-    		try:
-	    		lists = [x for x in raw]
-	    	except:
-	    		pass
+            try:
+                lists = [x for x in raw]
+            except:
+                pass
 
-	    	for i in range(len(lists)):
+            for i in range(len(lists)):
 
-	    		if int(lists[i]["time"]) <= 2:
+                if int(lists[i]["time"]) <= 2:
 
-	    			try:
-	    				ch = self.client.get_channel(lists[i]["channel"])
-	    				await ch.send(lists[i]["announcement"])
-	    				ta_cur.delete_one({"_id":lists[i]["_id"]})
+                    try:
+                        ch = self.client.get_channel(lists[i]["channel"])
+                        await ch.send(lists[i]["announcement"])
+                        ta_cur.delete_one({"_id":lists[i]["_id"]})
 
-	    			except:
-	    				pass
+                    except:
+                        pass
 
-	    		elif int(lists[i]["time"]) > 2:
-	    			ta_cur.update_one({"_id":lists[i]["_id"]},{"$inc":{"time":-1}})
+                elif int(lists[i]["time"]) > 2:
+                    updated = int(lists[i]["time"]) - 1
+                    ta_cur.update_one({"_id":lists[i]["_id"]},{"$set":{"time": updated}})
 
 def setup(client):
     client.add_cog(A_T_C_1(client))

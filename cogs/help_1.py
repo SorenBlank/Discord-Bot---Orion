@@ -19,6 +19,7 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import re
+import urllib
 
 class H_1(commands.Cog):
     def __init__(self, client):
@@ -31,45 +32,43 @@ class H_1(commands.Cog):
     @commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["h"])
     async def help(self,ctx):
 
-        help_embed = discord.Embed(title='= = = = = = = |❗❕Help❕❗| = = = = = = =',description="Prefix = `.o`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
+        help_embed = discord.Embed()
+        help_embed.set_author(name = "HELP COMMANDS",icon_url = self.client.user.avatar_url)
+        help_embed.set_thumbnail(url= self.client.user.avatar_url)
         
-        help_embed.add_field(name=":gear: __PROTOCOLS/SERVER UTILITIES__ :gear:",
-                             value=":white_small_square:This section includes all **Protocol** infos.\n__Command:__ ```.o help protocol```\n:white_small_square:This section includes all **Server Utility** infos.\n__Command:__ ```.o help server utility```\n ឵឵ ",
-                             inline = False)
+        help_embed.add_field(name="Server Utilities",
+                             value="```\n.o help server utility```",
+                             inline = True)
 
-        help_embed.add_field(name=":card_box: __UTILITIES__ :card_box:",
-                             value=":white_small_square:This section includes all **Utility** infos which are easily accessable to everyone.\n__Command:__ ```.o help utility```\n ឵឵",
+        help_embed.add_field(name="Utilities",
+                             value="```\n.o help utility```",
                              inline=False)
 
-        help_embed.add_field(name=":video_game: __GAMES__ :video_game:",
-                             value=":white_small_square:This section includes all **Games** infos.\n__Command:__ ```.o help game```\n ឵឵",
-                             inline=False)
+        help_embed.add_field(name="Games",
+                             value="```\n.o help game```",
+                             inline=True)
 
-        help_embed.add_field(name=":book: __PHILOSOPHY__ :book:",
-                             value=":white_small_square:If you aren't a nerd, this section isn't for you.\n__Command:__ ```.o help philosophy```\n ឵឵",
-                             inline= False)
-        help_embed.add_field(name = ":paperclips: __LINKS__ :paperclips:",
-                             value = "**[Invite link](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) | [Official server](https://discord.gg/JJtUtgMjBv)**",
+        help_embed.add_field(name="Activities",
+                             value="```\n.o help activity```",
+                             inline= True)
+
+        help_embed.add_field(name = "Links",
+                             value = "**[Invite link](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) | [Official server](https://discord.gg/JJtUtgMjBv) | [Vote](https://top.gg/bot/777095257262522399/vote/)**",
                              inline = False)
-        help_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
+        
         await ctx.send(embed = help_embed)
 
     @help.command(aliases=["games","g","tictactoe","tic","tac","fibo","Fibonacci"])
     async def game(self,ctx):
-        game_embed = discord.Embed(title="= = = = = = = = |🎮 Game 🎮| = = = = = = = =",description="឵឵")
-        game_embed.add_field(name=':1234: Fibonacci/Fibo :1234:',
-                             value="This is a **Fibonacci Count Up** game. In mathematics, the Fibonacci numbers, commonly denoted `Fn`, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from `0` and `1`.\nSequence Example: `1, 1, 2, 3, 5, 8, 13, 21, 55........`. Just start the game by typing `1` in the Fibonacci channel.\n:notepad_spiral:__**Rules:**__:notepad_spiral:\n**1)** A channel has to be specified/set before playing **Fibonacci Countup**.\n__**Activation Command**__: `.o activate fibo (channel)`\n**2)** The count starts from 1.\n**3)** One player can not count twice on a row.",
-                             inline=False)
-        game_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-        game_embed.add_field(name=":o: TicTacToe :x:",
-                             value="This is a **TicTacToe** game. Tic-tac-toe (American English), noughts and crosses (Commonwealth English), or Xs and Os/“X’y O’sies” (Ireland), is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3×3 grid. The player who succeeds in placing three of their marks in a diagonal, horizontal, or vertical row is the winner. It is a solved game with a forced draw assuming best play from both players.\n __**Command:**__ `.o tic [player/opponent]`\n:notepad_spiral:__**Rules:**__:notepad_spiral:\n**1)** A channel has to be specified/set before playing **TicTacToe**\n**2)** You can not place your symbol twice on a row.\n**3)** You can not overlap.",
-                             inline=False)
-        game_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-        game_embed.add_field(name=":ship: Battleship :ship:",
-                             value="This is a **Battleship** game. Battleship (also Battleships or Sea Battle) is a strategy type guessing game for two players. It is played on ruled grids (paper or board) on which each player's fleet of ships (including battleships) are marked. The locations of the fleets are concealed from the other player.The objective of the game is to destroy the opposing player's fleet. You can check this [tutorial](https://www.youtube.com/watch?v=4gHJlYLomrs&ab_channel=GatherTogetherGames) or read this [article](https://www.thesprucecrafts.com/the-basic-rules-of-battleship-411069) or type `.o help battleship`.\n__**Command:**__ `.o battleship [player/opponent]`\n:notepad_spiral:__**Rules:**__:notepad_spiral:\n**1)** Each player places the 5 ships somewhere on their board.\n**2)** The ships can only be placed vertically or horizontally. Diagonal placement is not allowed.\n**3)** No part of a ship may hang off the edge of the board.\n**4)** Ships may not overlap each other.",
-                             inline="False")
+        game_embed = discord.Embed()
+        game_embed.set_author(name = "GAME COMMANDS",icon_url = self.client.user.avatar_url)
+        game_embed.add_field(name=':1234: Fibonacci Countup',
+                             value="`.o set fibo (channel)`")
+        game_embed.add_field(name=":o: TicTacToe",
+                             value="`.o tic [player]`")
+        game_embed.add_field(name=":ship: Battleship",
+                             value="`.o bs [player]`")
 
-        game_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
         await ctx.send(embed = game_embed)
 
     @help.command(aliases=["bs"])
@@ -91,221 +90,140 @@ class H_1(commands.Cog):
         bs_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
         await ctx.send(embed=bs_embed)
 
-    @help.command(aliases=["p","c1","m1"])
-    async def protocol(self,ctx):
-        p_embed = discord.Embed(title="= = = = = = |:gear: Protocol :gear:| = = = = =",description="Aliases = `p`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-        p_embed.add_field(name=":crossed_swords: M1 :crossed_swords:",
-                          value=":small_orange_diamond: M1 Protocol includes moderation commands. After activating the **M1** you can use the following moderation commands-\n**1) **__Kick__\n__**Command:**__ `.o kick [member]`\n\n**2) **__Ban__\n__**Command:**__ `.o ban [member]`\n\n**3) **__Unban__\n__**Command:**__ `.o unabn [member]`",
-                          inline=False)
-        p_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-        p_embed.add_field(name=":robot: C1 :robot:",
-                          value=":small_blue_diamond: Just activate a channel using this command `.o activate c1 (channel)`. And rest of the job leave up to the bot.")
-        p_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
-        await ctx.send(embed=p_embed)
-
-    @help.command(aliases = ["initiate","start","set","setup"])
+    @help.command(aliases = ["initiate","start","set","setup","activation"])
     async def Activate(self,ctx):
-        activator_embed = discord.Embed(title='= = = = = = =| Help - [Activate] |= = = = = = =',description='Aliases = `initiate`, `start`, `set`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -')
-
-
-        #FIRST FIELD        
-        activator_embed.add_field(name=":gear:PROTOCOLS:gear:",
-                                  value='‎‎--------- :arrow_down_small: ---------',
-                                  inline=False)
-        activator_embed.add_field(name=":large_orange_diamond: M1",
-                                  value=":small_orange_diamond:Activating M1 will allow the mods to use **Moderation Commands**.\n**__Command:__** `.o activate m1`",
-                                  inline=False)
-        activator_embed.add_field(name=":large_orange_diamond: C1 (BETA)",
-                                  value=":small_orange_diamond:Activating C1 on a specific channel will allow the bot to use it's chat functionality.\n**__Command:__** `.o activate c1 (channel)`",
-                                  inline=False)
-
-        activator_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
+        activator_embed = discord.Embed()
+        activator_embed.set_author(name = "ACTIVATE COMMANDS", icon_url=self.client.user.avatar_url)
 
         #SECOND FIELD
         activator_embed.add_field(name=":card_box:SERVER UTILITIES:card_box:",
-                                  value = "------------ :arrow_down_small: ------------",
+                                  value = "Use the command `!set [option] (channel)` to set channels.",
                                   inline= False)
 
 
-
-        activator_embed.add_field(name = ":hammer_pick: Welcome Message",
-                                  value = ":small_orange_diamond: A channel and message where Orion will welcome new comers.\nType '#member' inside the message in order to mention the member.\n**__Command:__** `.o set welcome [channel] [message]`",
+        activator_embed.add_field(name = ":hammer_pick: Welcome/Bye Message",
+                                  value = "```py\n.o set welcome [channel] [message] \n# to set a greeting channel & message\n\n.o set bye [channel] [message] \n# to set a farewell channel & message```Use `#member` keyword to mention the member.\n\n ឵឵ ",
                                   inline = False)
-
-        activator_embed.add_field(name=":hammer_pick: Bye Message",
-                                  value = ":small_orange_diamond: A channel and message where Orion will send bye message.\nType '#member' inside the message in order to mention the member.\n**__Command:__** `.o set bye [channel] [message]`",
-                                  inline = False)
-
-        activator_embed.add_field(name=":hammer_pick: Announcement Command Channel",
-                                  value=":small_orange_diamond: A channel from where you will announce.\n**__Command:__** `.o set announce_ch (channel)`",
-                                  inline=False)
-
-        activator_embed.add_field(name=":hammer_pick: Announcement Channel",
-                                  value=":small_orange_diamond: A channel where you will announce.\n**__Command:__** `.o set announce (channel)`",
-                                  inline=False)
-
-        activator_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-
 
         #THIRD FIELD
         activator_embed.add_field(name=":video_game:GAMES:video_game:",
-                                  value="------ :arrow_down_small: -----",
+                                  value="Use the command `!set [option] (channel)` to set channels for games.",
                                   inline=False)
-        activator_embed.add_field(name=":large_blue_diamond: Fibonacci/Fibo",
-                                  value=":small_blue_diamond: A channel where you can count up but in Fibonacci series.\n**__Command:__** `.o activate fibo (channel)`",inline=False)
-        activator_embed.add_field(name=":large_blue_diamond: TicTacToe",
-                                  value=":small_blue_diamond: A channel for playing tictactoe.\n**__Command:__** `.o activate tic (channel)`",
-                                  inline=False)
-        activator_embed.add_field(name=":large_blue_diamond: Battleship (BETA)",
-                                  value=':small_blue_diamond: A channel for playing battleship.\n**__Command:__** `.o activate battleship (channel)`',
-                                  inline = False)
-        
-        activator_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
+        activator_embed.add_field(name=":1234: Fibonacci Countup",
+                                  value="`.o set fibo (channel)`")
+        activator_embed.add_field(name=":bangbang:  TicTacToe",
+                                  value="`.o set tic (channel)`")
+        activator_embed.add_field(name=":ship: Battleship (BETA)",
+                                  value='`.o set bs (channel)`')
 
-
-        activator_embed.add_field(name=":book:PHILOSOPHY:book:",
-                                  value="---------- :arrow_down_small: ---------",
-                                  inline=False)
-        activator_embed.add_field(name=":orange_book: Wikipedia",
-                                  value=":small_orange_diamond: A channel for wikipedia search.\n**__Command:__** `.o activate wiki (channel)`",
-                                  inline=False)
-
-
-        activator_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
+        activator_embed.set_footer(icon_url=ctx.author.avatar_url,text="Pro tip: The ( and ) around the argument mean it’s optional.")
 
         await ctx.send(embed = activator_embed)
 
-    @help.command(aliases = ["stop","eliminate","remove"])
+    @help.command(aliases = ["stop","eliminate","remove","deactivation"])
     async def Deactivate(self,ctx):
-        deactivator_embed = discord.Embed(title = "= = = = = = =| Help - [Deactivate] |= = = = = = =",description= "Aliases = `stop` , `eliminate`, `remove`\nFor more info: `.o help`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-
-        deactivator_embed.add_field(name=":octagonal_sign: Deactivate Commands :octagonal_sign:",value="-:arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down:-\n\n:one: `.o deactivate m1`\nThis command will turn off **M1 protocol**.\n\n:two: `.o deactivate c1 (channel)` or `deactivate all c1`\nThis command will eliminate **C1 Protocol** from a specific channel or all channels.\n\n:three: `.o remove announce_ch`\nThis command removes **Announcement Command Channel**.\n\n:four: `.o remove announce (channel)`\nThis command removes bot **Announcement Channel**.\n\n:five: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:six: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:seven: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:eight: `.o deactivate wiki`\nThis command removes **Wikipedia Channel**.")
-        deactivator_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
+        deactivator_embed = discord.Embed(description = ":one: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:two: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:three: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:nine: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:keycap_ten: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
+        deactivator_embed.set_author(name = "DEACTIVATE COMMANDS", icon_url= self.client.user.avatar_url)
         await ctx.send(embed = deactivator_embed)
-
-
 
     @help.command(aliases=["su","server","announce","announcement"])
     async def server_utilities(self,ctx,msg = None):
         try:
             if msg.lower() == "utility" or msg.lower() == "utilities" or msg.lower() == "u":
-                su_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `su`,`server utility`,`server utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-                
-                su_embed.add_field(name="= = __:link:ACTIVATION / DEACTIVATION:link:__ = =",
-                                     value="- - - - - - - - - :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - - - - - - - - -\n:white_small_square: **Activation/Deactivation** commands are the most important commands in order to use all features properly.",
-                                     inline=False)
-                su_embed.add_field(name=":large_blue_diamond: Activation",
-                                     value=":small_blue_diamond: Thre are so many features in this bot which requires a specific channel for each where the features can Better used. Such as, a specific channel for **TicTacToe** game or **Battleship** game, one or two specific **Announcement** channel and a specific Announcement Command channel where you will tell the bot in which channel to announce. Here you will find all activation commands.\n**__Command:__** `.o help activate`\n឵឵",
-                                     inline=False)
-                su_embed.add_field(name=":large_orange_diamond: Deactivation",
-                                     value=":small_orange_diamond: Sometimes you might need to deactivate a feature from a channel or change the channel. Here you will find all deactivation/update commands. \n**__Command:__** `.o help deactivate`\n- - - - - - - - - - - - - - - - - - - -",
-                                     inline=False)
-                su_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-                su_embed.add_field(name=":diamond_shape_with_a_dot_inside: ANNOUNCE",
-                                  value=":small_blue_diamond: You can announce announce with your bot now. You can also attach file with the announcement.\n__**Requirements:**__\n1) An *Announcement Command Channel*\n2) At least one *Announcement Channel* set for the bot.\n\nFirst execute the command written below in *Announcement Command Channel*. Then send your announcement in that same channel. You can also set a timer for when you want the bot to announce your announcement.\n__Example:__\nType `1s` at the place of `(time)` in order to announce after 1 second. In the same way, `1m` for after 1 minute, `1h` for after 1 hour.\n__**Command:**__ `.o announce [channel] (time)`\n឵឵",
+                su_embed = discord.Embed(description = "Use the command `.o help <option>` to view more info.")
+                su_embed.set_author(name = "SERVER UTILITY COMMANDS",icon_url = self.client.user.avatar_url)
+                su_embed.add_field(name=":white_check_mark: Activation",
+                                     value="`.o help activate`",
+                                     inline=True)
+                su_embed.add_field(name=":negative_squared_cross_mark: Deactivation",
+                                     value="`.o help deactivate`",
+                                     inline=True)
+                su_embed.add_field(name="-\n:bell: Announce",
+                                  value="`.o announce [channel] (time)`\nTime Plugin Example: `1s`, `1m`, `1h`\n**-**",
                                   inline=False)
-                su_embed.add_field(name = ":crossed_swords: KICK",
-                                  value = ":small_orange_diamond: This command is used for kicking an account out of the server.\n__**Command:**__ `.o kick [member]`\n឵឵",
-                                  inline=False)
-                su_embed.add_field(name = ":crossed_swords: BAN",
-                                  value = ":small_orange_diamond: This command is used for banning an account from the server.\n__**Command:**__ `.o ban [member]`\n឵឵")
-                su_embed.add_field(name = ":crossed_swords: UNBAN",
-                                  value = ":small_orange_diamond: This command is used for unbanning an account.\n__**Command:**__ `.o unban [member]`\n឵឵")
-                
-                su_embed.add_field(name = ":crossed_swords: PURGE",
-                                  value = ":small_orange_diamond: This command is used for deleting messages of current channel.\n__**Command:**__ `.o purge [number of messages]`\n឵឵",
-                                  inline = False)
+                su_embed.add_field(name = ":crossed_swords: Kick",
+                                    value = "`.o kick [member]`")
+                su_embed.add_field(name = ":crossed_swords: Ban",
+                                    value = "`.o ban [member]`")
+            
+                su_embed.add_field(name = ":crossed_swords: Unban",
+                                    value = "`.o unban [member]`")
+                su_embed.add_field(name = ":crossed_swords: Purge",
+                                    value = "`.o purge [number]`឵឵")
+                su_embed.add_field(name = ":crossed_swords: Change Nickname",
+                                value = "`.o chnick [user] [nickname]`")
+                su_embed.set_footer(text= "Pro tip: The ( and ) around the argument mean it’s optional.", icon_url= ctx.author.avatar_url)
 
-                su_embed.add_field(name = ":crossed_swords: CHANGE NICKNAME",
-                                   value = ":small_orange_diamond: This command is used to change nickname of a specific account.\n__**Command:**__ `.o chnick [user] [nickname]`",
-                                   inline = False)
-
-                su_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
                 await ctx.send(embed= su_embed)
         except:
-            su_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `su`,`server utility`,`server utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-            
-            su_embed.add_field(name="= = __:link:ACTIVATION / DEACTIVATION:link:__ = =",
-                                 value="- - - - - - - - - :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - - - - - - - - -\n:white_small_square: **Activation/Deactivation** commands are the most important commands in order to use all features properly.",
-                                 inline=False)
-            su_embed.add_field(name=":large_blue_diamond: Activation",
-                                 value=":small_blue_diamond: Thre are so many features in this bot which requires a specific channel for each where the features can Better used. Such as, a specific channel for **TicTacToe** game or **Battleship** game, one or two specific **Announcement** channel and a specific Announcement Command channel where you will tell the bot in which channel to announce. Here you will find all activation commands.\n**__Command:__** `.o help activate`\n឵឵",
-                                 inline=False)
-            su_embed.add_field(name=":large_orange_diamond: Deactivation",
-                                 value=":small_orange_diamond: Sometimes you might need to deactivate a feature from a channel or change the channel. Here you will find all deactivation/update commands. \n**__Command:__** `.o help deactivate`\n- - - - - - - - - - - - - - - - - - - -",
-                                 inline=False)
-            su_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-            su_embed.add_field(name=":diamond_shape_with_a_dot_inside: ANNOUNCE",
-                              value=":small_blue_diamond: You can announce announce with your bot now. You can also attach file with the announcement.\n__**Requirements:**__\n1) An *Announcement Command Channel*\n2) At least one *Announcement Channel* set for the bot.\n\nFirst execute the command written below in *Announcement Command Channel*. Then send your announcement in that same channel. You can also set a timer for when you want the bot to announce your announcement.\n__Example:__\nType `1s` at the place of `(time)` in order to announce after 1 second. In the same way, `1m` for after 1 minute, `1h` for after 1 hour.\n__**Command:**__ `.o announce [channel] (time)`\n឵឵",
-                              inline=False)
-            su_embed.add_field(name = ":crossed_swords: KICK",
-                              value = ":small_orange_diamond: This command is used for kicking an account out of the server.\n__**Command:**__ `.o kick [member]`\n឵឵",
-                              inline=False)
-            su_embed.add_field(name = ":crossed_swords: BAN",
-                              value = ":small_orange_diamond: This command is used for banning an account from the server.\n__**Command:**__ `.o ban [member]`\n឵឵")
-            su_embed.add_field(name = ":crossed_swords: UNBAN",
-                              value = ":small_orange_diamond: This command is used for unbanning an account.\n__**Command:**__ `.o unban [member]`\n឵឵")
-            
-            su_embed.add_field(name = ":crossed_swords: PURGE",
-                              value = ":small_orange_diamond: This command is used for deleting messages of current channel.\n__**Command:**__ `.o purge [number of messages]`\n឵឵",
-                              inline = False)
+            su_embed = discord.Embed(description = "Use the command `.o help <option>` to view more info.")
+            su_embed.set_author(name = "SERVER UTILITY COMMANDS",icon_url = self.client.user.avatar_url)
+            su_embed.add_field(name=":white_check_mark: Activation",
+                                    value="`.o help activate`",
+                                    inline=True)
+            su_embed.add_field(name=":negative_squared_cross_mark: Deactivation",
+                                    value="`.o help deactivate`",
+                                    inline=True)
+            su_embed.add_field(name="-\n:bell: Announce",
+                                value="```\n.o announce [channel] (time)```Time Plugin Example: `1s`, `1m`, `1h`\n**-**",
+                                inline=False)
+            su_embed.add_field(name = ":crossed_swords: Kick",
+                                value = "`.o kick [member]`")
+            su_embed.add_field(name = ":crossed_swords: Ban",
+                                value = "`.o ban [member]`")
+        
+            su_embed.add_field(name = ":crossed_swords: Unban",
+                                value = "`.o unban [member]`")
+            su_embed.add_field(name = ":crossed_swords: Purge",
+                                value = "`.o purge [number]`឵឵")
+            su_embed.add_field(name = ":crossed_swords: Change Nickname",
+                            value = "`.o chnick [user] [nickname]`")
+            su_embed.set_footer(text= "Pro tip: The ( and ) around the argument mean it’s optional.", icon_url= ctx.author.avatar_url)
 
-            su_embed.add_field(name = ":crossed_swords: CHANGE NICKNAME",
-                               value = ":small_orange_diamond: This command is used to change nickname of a specific account.\n__**Command:**__ `.o chnick [user] [nickname]`",
-                               inline = False)
-
-            su_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
             await ctx.send(embed= su_embed)
 
     @help.command(aliases = ["utility","u"])
     async def utilities(self,ctx):
-        u_embed = discord.Embed(title="= = = = = = |:card_box:Server Utilities :card_box:| = = = = =",description="Aliases = `u`,`utility`,`utilities`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-        
-        u_embed.add_field(name=":large_blue_diamond: AVATAR",
-                          value = ":small_blue_diamond: This command is used for seeing avatar of your account's or a specific account's.\n__**Command:**__ `.o avatar (member)` or `.o av (member)`\n឵឵",
-                          inline = False)
-        u_embed.add_field(name=":large_blue_diamond: USER INFO",
-                           value= ":small_blue_diamond: This command is used for getting user info of your account's or a specific account's.\n__**Command:**__ `.o userinfo (member)`",
-                           inline = False)
-        u_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
+        u_embed = discord.Embed()
+        u_embed.set_author(name = "UTILITY COMMANDS",icon_url = self.client.user.avatar_url)
+        u_embed.add_field(name=":frame_photo: Avatar",
+                          value = "`.o av (member)`")
+        u_embed.add_field(name=":card_index: User Info",
+                           value= "`.o userinfo (member)`")
+        u_embed.set_footer(text= "Pro tip: The ( and ) around the argument mean it’s optional.", icon_url= ctx.author.avatar_url)
         await ctx.send(embed= u_embed)
 
 
-    @help.command(aliases=['philosophy','wiki','wikipedia'])
-    async def philo(self,ctx):
-        ph_embed = discord.Embed(title="= = = = = = |:card_box: Philosophy :card_box:| = = = = =",description="Aliases = `philo`\nFor more info: `.o help`\n\n__**:warning:Disclaimer:warning:**__\n:white_small_square: The `[` and `]` around the argument mean it’s required.\n:white_small_square: The `(` and `)` around the argument mean it’s optional.\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n")
-    
-        ph_embed.add_field(name=":notebook: WIKIPEDIA",value="Using Wikipedia command you can search for any thing's summary on Wikipedia.\n__**Command:**__ `.o wiki [subject]`",
-                            inline=False)
+    @help.command(aliases=['activity','wiki','wikipedia','act'])
+    async def activities(self,ctx):
+        ph_embed = discord.Embed()
+        ph_embed.set_author(name = "ACTIVITY COMMANDS",icon_url = self.client.user.avatar_url)
+        ph_embed.add_field(name=":mag: SEARCH",value="Use the command `.o <platform> <search>` to search.", inline= False)
+        ph_embed.add_field(name = ":notebook: Wikipedia",value = "`.o wiki [search]`")
+        ph_embed.add_field(name = ":flag_jp: Anime", value = "`.o anime [search]`")
+        ph_embed.add_field(name = ":flag_jp: Manga", value = "`.o manga [search]`")
+        ph_embed.add_field(name = "<:google:829098461306683443> Google", value = "`.o google [search]`")
+        ph_embed.add_field(name = "<:youtube:829099216944758857> YouTube", value = "`.o youtube [search]`")
+        ph_embed.add_field(name = " ឵឵ \n📚 RESOURCES",
+                      value = "Use the command `.o re <option>` to view all resource.",
+                      inline= False)
+        ph_embed.add_field(name = "<:python:814811189241970718> Python ",
+                     value= "`.o re python`")
+        ph_embed.add_field(name = "<:html:815225352958771210> Web Dev",
+                     value = "`.o re web`")
+        ph_embed.add_field(name = ":gear: Machine Learning",
+                     value = "`.o re ml`")
+        ph_embed.add_field(name = "<:android:814849449570205736> Android Dev",
+                     value = "`.o re android`")
 
-        ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:python:814811189241970718> PYTHON LEARNING RESOURCES",
-                     value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
-                     inline = False)
-        ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:html:815225352958771210> WEB DEVELOPMENT RESOURCES",
-                     value = ":small_orange_diamond: Here you will find useful web development learning resources for any code newbie who is trying to learn web development.\n**__Command:__** `.o resource web`",
-                     inline = False)
+        ph_embed.add_field(name = "<:iOS:814846523128676372> iOS Dev",
+                     value = "`.o re ios`")
 
-        ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:android:814849449570205736> ANDROID DEVELOPMENT RESOURCES",
-                     value = ":small_orange_diamond: Here you will find some useful resources if you are interested in Android development.\n**__Command:__** `.o resource android`",
-                     inline = False)
+        ph_embed.add_field(name = ":keyboard: Programming",
+                     value = "`.o re programming`")
 
-        ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:iOS:814846523128676372> iOS DEVELOPMENT RESOURCES",
-                     value = ":white_small_square: Here you will find some useful iOS development learning resources to quick-start your iOS development journey.\n**__Command:__** `.o resource ios`",
-                     inline = False)
-
-        ph_embed.add_field(name = "―――――――――――――――――――――――――\n:gear: MACHINE LEARNING RESOURCES",
-                     value = ":small_orange_diamond: Here is a brief overview of the magnificent world of machine learning. Hope you find something useful or interesting!\n**__Command:__** `.o resource ml`",
-                     inline = False)
-
-        ph_embed.add_field(name = "―――――――――――――――――――――――――\n:keyboard: GENERAL PROGRAMMING RESOURCES",
-                     value = ":small_orange_diamond: Here are some general resources that you all will find useful, they aren't based on one specific topic. So there should be something here for everyone.\n**__Command:__** `.o resource programming`",
-                     inline = False)
-
-        ph_embed.add_field(name = "―――――――――――――――――――――――――\n<:linux:814863906756624384> LINUX GUIDE",
-                     value = ":small_orange_diamond: Here is a guide to getting started with linux. Hope everyone will find it very useful.\n__**Command:**__ `.o resource linux`",
-                     inline = False)
-
-        ph_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
+        ph_embed.add_field(name = "<:linux:814863906756624384> Linux Guide",
+                     value = "`.o re linux`")
         await ctx.send(embed = ph_embed)
 
 def setup(client):

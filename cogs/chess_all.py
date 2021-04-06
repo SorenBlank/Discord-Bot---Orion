@@ -24,9 +24,7 @@ chessClient.aio = True
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 chess_cur = base["chessaccount"]
-def get_player(user):
-        data = get_player_profile(user)
-        return data
+
 
 class CHESS(commands.Cog):
     def __init__(self, client):
@@ -111,7 +109,8 @@ class CHESS(commands.Cog):
             player = data["player"]
             stats = data2["stats"]
 
-            profile_em = discord.Embed(title = "= = = = = |<:wk:820331572938539010> **Chess Profile** <:bk:820557586318360597>| = = = = =")
+            profile_em = discord.Embed()
+            profile_em.set_author(name = "CHESS PROFILE",icon_url= self.client.user.avatar_url)
             try:
                 profile_em.add_field(name = ':white_medium_square: NAME :',
                     value = f':white_small_square:`{player["name"]}`')
@@ -157,5 +156,6 @@ class CHESS(commands.Cog):
         elif raw == None:
             await ctx.send(f"`{user}` isn't linked with any **chess.com** account.")
 
+        
 def setup(client):
     client.add_cog(CHESS(client))

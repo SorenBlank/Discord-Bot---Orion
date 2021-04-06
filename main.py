@@ -20,6 +20,8 @@ from io import BytesIO
 import numpy as np
 import re
 from discord import ActivityType as AT
+import urllib
+import requests
 import pymongo
 from pymongo import MongoClient
 
@@ -59,8 +61,6 @@ client.load_extension('cogs.help_1')
 client.load_extension('cogs.activate_1')
 client.load_extension('cogs.deactivate_1')
 client.load_extension('cogs.mod_1')
-client.load_extension('cogs.chat_1')
-client.load_extension('cogs.chat_1_2')
 client.load_extension('cogs.announce_1')
 client.load_extension('cogs.announce_timer_check_1')
 client.load_extension('cogs.philosophy_1')
@@ -70,6 +70,8 @@ client.load_extension('cogs.fibo_1')
 client.load_extension('cogs.show_1')
 client.load_extension('cogs.utility_1')
 client.load_extension('cogs.chess_all')
+client.load_extension('cogs.anime_1')
+client.load_extension('cogs.google_1')
 
 
 @client.event
@@ -117,7 +119,6 @@ async def on_member_join(member):
 
     if member.guild.id in guilds:
         raw = weclome_cur.find_one({"guild":member.guild.id})
-
         channel = raw["channel"]
         channel = client.get_channel(channel)
         msg = raw["message"]
@@ -211,6 +212,83 @@ async def invite(ctx):
         await ctx.send(f"{ctx.author.mention} Please check your DM.")
         await ctx.author.send(embed = embed)
 
+@client.command()
+async def youtube(ctx, *, search):
+    query_string = urllib.parse.urlencode({'search_query': search})
+    html_content = urllib.request.urlopen('http://www.youtube.com/results?' + query_string)
+    search_content= html_content.read().decode()
+    search_results = re.findall(r'\/watch\?v=\w+', search_content)
+    #print(search_results)
+    link_msg = await ctx.send('https://www.youtube.com' + search_results[0])
+
+    def react_check(reaction, user): #reaction check function
+        emojis = ["🚫","➡️","⬅️"]
+        return user.id == ctx.author.id and reaction.message.id == link_msg.id and str(reaction.emoji) in emojis
+    
+    page = 0
+    pages = len(search_results)
+    
+    clean_emoji = True
+
+    while True: # looping between pages
+        if page == 0:
+            if not clean_emoji:
+                for i in emojis:
+                    await link_msg.clear_reaction(i) # remove emoji if exists
+
+            emojis = ["🚫","➡️"]
+            for emoji in emojis:
+                await link_msg.add_reaction(emoji) # add emoji to link_msg
+        
+            clean_emoji = True
+            
+        elif page == pages-1:
+            if not clean_emoji:
+                for i in emojis:
+                    await link_msg.clear_reaction(i) # remove emoji if exists
+
+            emojis = ["⬅️","🚫"]
+            for emoji in emojis:
+                await link_msg.add_reaction(emoji)
+            
+            clean_emoji = True
+        else:
+            if clean_emoji:
+                for i in emojis:
+                    await link_msg.clear_reaction(i) # remove emoji if exists
+
+            emojis = ["⬅️","➡️"]
+            for emoji in emojis:
+                await link_msg.add_reaction(emoji)
+        
+            clean_emoji = False
+        
+        try: # to handle timeout error
+            user_react,user = await client.wait_for("reaction_add", check = react_check, timeout=60)
+            
+            
+            if user_react.emoji == "➡️" and page != pages-1:
+                page += 1
+                await link_msg.edit(content = 'https://www.youtube.com' + search_results[page])
+                await link_msg.remove_reaction(user_react, user)
+            
+            if user_react.emoji == "⬅️" and page > 0:
+                page -= 1
+                await link_msg.edit(content = 'https://www.youtube.com' + search_results[page])
+                await link_msg.remove_reaction(user_react, user)
+            
+            if user_react.emoji == "🚫":
+                if react_check(user_react,user):
+                    await link_msg.clear_reactions()
+                    break
+                
+        
+        except asyncio.TimeoutError:
+            try:
+                for emoji in link_msg.reactions:
+                    await link_msg.clear_reaction(emoji)
+            except:
+                pass
 
 #######################################################################################################
                                     #ALL MESSAGE RELATED ACTIVITIES#

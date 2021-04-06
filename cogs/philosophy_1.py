@@ -27,9 +27,9 @@ class P1(commands.Cog):
 
     @commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["r","re","resources"])
     async def resource(self,ctx):
-        rs = discord.Embed(title = "= = = = = | 📚 Learning Resources 📚 | = = = =", description= "Aliases = `re`,`resource`,`resources`\nFor more info: `.o help`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-
-        rs.add_field(name = "―――――――――――――――――――――――――\n<:python:814811189241970718> PYTHON LEARNING RESOURCES",
+        rs = discord.Embed()
+        rs.set_author(name = "LEARNING RESOURCES",icon_url= self.client.user.avatar_url)
+        rs.add_field(name = "<:python:814811189241970718> PYTHON LEARNING RESOURCES",
                      value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
                      inline = False)
         rs.add_field(name = "―――――――――――――――――――――――――\n<:html:815225352958771210> WEB DEVELOPMENT RESOURCES",
@@ -56,9 +56,7 @@ class P1(commands.Cog):
                      value = ":small_orange_diamond: Here is a guide to getting started with linux. Hope everyone will find it very useful.\n__**Command:**__ `.o resource linux`",
                      inline = False)
 
-        
 
-        rs.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
         await ctx.send(embed = rs)
 
 
@@ -111,7 +109,7 @@ value = "\
 
         py.add_field(name = ":boxing_glove: PYTHON EXERCISES/CHALLENGES",
                      value = "\
-:small_blue_diamond: [Python Challenges on HackerRank](https://www.codewars.com/)\n\
+:small_blue_diamond: [Python Challenges on HackerRank](https://www.hackerrank.com/)\n\
 :small_blue_diamond: [Python Challenges on CodeWars](https://www.codewars.com/)\n\
 :small_blue_diamond: [Python Challenges on Exercism](https://exercism.io/tracks/python)",
                      inline = False)
@@ -429,57 +427,35 @@ Here are installation guides for some popular Linux distributions\n\n\
     async def wiki(self,ctx,*,message):
         au = ctx.author.id
         ch = ctx.channel.id
-        raw = wc_cur.find({})
-        guilds = []
-        channels = []
         try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-            channels = [x[i]["channel"] for i in range(len(x))]
-        except:
-            pass
-        
-        if ctx.guild.id in guilds:
-            if ctx.channel.id in channels:
+            await ctx.channel.send(wiki.summary(message, sentences=5))
+        except wiki.exceptions.DisambiguationError as e:
+            m='Search item couldn\'t be distinguished. Here is a list of search results: '
+            await ctx.channel.send(m)
+            items=20
+            pages=math.ceil(len(e.options)/items)
+
+            for page in range(pages):
+                p=''
+                start = (page) * items
+                end = min(start + items , len(e.options))
+                for i, opt in enumerate(e.options[start:end], start=start):
+                    p += '**{0}. {1}** \n'.format(i + 1, opt)
+                await ctx.channel.send(p)
+            await ctx.channel.send('Now choose the index of your desired search result.')
+            msgg=await self.client.wait_for('message')
+            while not (msgg.author.id == au and msgg.channel.id == ch):
+                msgg=await self.client.wait_for('message')
+                pass
+            if msgg.author.id == au:
                 try:
-                    await ctx.channel.send(wiki.summary(message, sentences=5))
-                except wiki.exceptions.DisambiguationError as e:
-                    m='Search item couldn\'t be distinguished. Here is a list of search results: '
-                    await ctx.channel.send(m)
-                    items=20
-                    pages=math.ceil(len(e.options)/items)
-
-                    for page in range(pages):
-                        p=''
-                        start = (page) * items
-                        end = min(start + items , len(e.options))
-                        for i, opt in enumerate(e.options[start:end], start=start):
-                            p += '**{0}. {1}** \n'.format(i + 1, opt)
-                        await ctx.channel.send(p)
-                    await ctx.channel.send('Now choose the index of your desired search result.')
-                    msgg=await self.client.wait_for('message')
-                    while not (msgg.author.id == au and msgg.channel.id == ch):
-                        msgg=await self.client.wait_for('message')
-                        pass
-                    if msgg.author.id == au:
-                        try:
-                            msg1 = [words for words in msgg.content.lower().split(" ") if words.isnumeric()]
-                            ind = int(msg1[0])
-                            if 1<=ind and ind<=len(e.options):
-                                await msgg.channel.send(wiki.summary(e.options[ind-1], sentences=5))
-                            else :
-                                await msgg.channel.send('The index does not exist. Start over again.')
-                        except:
-                            await msgg.channel.send('This page cannot be shown for some unknown reason.')
-
-            if ctx.channel.id not in channels:
-                raw = wc_cur.find_one({"guild":ctx.guild.id})
-                ch = raw["channel"]
-                ch = self.client.get_channel(ch)
-                await ctx.channel.send(f"Please use this {ch.mention} channel.")
-        else:
-            await ctx.channel.send("No channel of this server is set as **Wikipedia Channel**.\nPlease set one using this command `.o set wiki (channel)`")
-            
-
+                    msg1 = [words for words in msgg.content.lower().split(" ") if words.isnumeric()]
+                    ind = int(msg1[0])
+                    if 1<=ind and ind<=len(e.options):
+                        await msgg.channel.send(wiki.summary(e.options[ind-1], sentences=5))
+                    else :
+                        await msgg.channel.send('The index does not exist. Start over again.')
+                except:
+                    await msgg.channel.send('This page cannot be shown for some unknown reason.')
 def setup(client):
     client.add_cog(P1(client))

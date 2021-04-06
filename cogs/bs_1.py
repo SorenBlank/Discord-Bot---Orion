@@ -273,11 +273,9 @@ class Battleship(commands.Cog):
                         await ctx.send(f"{member.mention} You took a long time to respond. The challenge is dismissed.")
                         return
             else:
-                x = 0
-                for i in all:
-                    if i[0] == ctx.guild.id:
-                        x = i[1]
-                ch = self.client.get_channel(x)
+                raw = bc_cur.find_one({"guild":ctx.guild.id})
+                ch = raw["channel"]
+                ch = self.client.get_channel(ch)
                 await ctx.send(f"Please use this {ch.mention} channel.")
 
         else:

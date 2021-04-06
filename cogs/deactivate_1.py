@@ -51,64 +51,9 @@ class D_1(commands.Cog):
 
     @commands.group(aliases = ["stop","eliminate","remove"],invoke_without_command = True,case_insensitive = True)
     async def deactivate(self,ctx):
-        deactivator_embed = discord.Embed(title = "= = = = = = =| Help - [Deactivate] |= = = = = = =",description= "Aliases = `stop` , `eliminate`, `remove`\nFor more info: `.o help`\n-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-        
-
-        deactivator_embed.add_field(name=":octagonal_sign: Deactivate Commands :octagonal_sign:",value="-:arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down: - -  :arrow_down:-\n\n:one: `.o deactivate m1`\nThis command will turn off **M1 protocol**.\n\n:two: `.o deactivate c1 (channel)` or `deactivate all c1`\nThis command will eliminate **C1 Protocol** from a specific channel or all channels.\n\n:three: `.o remove announce_ch`\nThis command removes **Announcement Command Channel**.\n\n:four: `.o remove announce (channel)`\nThis command removes bot **Announcement Channel**.\n\n:five: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:six: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:seven: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:eight: `.o deactivate wiki`\nThis command removes **Wikipedia Channel**.\n\n:nine: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:ten: `.o deactivate bye`\nnThis command removes  **Bye Channel**.")
-        deactivator_embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Requested by {ctx.author.name}")
-
+        deactivator_embed = discord.Embed(description = ":one: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:two: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:three: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:nine: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:keycap_ten: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
+        deactivator_embed.set_author(name = "DEACTIVATE COMMANDS", icon_url= self.client.user.avatar_url)
         await ctx.send(embed = deactivator_embed)
-
-    @deactivate.command()
-    async def all(self,ctx,p = None):
-        if p == "c1" or p == "C1":
-            c1_cur.delete_many({"guild":ctx.guild.id})
-            await ctx.send("C1 has been eliminated from all channels.")
-
-    @deactivate.command(aliases = ["m1 protocol","m1 function"])
-    async def m1(self,ctx):
-        if ctx.author.guild_permissions.manage_channels and ctx.author.guild_permissions.manage_channels:
-            id_guild = ctx.guild.id
-            raw = m1_cur.find({})
-            guilds = []
-            try:
-                x = [i for i in raw]
-                guilds = [x[i]["guild"] for i in range(len(x))]
-            except:
-                pass
-            if ctx.guild.id not in guilds:
-                    await ctx.send(random.choice(["M1 is stop",
-                                                  "M1 isn't running"]))
-            
-            if ctx.guild.id in guilds:
-                m1_cur.delete_one({"guild":id_guild})
-                await ctx.send(random.choice(["M1 Eliminated","M1 Stopped"]))
-        
-        else:
-            await ctx.send("**Access Denied!** \nThis command requires `manage_channel` and `manage_messages` permission in order to execute.")
-
-    @deactivate.command()
-    async def c1(self,ctx,channel:discord.TextChannel=None):
-        raw = c1_cur.find({})
-        channels = [x["channel"] for x in raw]
-        
-
-        if ctx.author.guild_permissions.manage_channels:
-            if channel == None:
-                if ctx.channel.id in channels:
-                    c1_cur.delete_one({"channel":ctx.channel.id})
-                    await ctx.send(f"C1 has been eliminated from {ctx.channel.mention}")
-                if ctx.channel.id not in channels:
-                    await ctx.send(f"C1 is not running in {ctx.channel.mention}")
-            
-            if channel != None:
-                try:
-                    c1_cur.delete_one({"channel":channel.id})
-                except:
-                    await ctx.send(f"Argument ERROR.")
-        else:
-            await ctx.send("**Access Denied!**\nThis command requires `manage_channel` permission in order to execute.")
-
 
     @deactivate.command(aliases = ["fibo"])
     async def Fibonacci(self,ctx):
@@ -179,102 +124,6 @@ class D_1(commands.Cog):
         else:
             await ctx.send("**Access Denied!**This command requires `manage_channel` permission in order to execute.")
 
-    @deactivate.command(aliases= ["announcement_ch","ach"])
-    async def Announce_ch(self,ctx):
-        raw = anc_cur.find({})
-        guilds = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-        except:
-            pass
-
-        cooked = anc_cur.find_one({"guild":ctx.guild.id})
-        ch = self.client.get_channel(cooked["channel"])
-        if ctx.author.guild_permissions.manage_channels:
-            if ctx.guild.id in guilds:
-                anc_cur.delete_one({"guild":ctx.guild.id})
-                await ctx.send(f"{ch.mention} is no longer **Announcement Command Channel**.")
-            else:
-                await ctx.send("No channel is set as **Announcement Command Channel**.")
-        else:
-            await ctx.send("**Access Denied!**This command requires `manage_channel` permission in order to execute.")
-
-    @deactivate.command(aliases=["an"])
-    async def Announce(self,ctx,channel:discord.TextChannel = None):
-        raw = anc_cur.find({})
-        guilds = []
-        channels = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-            channels = [x[i]["channel"] for i in range(len(x))]
-        except:
-            pass
-
-        if ctx.author.guild_permissions.manage_channels:
-            if ctx.channel.id in channels:
-                au = ctx.author.id
-                ch = ctx.channel.id
-                raw2 = anch_cur.find({})
-                guilds = []
-                channels = []
-                try:
-                    x = [i for i in raw]
-                    guilds = [x[i]["guild"] for i in range(len(x))]
-                    channels = [x[i]["channel"] for i in range(len(x))]
-                except:
-                    pass
-
-                if channel != None:
-                    try:
-                        if channel.id in channels:
-                            anch_cur.delete_one({"channel":channel.id})
-                            await ctx.send(f"{channel.mention} is no longer an **Announcement Channel**")
-                        elif channel.id not in channels:
-                            await ctx.send(f"**Access Denied!**\nNo channel of this server is set as **Announcement Channel**.")
-
-                    except:
-                        await ctx.send("Argument ERROR!")
-                if channel == None:
-                    try:
-                        if ctx.channel.id in channels:
-                            anch_cur.delete_one({"channel":ctx.channel.id})
-                            await ctx.send(f"{ctx.channel.mention} is no longer an **Announcement Channel**")
-                        elif channel.id not in channels:
-                            await ctx.send(f"**Access Denied!**\nNo channel of this server is set as **Announcement Channel**.")
-
-                    except:
-                        await ctx.send("Argument ERROR!")
-
-        else:
-            await ctx.send("**Access Denied!**This command requires `manage_channel` permission in order to execute.")
-
-
-    @deactivate.command(aliases = ["wiki"])
-    async def WIKipedia(self,ctx):
-        raw = wc_cur.find({})
-        guilds = []
-        channels = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-            channels = [x[i]["channel"] for i in range(len(x))]
-        except:
-            pass
-        if ctx.author.guild_permissions.manage_channels:
-            if ctx.guild.id in guilds:
-                raw2 = wc_cur.find_one({"guild":ctx.guild.id})
-                ch = raw2["channel"]
-                wc_cur.delete_one({"guild":ctx.guild.id})
-
-                channel = self.client.get_channel(ch)
-                await ctx.send(f"{channel.mention} is no longer an **Wikipedia Channel**")
-            else:
-                await ctx.send("No channel of this server is set as **Wikipedia Channel**.")
-        else:
-            await ctx.send("**Access Denied!**This command requires `manage_channel` permission in order to execute.")
-
     @deactivate.command()
     async def WElcome(self,ctx):
         raw = weclome_cur.find({})
@@ -287,7 +136,7 @@ class D_1(commands.Cog):
 
         cooked = weclome_cur.find_one({"guild":ctx.guild.id})
         ch = self.client.get_channel(cooked["channel"])
-        if ctx.author.guild_permissions.manage_guilds:
+        if ctx.author.guild_permissions.manage_guild:
             if ctx.guild.id in guilds:
                 weclome_cur.delete_one({"guild":ctx.guild.id})
                 await ctx.send(f"{ch.mention} is no longer a **WELCOME** channel.")
@@ -308,7 +157,7 @@ class D_1(commands.Cog):
 
         cooked = bye_cur.find_one({"guild":ctx.guild.id})
         ch = self.client.get_channel(cooked["channel"])
-        if ctx.author.guild_permissions.manage_guilds:
+        if ctx.author.guild_permissions.manage_guild:
             if ctx.guild.id in guilds:
                 bye_cur.delete_one({"guild":ctx.guild.id})
                 await ctx.send(f"{ch.mention} is no longer a **BYE** channel.")

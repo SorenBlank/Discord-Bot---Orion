@@ -49,7 +49,8 @@ class U_1(commands.Cog):
                         roles.remove(role)
                         break
             
-            em = discord.Embed(title='= = = = = |:notepad_spiral: User Info :notepad_spiral:| = = = = =',description = "- - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+            em = discord.Embed()
+            em.set_author(name = "USERINFO", icon_url= self.client.user.avatar_url)
             em.add_field(name=":white_medium_small_square:USER_NAME:",value=f":white_small_square:`{user.name}`", inline=True)
             em.add_field(name=":white_medium_small_square:DISCRIMINATOR:",value=f":white_small_square:`{user.discriminator}`", inline=True)
             
@@ -57,15 +58,10 @@ class U_1(commands.Cog):
                 nn=user.name
             else:
                 nn=user.nick
-            em.add_field(name=':white_medium_small_square:NICK_NAME:', value=f":white_small_square:`{nn}`", inline=True)
-            em.add_field(name=':white_medium_small_square:USER_ID:',value=f":white_small_square:`{user.id}`",inline = True)
 
+            em.add_field(name=':white_medium_small_square:NICK_NAME:', value=f":white_small_square:`{nn}`", inline=True)
 
             em.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-
-            dic={"online":"<:online:814161343426199622> ","dnd":"<:dnd:814161369892257842> ","offline":":black_circle: ","idle":"<:idle:814161403271184426> "}
-            dic1={"online":"Online","dnd":"Do Not Disturb","offline":"Offline","idle":"Idle"}
-            em.add_field(name='PRESENCE', value= f"{dic[str(user.status)] + dic1[str(user.status)]}\n―", inline=True)
             
             st="None"
             activ=""
@@ -83,8 +79,6 @@ class U_1(commands.Cog):
                     playy=act
                 elif act.type==AT.watching:
                     watch=act
-
-            em.add_field(name='STATUS', value=f"{st}\n―", inline=True)
 
             if listen != "" and hasattr(listen,"title") and hasattr(listen,"artists"):
                 ACT.append(f'<:spotify:814185511655964682> Listening to `{listen.title}`  by **{", ".join(listen.artists)}**')
@@ -169,7 +163,7 @@ class U_1(commands.Cog):
                 activ=" \n\n".join(ACT)
 
 
-            em.add_field(name='ACTIVITY', value=f"{activ}\n―" if activ!="" else "None \n―", inline=False)
+            em.add_field(name='ACTIVITY', value=f"{activ}\n―" if activ!="" else "None. \n―", inline=False)
             devices=[]
             if str(user.desktop_status)!='offline':
                 devices.append(":desktop: - Desktop Client")
@@ -193,7 +187,7 @@ class U_1(commands.Cog):
 
             em.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
 
-            form=':calendar_spiral: __**Date:**__\n%d %B %Y\n:clock1: __**Time:**__\n%H:%M:%S'
+            form='__**Date:**__\n%d %B %Y\n__**Time:**__\n%H:%M:%S'
             em.add_field(name=':pencil: ACCOUNT CREATED', 
                         value=f"{user.created_at.__format__(form)}\n―",inline=True)
             em.add_field(name=':pencil: JOINED SERVER', 
@@ -204,8 +198,6 @@ class U_1(commands.Cog):
                             value='❎ No Boost' if nitro==None else nitro.__format__(form),inline=False)
             em.set_thumbnail(url=avi)
             av=ctx.author.avatar_url_as(static_format='png')
-
-            em.set_footer(text=f"Requested by {ctx.author.name}", icon_url=av)
             await ctx.send(embed=em)
         
         else:
@@ -217,7 +209,8 @@ class U_1(commands.Cog):
                         roles.remove(role)
                         break
             
-            em = discord.Embed(title='= = = = = |:notepad_spiral: User Info :notepad_spiral:| = = = = =',description = "- - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+            em = discord.Embed()
+            em.set_author(name = "USERINFO", icon_url= self.client.user.avatar_url)
             em.add_field(name=":white_medium_small_square:USER_NAME:",value=f":white_small_square:`{user.name}`", inline=True)
             em.add_field(name=":white_medium_small_square:DISCRIMINATOR:",value=f":white_small_square:`{user.discriminator}`", inline=True)
             
@@ -226,7 +219,6 @@ class U_1(commands.Cog):
             else:
                 nn=user.nick
             em.add_field(name=':white_medium_small_square:NICK_NAME:', value=f":white_small_square:`{nn}`", inline=True)
-            em.add_field(name=':white_medium_small_square:USER_ID:',value=f":white_small_square:`{user.id}`",inline = True)
 
 
             em.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
@@ -301,7 +293,6 @@ class U_1(commands.Cog):
             else:
                 emo = dic[num]
 
-            
             em.add_field(name='ACTIVE ON', value=f"{emo} servers\n―", inline=True)
 
             if len(roles)>0:
@@ -313,20 +304,17 @@ class U_1(commands.Cog):
 
             em.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
 
-            form=':calendar_spiral: __**Date:**__\n%d %B %Y\n:clock1: __**Time:**__\n%H:%M:%S'
+            form='__**Date:**__\n%d %B %Y\n__**Time:**__\n%H:%M:%S'
+
             em.add_field(name=':pencil: ACCOUNT CREATED', 
                         value=f"{user.created_at.__format__(form)}\n―",inline=True)
-            em.add_field(name=':pencil: JOINED SERVER', 
+
+            em.add_field(name=':pencil: JOINED SERVER',
                         value=user.joined_at.__format__(form),inline=True)
 
             em.set_thumbnail(url=avi)
             av=ctx.author.avatar_url_as(static_format='png')
-
-            em.set_footer(text=f"Requested by {ctx.author.name}", icon_url=av)
             await ctx.send(embed=em)
-
-
-
 
 
     @commands.command(aliases = ["avatar"])
@@ -335,7 +323,6 @@ class U_1(commands.Cog):
             user = ctx.author
         embed = discord.Embed(title=f"{user.name}")
         embed.set_image(url = user.avatar_url)
-        embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
         await ctx.send(embed = embed)
 
 
