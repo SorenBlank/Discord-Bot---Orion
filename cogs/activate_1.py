@@ -25,19 +25,14 @@ from pymongo import MongoClient
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
-m1_cur = base["m1guilds"]
-c1_cur = base["c1channels"]
-anch_cur = base["anch"]
-anc_cur = base["anc"]
 fc_cur = base["fc"]
 tc_cur = base["tc"]
 bc_cur = base["bc"]
 tic_cur = base["tic"]
 ta_cur = base["ta"]
-wc_cur = base["wc"]
 weclome_cur = base["welcome"]
 bye_cur = base["bye"]
-
+c_cur = base["c"] #Formation = [Guild, Channel, Past_Number, Last_Number, Author]
 
 class A_1(commands.Cog):
     def __init__(self, client):
@@ -167,6 +162,64 @@ class A_1(commands.Cog):
         else:
             await ctx.send("**Access Denied!** \nThis command requires `manage_channel` permission in order to execute.")
 
+    @activate.command(aliases = ["count"])
+    async def countup(self,ctx,channel:discord.TextChannel = None):
+        raw = c_cur.find({})
+        
+        guilds = []
+        channels = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+            channels = [x[i]["channel"] for i in range(len(x))]
+        except:
+            pass
+
+        if ctx.author.guild_permissions.manage_channels:
+            if channel == None:
+                id_channel = ctx.channel.id
+                if ctx.guild.id not in guilds:
+                    up = {"_id":len(guilds),
+                          "guild":ctx.guild.id,
+                          "channel":id_channel,
+                          "last":0,
+                          "highest":0,
+                          "author":0}
+                    c_cur.insert_one(up)
+                    await ctx.send(f"Countup channel has been updated to {ctx.channel.mention}")
+                
+                if ctx.guild.id in guilds and id_channel in channels:
+                    await ctx.send("This channel is already set as Countup channel.")
+                
+                if ctx.guild.id in guilds and id_channel not in channels:
+                    c_cur.update_one({"guild":ctx.guild.id},{"$set":{"channel":ctx.channel.id}})
+                    await ctx.send(f"Countup channel has been update to {ctx.channel.mention}")
+
+            if channel != None:
+                try:
+                    id_channel = channel.id
+                    if ctx.guild.id not in guilds:
+                        up = {"_id":len(guilds),
+                          "guild":ctx.guild.id,
+                          "channel":id_channel,
+                          "last":0,
+                          "highest":0,
+                          "author":0}
+                        c_cur.insert_one(up)
+                        await ctx.send(f"Countup channel has been updated to {ctx.channel.mention}")
+                    
+                    if ctx.guild.id in guilds and id_channel in channels:
+                        await ctx.send("This channel is already set as Countup channel.")
+                    
+                    if ctx.guild.id in guilds and id_channel not in channels:
+                        c_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":id_channel}})
+                        await ctx.send(f"Countup channel has been update to {channel.mention}")
+                except:
+                    await ctx.send(f"Argument ERROR!")
+
+        else:
+            await ctx.send("**Access Denied!** \nThis command requires `manage_channel` permission in order to execute.")
+
 
     @activate.command(aliases = ["tictac","tictactoe"])
     async def tic(self,ctx, channel: discord.TextChannel = None):
@@ -269,55 +322,6 @@ class A_1(commands.Cog):
 
         else:
             await ctx.send("**Access Denied!** \nThis command requires `manage_channel` permission in order to execute.")
-
-    @activate.command(aliases = ["wiki"])
-    async def Wikipedia(self,ctx,channel:discord.TextChannel = None):
-        raw = wc_cur.find({})
-        guilds = []
-        channels = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-            channels = [x[i]["channel"] for i in range(len(x))]
-        except:
-            pass
-
-        if channel == None:
-            try:
-                if ctx.guild.id not in guilds:
-                        up = {"_id":len(guilds),
-                              "guild":ctx.guild.id,
-                              "channel":ctx.channel.id}
-                        wc_cur.insert_one(up)
-                        await ctx.send(f"**Wikipedia** channel has been updated to {ctx.channel.mention}.")
-
-                if ctx.guild.id in guilds and ctx.channel.id in channels:
-                    await ctx.send("This channel is already set as **Wikipedia** channel.")
-
-                if ctx.guild.id in guilds and ctx.channel.id not in channels:
-                        wc_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":ctx.channel.id}})
-                        await ctx.send(f"**Wikipedia** channel has been updated to {ctx.channel.mention}.")
-            except:
-                ctx.send("Argument ERROR!")
-
-        if channel != None:
-            try:
-                if ctx.guild.id not in guilds:
-                        up = {"_id":len(guilds),
-                              "guild":ctx.guild.id,
-                              "channel":channel.id}
-                        wc_cur.insert_one(up)
-                        await ctx.send(f"**Wikipedia** channel has been updated to {channel.mention}.")
-
-                if ctx.guild.id in guilds and channel.id in channels:
-                    await ctx.send("This channel is already set as **Wikipedia** channel.")
-
-                if ctx.guild.id in guilds and channel.id not in channels:
-                        wc_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
-                        await ctx.send(f"**Wikipedia** channel has been updated to {channel.mention}.")
-                        
-            except:
-                ctx.send("Argument ERROR!")
 
     @activate.command()
     async def welcome(self,ctx,channel:discord.TextChannel = None,*,message):

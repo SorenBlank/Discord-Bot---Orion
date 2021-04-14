@@ -4,7 +4,7 @@ from discord.ext import commands
 from discord.ext import commands, tasks
 import random
 import asyncio
-import wikipedia as wiki
+import wikipedia
 import math
 import os
 import pymongo
@@ -13,7 +13,6 @@ from pymongo import MongoClient
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
-wc_cur = base["wc"]
 
 class P1(commands.Cog):
 
@@ -27,7 +26,7 @@ class P1(commands.Cog):
 
     @commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["r","re","resources"])
     async def resource(self,ctx):
-        rs = discord.Embed()
+        rs = discord.Embed(color = 0x714ec4)
         rs.set_author(name = "LEARNING RESOURCES",icon_url= self.client.user.avatar_url)
         rs.add_field(name = "<:python:814811189241970718> PYTHON LEARNING RESOURCES",
                      value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
@@ -62,7 +61,7 @@ class P1(commands.Cog):
 
     @resource.command(aliases = ["py"])
     async def python(self,ctx):
-        py = discord.Embed(title = "= = =|<:python:814811189241970718> Python Learning Resources <:python:814811189241970718>|= = =",
+        py = discord.Embed(
                            color = 0xffd43b,
                            description = "Here are some python learning resources that will help you go master or advance your python skills.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -\n\
@@ -113,11 +112,12 @@ value = "\
 :small_blue_diamond: [Python Challenges on CodeWars](https://www.codewars.com/)\n\
 :small_blue_diamond: [Python Challenges on Exercism](https://exercism.io/tracks/python)",
                      inline = False)
+        py.set_author(name = "PYTHON LEARNING RESOURCES",icon_url="https://cdn.discordapp.com/emojis/814811189241970718.png?v=1")
         await ctx.send(embed = py)
 
-    @resource.command()
+    @resource.command(aliases = ["webdev"])
     async def web(self,ctx):
-        web = discord.Embed(title = "= ==|<:html:815225352958771210>Web Dev Learning Resources<:css:815225369040519168>|== =",
+        web = discord.Embed(
                   color = 0xf16524,
                   description = "Here you will find useful web development learning resources for any code newbie who is trying to learn web development, below is a list of resources you can use to start your journey.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
@@ -182,12 +182,12 @@ Free trusted online classes and practice at your own pace.\n឵឵",
 :white_small_square:[Frontend Roadmap](https://www.freecodecamp.org/news/2019-web-developer-roadmap/)\n\
 :white_small_square:[Backend Roadmap](https://www.freecodecamp.org/news/2019-web-developer-roadmap/)\n\
 :white_small_square:[Full Stack Roadmap](https://levelup.gitconnected.com/the-2020-web-developer-roadmap-76503ddfb327)")
-
+        web.set_author(name = "WEB DEV LEARNING RESOURCES",icon_url= "https://cdn.discordapp.com/emojis/815225352958771210.png?v=1")
         await ctx.send(embed = web)
 
-    @resource.command(aliases = ["an"])
+    @resource.command(aliases = ["an","androiddev"])
     async def android(self,ctx):
-        an = discord.Embed(title = "===| <:android:814849449570205736> Android Dev Resources <:android:814849449570205736> |===",
+        an = discord.Embed(
             color = 0x3ddb86,
             description = "Here you will find some useful resources if you are interested in Android development.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
@@ -222,14 +222,15 @@ If you need a collection of open-source apps, library and frameworks, you can ch
         an.add_field(name = ":map: ROADMAP",
             value = ":small_blue_diamond: [Android Developer Roadmap by MindOrks](https://github.com/MindorksOpenSource/android-developer-roadmap)",
             inline = False)
+        an.set_author(name = "ANDROID DEV RESOURCES", icon_url= "https://cdn.discordapp.com/emojis/814849449570205736.png?v=1")
 
         await ctx.send(embed = an)
 
 
 
-    @resource.command()
+    @resource.command(aliases = ["iosdev"])
     async def ios(self,ctx):
-        ios = discord.Embed(title = "= = = = =|<:iOS:814846523128676372> iOS Dev Resources <:iOS:814846523128676372>|= = = = =",
+        ios = discord.Embed(
             color = 0xea1e5d,
             description = "Here you will find some useful iOS development learning resources to quick-start your iOS development journey. \
 The majority of resources and recommendations are geared towards native iOS development. Many may apply to cross-platform development as well.\n\
@@ -271,12 +272,13 @@ The majority of resources and recommendations are geared towards native iOS deve
 :white_small_square:[Open Source Learning ~ iOS Programming - by Greyson Murray](https://gist.github.com/greysonDEV/add089a24ea0392414a415ab3f081db6)\n\
 :white_small_square:[Quick-start guide create apps in Swift without storyboards - by Greyson Murray](https://gist.github.com/greysonDEV/25d5347f2f708715934706dfe09a8686)",
             inline = False)
+        ios.set_author(name = "iOS DEV RESOURCES",icon_url= "https://cdn.discordapp.com/emojis/814846523128676372.png?v=1")
         await ctx.send(embed = ios)
     
 
-    @resource.command(aliases = ["ml"])
+    @resource.command(aliases = ["ml","machinelearning"])
     async def machine(self,ctx):
-        ml = discord.Embed(title = "= = =|:gear:Machine Learning Resources:gear:|= = =",
+        ml = discord.Embed(
                            color = 0x1cb1c2,
                            description = "Here is a brief overview of the magnificent world of machine learning. Hope you find something useful or interesting!\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
@@ -342,12 +344,13 @@ This is the book to get if you love statistics.\n឵឵",
 The limit of what we think it is possible to do in the field of artificial intelligence is constantly moving forwards. \
 If you want to follow the newest research I suggest reading some of the [papers published on the arXiv website by Cornell University](https://arxiv.org/corr/subjectclasses).",
             inline = False)
+        ml.set_author(name = "MACHINE LEARNING RESOURCES",icon_url= "https://cdn.discordapp.com/emojis/814959323599077436.png?v=1")
         await ctx.send(embed = ml)
 
 
     @resource.command(aliases = ["pro"])
     async def programming(self,ctx):
-        pro = discord.Embed(title = "= =|:keyboard: PROGRAMMING RESOURCES :keyboard:|= =",
+        pro = discord.Embed(color = 0x714ec4,
                             description = "Here are some general resources that you all will find useful, they aren't based on one specific topic. So there should be something here for everyone.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 
@@ -383,13 +386,13 @@ Here is an article which should help you get an idea of what problem-solving ski
 Here you will find lots of designing stuff, including but not limited to, UI Graphics, Fonts, Icons/Logos, CSS Animations, CSS Frameworks, and many more resources. Check it out for yourself:\n\n\
 :small_blue_diamond:[Design resources for Developers by Bradtraversy](https://github.com/bradtraversy/design-resources-for-developers#css-animations)",
             inline = False)
-
+        pro.set_author(name = "PROGRAMMING RESOURCES",icon_url= "https://cdn.discordapp.com/emojis/831229972169097257.png?v=1")
         await ctx.send(embed = pro)
 
     @resource.command(aliases = ["li"])
     async def linux(self,ctx):
 
-        li = discord.Embed(title = "= = = = =| <:linux:814863906756624384> Linux Guide <:linux:814863906756624384>|= = = = =",
+        li = discord.Embed(
             description = "Here is a guide to getting started with linux. Hope everyone will find it very useful.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 
@@ -418,44 +421,423 @@ Here are installation guides for some popular Linux distributions\n\n\
 :two: <:debian:814859002780581899> Debian - [Article](https://www.debian.org/releases/stable/installmanual)/[Video](https://www.youtube.com/watch?v=P4J_99cS7Bg)\n\n\
 :three: <:arch:814858893993705542> Arch Linux - [Article](https://wiki.archlinux.org/index.php/Installation_guide)/[Video](https://www.youtube.com/watch?v=PQgyW10xD8s)\n\n\
 :four: <:manjaro:814857561252823090> Manjaro - [Article](https://itsfoss.com/install-manjaro-linux/)/[Video](https://www.youtube.com/watch?v=4tGK9OCcSPk)\n឵឵")
-
+        li.set_author(name = "LINUX GUIDE",icon_url= "https://cdn.discordapp.com/emojis/814863906756624384.png?v=1")
         await ctx.send(embed = li)
 
 
 
-    @commands.command()
-    async def wiki(self,ctx,*,message):
-        au = ctx.author.id
-        ch = ctx.channel.id
-        try:
-            await ctx.channel.send(wiki.summary(message, sentences=5))
-        except wiki.exceptions.DisambiguationError as e:
-            m='Search item couldn\'t be distinguished. Here is a list of search results: '
-            await ctx.channel.send(m)
-            items=20
-            pages=math.ceil(len(e.options)/items)
+    # @commands.command()
+    # async def wiki(self,ctx,*,message):
+    #     au = ctx.author.id
+    #     ch = ctx.channel.id
+    #     try:
+    #         await ctx.channel.send(wiki.summary(message, sentences=5))
+    #     except wiki.exceptions.DisambiguationError as e:
+    #         m='Search item couldn\'t be distinguished. Here is a list of search results: '
+    #         await ctx.channel.send(m)
+    #         items=20
+    #         pages=math.ceil(len(e.options)/items)
 
-            for page in range(pages):
-                p=''
-                start = (page) * items
-                end = min(start + items , len(e.options))
-                for i, opt in enumerate(e.options[start:end], start=start):
-                    p += '**{0}. {1}** \n'.format(i + 1, opt)
-                await ctx.channel.send(p)
-            await ctx.channel.send('Now choose the index of your desired search result.')
-            msgg=await self.client.wait_for('message')
-            while not (msgg.author.id == au and msgg.channel.id == ch):
-                msgg=await self.client.wait_for('message')
-                pass
-            if msgg.author.id == au:
+    #         for page in range(pages):
+    #             p=''
+    #             start = (page) * items
+    #             end = min(start + items , len(e.options))
+    #             for i, opt in enumerate(e.options[start:end], start=start):
+    #                 p += '**{0}. {1}** \n'.format(i + 1, opt)
+    #             await ctx.channel.send(p)
+    #         await ctx.channel.send('Now choose the index of your desired search result.')
+    #         msgg=await self.client.wait_for('message')
+    #         while not (msgg.author.id == au and msgg.channel.id == ch):
+    #             msgg=await self.client.wait_for('message')
+    #             pass
+    #         if msgg.author.id == au:
+    #             try:
+    #                 msg1 = [words for words in msgg.content.lower().split(" ") if words.isnumeric()]
+    #                 ind = int(msg1[0])
+    #                 if 1<=ind and ind<=len(e.options):
+    #                     await msgg.channel.send(wiki.summary(e.options[ind-1], sentences=5))
+    #                 else :
+    #                     await msgg.channel.send('The index does not exist. Start over again.')
+    #             except:
+    #                 await msgg.channel.send('This page cannot be shown for some unknown reason.')
+    
+    @commands.command(aliases = ["wikipedia"])
+    async def wiki(self,ctx,*,message):
+        try:
+            x = wikipedia.search(message)
+            page = wikipedia.page(x[0])
+            #summary = wikipedia.summary(page.title, sentences = 5)
+            summary = page.summary
+            summary = summary.split(".")
+            summary = ". ".join(summary[:5])
+            embed = discord.Embed(color = 0x714ec4,title = page.title, url = page.url,
+            description = f"{summary}......[more]({page.url})")
+            embed.set_author(name="Wikipedia", icon_url="https://cdn.discordapp.com/attachments/777124925219536911/829261559216734218/1200px-Wikipedia-logo-v2.svg.png")
+            
+            await ctx.send(embed = embed)
+        except wikipedia.exceptions.DisambiguationError as e:
+            count = 0
+            full = e.options
+            all_pages = []
+            s = []
+            for i in full:
+                if count != 10:
+                    s.append(i)
+                    count += 1
+                else:
+                    all_pages.append(s)
+                    s = []
+                    count = 0
+            page = 0
+            pages = len(all_pages)
+            text = ""
+            num = 1
+            for i in all_pages[page]:
+                text = text + str(num) +' - '+ i + "\n"
+                num += 1
+            embed = discord.Embed(color = 0x714ec4,description = "Use the command `.o wiki <search>` to search.")
+            embed.set_author(name="Wikipedia", icon_url="https://cdn.discordapp.com/attachments/777124925219536911/829261559216734218/1200px-Wikipedia-logo-v2.svg.png")
+            embed.add_field(name = f'"{message}" might refer to-',
+            value = text,
+            inline= False)
+            link_msg = await ctx.send(embed = embed)
+
+            def react_check(reaction, user): #reaction check function
+                emojis = ["🚫","➡️","⬅️"]
+                return user.id == ctx.author.id and reaction.message.id == link_msg.id and str(reaction.emoji) in emojis
+            
+            
+            clean_emoji = True
+
+            while True: # looping between pages
+                if page == 0:
+                    if not clean_emoji:
+                        for i in emojis:
+                            await link_msg.clear_reaction(i) # remove emoji if exists
+
+                    emojis = ["🚫","➡️"]
+                    for emoji in emojis:
+                        await link_msg.add_reaction(emoji) # add emoji to link_msg
+                
+                    clean_emoji = True
+                    
+                elif page == pages-1:
+                    if not clean_emoji:
+                        for i in emojis:
+                            await link_msg.clear_reaction(i) # remove emoji if exists
+
+                    emojis = ["⬅️","🚫"]
+                    for emoji in emojis:
+                        await link_msg.add_reaction(emoji)
+                    
+                    clean_emoji = True
+                else:
+                    if clean_emoji:
+                        for i in emojis:
+                            await link_msg.clear_reaction(i) # remove emoji if exists
+
+                    emojis = ["⬅️","➡️"]
+                    for emoji in emojis:
+                        await link_msg.add_reaction(emoji)
+                
+                    clean_emoji = False
+                
+                try: # to handle timeout error
+                    user_react,user = await self.client.wait_for("reaction_add", check = react_check, timeout=60)
+                    
+                    if user_react.emoji == "➡️" and page != pages-1:
+                        page += 1
+                        num = str(page)+"1"
+                        num = int(num)
+                        text = ""
+                        for i in all_pages[page]:
+                            text = text + str(num) +' - '+ i + "\n"
+                            num += 1
+
+                        embed = discord.Embed(description = text)
+                        embed.set_author(name="Wikipedia", icon_url="https://cdn.discordapp.com/attachments/777124925219536911/829261559216734218/1200px-Wikipedia-logo-v2.svg.png")
+                        await link_msg.edit(embed = embed)
+                        await link_msg.remove_reaction(user_react, user)
+
+                    if user_react.emoji == "⬅️" and page > 0:
+                        page -= 1
+                        num = str(page)+"1"
+                        num = int(num)
+                        text = ""
+                        for i in all_pages[page]:
+                            text = text + str(num) +' - '+ i + "\n"
+                            num += 1
+                        if page == 0:
+                            embed = discord.Embed(description = "Use the command `.o wiki <search>` to search.")
+                            embed.set_author(name="Wikipedia", icon_url="https://cdn.discordapp.com/attachments/777124925219536911/829261559216734218/1200px-Wikipedia-logo-v2.svg.png")
+                            embed.add_field(name = f'"{message}" might refer to-',
+                            value = text,
+                            inline= False)
+                        else:
+                            embed = discord.Embed(description = text)
+                            embed.set_author(name="Wikipedia", icon_url="https://cdn.discordapp.com/attachments/777124925219536911/829261559216734218/1200px-Wikipedia-logo-v2.svg.png")
+                        await link_msg.edit(embed = embed)
+                        await link_msg.remove_reaction(user_react, user)
+                    
+                    if user_react.emoji == "🚫":
+                        if react_check(user_react,user):
+                            await link_msg.clear_reactions()
+                            break
+                        
+                
+                except asyncio.TimeoutError:
+                    try:
+                        for emoji in link_msg.reactions:
+                            await link_msg.clear_reaction(emoji)
+                    except:
+                        pass
+    @commands.command(aliases = ["umma","ummma","ummmma","ummmmma","ummmmmma","ummmmmmma","ummmmmmmma","ummmmmmmmma","ummmmmmmmmma"])
+    async def kiss(self,ctx,*, name=""):
+        if name:
+            try:
+                user = ctx.message.mentions[0]
+            except IndexError:
+                user = ctx.guild.get_member_named(name)
+            if not user:
                 try:
-                    msg1 = [words for words in msgg.content.lower().split(" ") if words.isnumeric()]
-                    ind = int(msg1[0])
-                    if 1<=ind and ind<=len(e.options):
-                        await msgg.channel.send(wiki.summary(e.options[ind-1], sentences=5))
-                    else :
-                        await msgg.channel.send('The index does not exist. Start over again.')
+                    user = ctx.guild.get_member(int(name))
                 except:
-                    await msgg.channel.send('This page cannot be shown for some unknown reason.')
+                    pass
+            if not user:
+                await ctx.send('Argument ERROR! Please tag someone.')
+                return
+        else:
+            await ctx.send('Argument ERROR! Please tag someone.')
+            return
+        
+        kiss = ["https://cdn.weeb.sh/images/r1VWnTuPW.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif",
+                "https://cdn.weeb.sh/images/SJ3dXCKtW.gif","https://cdn.weeb.sh/images/SJSr3TOv-.gif",
+                "https://cdn.weeb.sh/images/Skv72TuPW.gif","https://cdn.weeb.sh/images/r1cB3aOwW.gif",
+                "https://cdn.weeb.sh/images/BJLP3a_Pb.gif","https://cdn.weeb.sh/images/S1qZksSXG.gif",
+                "https://cdn.weeb.sh/images/HJ5khTOP-.gif","https://cdn.weeb.sh/images/B13D2aOwW.gif",
+                "https://cdn.weeb.sh/images/S1E1npuvb.gif","https://cdn.weeb.sh/images/S1PCJWASf.gif",
+                "https://cdn.weeb.sh/images/SJn43adDb.gif","https://cdn.weeb.sh/images/Bkuk26uvb.gif",
+                "https://cdn.weeb.sh/images/HJYghpOP-.gif","https://cdn.weeb.sh/images/rkFSiEedf.gif",
+                "https://cdn.weeb.sh/images/BkLQnT_PZ.gif","https://cdn.weeb.sh/images/Skc42pdv-.gif",
+                "https://cdn.weeb.sh/images/SJ8I2Tuv-.gif","https://cdn.weeb.sh/images/H1e7nadP-.gif",
+                "https://cdn.weeb.sh/images/SkQIn6Ovb.gif","https://cdn.weeb.sh/images/ByVQha_w-.gif",
+                "https://cdn.weeb.sh/images/rkv_mRKF-.gif","https://cdn.weeb.sh/images/r1H42advb.gif",
+                "https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/Sy6Ai6ODb.gif",
+                "https://cdn.weeb.sh/images/ryFdQRtF-.gif"]
+        
+        messages = [f"{ctx.author.name} kissed {user.name}!!?",f"Did just {ctx.author.name} kissed {user.name}!!? OwO",f"{ctx.author.name} kissed {user.name}!!? Really?",f"{ctx.author.name} just kissed {user.name}. >//<", f"Awwww {ctx.author.name} kissed {user.name}."]
+        gif = random.choice(kiss)
+        embed = discord.Embed(color = 0x714ec4)
+        embed.set_author(name = random.choice(messages))
+        embed.set_image(url = gif)
+        await ctx.send(embed = embed)
+
+    @commands.command()
+    async def pat(self,ctx,*,name = ""):
+        if name:
+            try:
+                user = ctx.message.mentions[0]
+            except IndexError:
+                user = ctx.guild.get_member_named(name)
+            if not user:
+                try:
+                    user = ctx.guild.get_member(int(name))
+                except:
+                    pass
+            if not user:
+                await ctx.send('Argument ERROR! Please tag someone.')
+                return
+        else:
+            await ctx.send('Argument ERROR! Please tag someone.')
+            return
+
+        pat = ["https://cdn.weeb.sh/images/Sk2FyQHpZ.gif","https://cdn.weeb.sh/images/Sk2f7J39G.gif",
+               "https://cdn.weeb.sh/images/ryXj1JKDb.gif","https://cdn.weeb.sh/images/ry1tlj2AW.gif",
+               "https://cdn.weeb.sh/images/SJS1lyYwW.gif","https://cdn.weeb.sh/images/rkl1xJYDZ.gif",
+               "https://cdn.weeb.sh/images/H1s5hx0Bf.gif","https://cdn.weeb.sh/images/SJmW1RKtb.gif",
+               "https://cdn.weeb.sh/images/BkJBQlckz.gif","https://cdn.weeb.sh/images/SkksgsnCW.gif",
+               "https://cdn.weeb.sh/images/SJva1kFv-.gif","https://cdn.weeb.sh/images/S1ja11KD-.gif",
+               "https://cdn.weeb.sh/images/SkVNXac-G.gif","https://cdn.weeb.sh/images/r1Y5L6NCZ.gif",
+               "https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/HJGQlJYwb.gif",
+               "https://cdn.weeb.sh/images/ryXj1JKDb.gif","https://cdn.weeb.sh/images/HyqTkyFvb.gif",
+               "https://cdn.weeb.sh/images/SJLaWWRSG.gif","https://cdn.weeb.sh/images/B1D9J1tvZ.gif",
+               "https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/HkZqkyFvZ.gif",
+               "https://cdn.weeb.sh/images/HyG2kJKD-.gif","https://cdn.weeb.sh/images/rJMskkFvb.gif",
+               "https://cdn.weeb.sh/images/Bk4Ry1KD-.gif","https://cdn.weeb.sh/images/HyxG31ktDb.gif",
+               "https://cdn.weeb.sh/images/SktIxo20b.gif","https://cdn.weeb.sh/images/rytzGAE0W.gif",
+               "https://cdn.weeb.sh/images/rkADh0sqM.gif","https://cdn.weeb.sh/images/rkbblkYvb.gif",
+               "https://cdn.weeb.sh/images/rybs1yFDb.gif","https://cdn.weeb.sh/images/HyWlxJFvb.gif",
+               "https://cdn.weeb.sh/images/B1FqkJKPW.gif","https://cdn.weeb.sh/images/rkSN7g91M.gif",
+               "https://cdn.weeb.sh/images/rkTC896_f.gif","https://cdn.weeb.sh/images/HkJ2VknqG.gif",
+               "https://cdn.weeb.sh/images/rkZbJAYKW.gif","https://cdn.weeb.sh/images/rktsca40-.gif",
+               "https://cdn.weeb.sh/images/SJmW1RKtb.gif","https://cdn.weeb.sh/images/r180y1Yvb.gif",
+               "https://cdn.weeb.sh/images/rkBZkRttW.gif","https://cdn.weeb.sh/images/r12R1kYPZ.gif",
+               "https://cdn.weeb.sh/images/B1PnJJYP-.gif","https://cdn.weeb.sh/images/SyFmqkFwW.gif",
+               "https://cdn.weeb.sh/images/Sky1x1YwW.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif",
+               "https://cdn.weeb.sh/images/B1SOzCV0W.gif","https://cdn.weeb.sh/images/r1lVQgcyG.gif",
+               "https://cdn.weeb.sh/images/H1jgekFwZ.gif","https://cdn.weeb.sh/images/H1XkAyYNM.gif "]
+        
+        messages = [f"Awww {ctx.author.name} just pat {user.name}'s head. >.<",f"Adorable >.< {ctx.author.name} just gave {user.name} a head pat.",f"{ctx.author.name} pats {user.name}! So cute! >//<"]
+        gif = random.choice(pat)
+        embed = discord.Embed(color = 0x714ec4)
+        embed.set_author(name = random.choice(messages))
+        embed.set_image(url = gif)
+        await ctx.send(embed = embed)
+
+
+    @commands.command()
+    async def hug(self,ctx,*,name = ""):
+        if name:
+            try:
+                user = ctx.message.mentions[0]
+            except IndexError:
+                user = ctx.guild.get_member_named(name)
+            if not user:
+                try:
+                    user = ctx.guild.get_member(int(name))
+                except:
+                    pass
+            if not user:
+                await ctx.send('Argument ERROR! Please tag someone.')
+                return
+        else:
+            await ctx.send('Argument ERROR! Please tag someone.')
+            return
+
+        hug = ["https://cdn.weeb.sh/images/Sk80wyhqz.gif","https://cdn.discordapp.com/attachments/777124925219536911/831630665749233664/tenor_32.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831630757578801222/tenor_30.gif","https://cdn.discordapp.com/attachments/777124925219536911/831630950042959892/tenor_3.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831630876981985350/tenor_2.gif","https://cdn.discordapp.com/attachments/777124925219536911/831631027432194058/tenor_4.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831631100664741918/tenor_5.gif","https://cdn.discordapp.com/attachments/777124925219536911/831631144167407616/tenor_7.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831631245715701801/tenor_8.gif","https://cdn.discordapp.com/attachments/777124925219536911/831631357687496754/tenor_11.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831631318004662292/tenor_10.gif","https://cdn.discordapp.com/attachments/777124925219536911/831631343192244254/tenor_9.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831631484553003058/tenor_12.gif","https://cdn.discordapp.com/attachments/777124925219536911/831631548574728262/tenor_13.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831631571710115840/tenor_14.gif","https://cdn.discordapp.com/attachments/777124925219536911/831631603812794438/tenor_16.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831631612416229386/tenor_15.gif","https://cdn.discordapp.com/attachments/777124925219536911/831631631105130556/tenor_17.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831631984198418432/tenor_18.gif","https://cdn.discordapp.com/attachments/777124925219536911/831632008069382184/tenor_19.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831632090361626654/tenor_20.gif","https://cdn.discordapp.com/attachments/777124925219536911/831632174704492604/tenor_21.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831632311102603304/tenor_24.gif","https://cdn.discordapp.com/attachments/777124925219536911/831632407115071568/tenor_25.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831632432024780840/tenor_26.gif","https://cdn.discordapp.com/attachments/777124925219536911/831632451742335006/tenor_29.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831632595073630298/tenor_30.gif","https://cdn.weeb.sh/images/SJZ-Qy35f.gif",
+               "https://cdn.weeb.sh/images/rkN2u_XP-.gif","https://cdn.weeb.sh/images/BkFnJsnA-.gif",
+               "https://cdn.weeb.sh/images/rko9O_mwW.gif","https://cdn.weeb.sh/images/SywetdQvZ.gif",
+               "https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/ByPGRkFVz.gif",
+               "https://cdn.weeb.sh/images/Hk3ox0tYW.gif","https://cdn.weeb.sh/images/rJnKu_XwZ.gif",
+               "https://cdn.weeb.sh/images/ryCG-OatM.gif","https://cdn.weeb.sh/images/HkfgF_QvW.gif",
+               "https://cdn.weeb.sh/images/r1G3xCFYZ.gif","https://cdn.weeb.sh/images/rkIK_u7Pb.gif"]
+
+        messages = [f"Awww {ctx.author.name} hugged {user.name}. >.<",f"Cute! >.< {ctx.author.name} just hugged {user.name}.",f"{ctx.author.name} Squeeze harder! >//<", f"AWWWW! {ctx.author.name} {user.name}, you are so cute."]
+        gif = random.choice(hug)
+        embed = discord.Embed(color = 0x714ec4)
+        embed.set_author(name = random.choice(messages))
+        embed.set_image(url = gif)
+        await ctx.send(embed = embed)
+
+    @commands.command()
+    async def lick(self,ctx,*,name = ""):
+        if name:
+            try:
+                user = ctx.message.mentions[0]
+            except IndexError:
+                user = ctx.guild.get_member_named(name)
+            if not user:
+                try:
+                    user = ctx.guild.get_member(int(name))
+                except:
+                    pass
+            if not user:
+                await ctx.send('Argument ERROR! Please tag someone.')
+                return
+        else:
+            await ctx.send('Argument ERROR! Please tag someone.')
+            return
+
+        lick = ["https://cdn.discordapp.com/attachments/777124925219536911/831830324392230912/tenor.gif","https://cdn.discordapp.com/attachments/777124925219536911/831830377432612885/tenor_2.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831830872054562846/tenor_1.gif","https://cdn.discordapp.com/attachments/777124925219536911/831831446976987156/tenor_3.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831831778778939442/tenor_4.gif","https://cdn.discordapp.com/attachments/777124925219536911/831832455174029362/tenor_5.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831832802664120330/tenor_6.gif","https://cdn.discordapp.com/attachments/777124925219536911/831833736932884521/tenor_7.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831834187208196126/tenor_8.gif","https://cdn.discordapp.com/attachments/777124925219536911/831834746849853440/tenor_9.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831834805619654656/tenor_10.gif","https://cdn.discordapp.com/attachments/777124925219536911/831834897881890816/tenor_11.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831835781303631892/tenor_13.gif","https://cdn.discordapp.com/attachments/777124925219536911/831835480311726080/tenor_12.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831836087843946506/tenor_14.gif","https://cdn.discordapp.com/attachments/777124925219536911/831836444087025694/tenor_15.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831837059328245781/tenor_16.gif","https://cdn.discordapp.com/attachments/777124925219536911/831837614461157426/tenor_17.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831838684298739722/tenor_18.gif","https://cdn.discordapp.com/attachments/777124925219536911/831838854474104882/tenor_19.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831838997252407296/tenor_20.gif","https://cdn.discordapp.com/attachments/777124925219536911/831839608823611392/tenor_22.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831839579316289556/tenor_21.gif","https://cdn.weeb.sh/images/rykRHmB6W.gif",
+                "https://cdn.weeb.sh/images/ryGpGsnAZ.gif","https://cdn.weeb.sh/images/rkBbBQS6W.gif",
+                "https://cdn.weeb.sh/images/Bkxge0uPW.gif","https://cdn.weeb.sh/images/H1EJxR_vZ.gif",
+                "https://cdn.weeb.sh/images/BkvTBQHaZ.gif","https://cdn.weeb.sh/images/rJ6hrQr6-.gif",
+                "https://cdn.discordapp.com/attachments/777124925219536911/831844451311550494/tenor_23.gif"]
+
+        messages = [f"Awww {ctx.author.name} licked {user.name}. >.<",f"Cute! >.< {ctx.author.name} just licked {user.name} so hard.",f"{ctx.author.name} don't lick too much! >//<", f"AWWWW! {ctx.author.name} {user.name}, stop licking. ><"]
+        gif = random.choice(lick)
+        embed = discord.Embed(color = 0x714ec4)
+        embed.set_author(name = random.choice(messages))
+        embed.set_image(url = gif)
+        await ctx.send(embed = embed)
+
+    @commands.command(aliases = ["sob"])
+    async def cry(self,ctx):
+        cry = ["https://cdn.weeb.sh/images/rknUmIXD-.gif","https://cdn.weeb.sh/images/rkpoLqadG.gif",
+               "https://cdn.weeb.sh/images/HJIpry35M.gif","https://cdn.weeb.sh/images/r1itBRFTZ.gif",
+               "https://cdn.weeb.sh/images/rkoNQ8mP-.gif","https://cdn.weeb.sh/images/BJJkFTN0b.gif",
+               "https://cdn.weeb.sh/images/Sk5a01cyf.gif","https://cdn.weeb.sh/images/SkbN7LQv-.gif",
+               "https://cdn.weeb.sh/images/H1nGQ8Qw-.gif","https://cdn.weeb.sh/images/ByuM1x5Jz.gif",
+               "https://cdn.weeb.sh/images/B1N87IQDZ.gif","https://cdn.weeb.sh/images/Bk_fmL7wZ.gif",
+               "https://cdn.weeb.sh/images/HyiGQUmPb.gif","https://cdn.weeb.sh/images/r1WMmLQvW.gif",
+               "https://cdn.weeb.sh/images/Hy4QmU7PZ.gif","https://cdn.weeb.sh/images/SJ08mUXwZ.gif",
+               "https://cdn.weeb.sh/images/HkxLXIQvb.gif","https://cdn.weeb.sh/images/r1UGQLXvb.gif",
+               "https://cdn.weeb.sh/images/rJ5IX8XPZ.gif","https://cdn.weeb.sh/images/rkXImUQDW.gif",
+               "https://cdn.weeb.sh/images/ByF7REgdf.gif","https://cdn.weeb.sh/images/ryi8787vW.gif",
+               "https://cdn.weeb.sh/images/ryVBX8mw-.gif","https://cdn.weeb.sh/images/BJJPXLQPW.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831932064324255794/tenor.gif","https://cdn.discordapp.com/attachments/777124925219536911/831932227906175056/tenor_1.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831932511121834004/tenor_2.gif","https://cdn.discordapp.com/attachments/777124925219536911/831932778672422912/tenor_3.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831932963230449755/tenor_4.gif","https://cdn.discordapp.com/attachments/777124925219536911/831933101482835998/tenor_5.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831933178477936670/tenor_6.gif","https://cdn.discordapp.com/attachments/777124925219536911/831933552571842610/tenor_7.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831933884442083379/tenor_8.gif","https://cdn.discordapp.com/attachments/777124925219536911/831933926066356275/tenor_9.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831934188142985277/tenor_10.gif","https://cdn.discordapp.com/attachments/777124925219536911/831934212226678856/tenor_11.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831934228282998874/tenor_12.gif","https://cdn.discordapp.com/attachments/777124925219536911/831934612678508576/tenor_13.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831934618298875934/tenor_14.gif","https://cdn.discordapp.com/attachments/777124925219536911/831934669171196024/tenor_15.gif",
+               "https://cdn.discordapp.com/attachments/777124925219536911/831934680034443334/tenor_16.gif","https://cdn.discordapp.com/attachments/777124925219536911/831935024055844914/tenor_17.gif"]
+
+        messages = [f'{ctx.author.name} is crying. :"(', f'{ctx.author.name} needs a warm hug.',f"{ctx.author.name} don't cry. Everything will be alright.",f"{ctx.author.name} is crying. Somebody hug...",f"{ctx.author.name} please don't cry. ;-; I am here."]
+        gif = random.choice(cry)
+        embed = discord.Embed(color = 0x714ec4)
+        embed.set_author(name = random.choice(messages))
+        embed.set_image(url = gif)
+        await ctx.send(embed = embed)
+
+    @commands.command()
+    async def tickle(self,ctx,*,name = ""):
+        if name:
+            try:
+                user = ctx.message.mentions[0]
+            except IndexError:
+                user = ctx.guild.get_member_named(name)
+            if not user:
+                try:
+                    user = ctx.guild.get_member(int(name))
+                except:
+                    pass
+            if not user:
+                await ctx.send('Argument ERROR! Please tag someone.')
+                return
+        else:
+            await ctx.send('Argument ERROR! Please tag someone.')
+            return
+        
+        tickle = ["https://cdn.weeb.sh/images/HyjNLkXiZ.gif","https://cdn.weeb.sh/images/H1p0ByQo-.gif",
+                  "https://cdn.weeb.sh/images/rybRByXjZ.gif","https://cdn.weeb.sh/images/rkPzIyQi-.gif",
+                  "https://cdn.weeb.sh/images/SyQHUy7oW.gif","https://cdn.discordapp.com/attachments/777124925219536911/831997960623095828/tenor.gif",
+                  "https://cdn.discordapp.com/attachments/777124925219536911/831997960614838322/tenor_1.gif","https://cdn.discordapp.com/attachments/777124925219536911/831997921003438090/tenor_2.gif",
+                  "https://cdn.discordapp.com/attachments/777124925219536911/831998244586389574/tenor_3.gif","https://cdn.discordapp.com/attachments/777124925219536911/831998277204312104/tenor_4.gif",
+                  "https://cdn.discordapp.com/attachments/777124925219536911/831998348814581760/tenor_5.gif"]
+        
+        messages = [f'{ctx.author.name} is tickling {user.name} ><!',f'{ctx.author.name} is tickling {user.name} ><! Save her!',f'{ctx.author.name} is tickling hard {user.name} :))',f'{user.name} RIP. :))']
+        gif = random.choice(tickle)
+        embed = discord.Embed(color = 0x714ec4)
+        embed.set_author(name = random.choice(messages))
+        embed.set_image(url = gif)
+        await ctx.send(embed = embed)
+
 def setup(client):
     client.add_cog(P1(client))

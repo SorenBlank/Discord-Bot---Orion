@@ -49,6 +49,7 @@ class Google(commands.Cog):
                 await ctx.send("Page Not Found")
             
             def react_check(reaction, user): #reaction check function
+                emojis = ["🚫","➡️","⬅️"]
                 return user.id == ctx.author.id and reaction.message.id == link_msg.id and str(reaction.emoji) in emojis
     
             page = 0
@@ -100,18 +101,21 @@ class Google(commands.Cog):
                         await link_msg.edit(content = all_working_link[page])
                         await link_msg.remove_reaction(user_react, user)
     				
-                    elif user_react.emoji == "⬅️" and page > 0:
+                    if user_react.emoji == "⬅️" and page > 0:
                         page -= 1
                         await link_msg.edit(content = all_working_link[page])
                         await link_msg.remove_reaction(user_react, user)
     				
-                    else:
-                        await link_msg.remove_reaction(user_react,user)
+                    if user_react.emoji == "🚫":
+                        if react_check(user_react,user):
+                            await link_msg.clear_reactions()
+                            break
                 
                 except asyncio.TimeoutError:
                     try:
                         for emoji in emojis:
                             await link_msg.clear_reaction(emoji)
+                        break
                     except:
                         pass
 

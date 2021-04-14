@@ -11,3 +11,4 @@ dnspython
 pymongo
 nest_asyncio
 chess.com
+youtube-search==2.1.0

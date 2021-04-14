@@ -25,16 +25,11 @@ from pymongo import MongoClient
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
-m1_cur = base["m1guilds"]
-c1_cur = base["c1channels"]
-anch_cur = base["anch"]
-anc_cur = base["anc"]
 fc_cur = base["fc"]
 tc_cur = base["tc"]
 bc_cur = base["bc"]
 tic_cur = base["tic"]
 ta_cur = base["ta"]
-wc_cur = base["wc"]
 
 class AN_1(commands.Cog):
     def __init__(self, client):

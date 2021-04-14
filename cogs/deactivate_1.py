@@ -25,15 +25,11 @@ from pymongo import MongoClient
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
-m1_cur = base["m1guilds"]
-c1_cur = base["c1channels"]
-anch_cur = base["anch"]
-anc_cur = base["anc"]
 fc_cur = base["fc"] #Formation = [Guild, Channel, Past_Number, Last_Number, Author]
+c_cur = base["c"] #Formation = [Guild, Channel, Past_Number, Last_Number, Author]
 tc_cur = base["tc"]
 bc_cur = base["bc"]
 ta_cur = base["ta"]
-wc_cur = base["wc"]
 weclome_cur = base["welcome"] 
 bye_cur = base["bye"] 
 
@@ -51,7 +47,7 @@ class D_1(commands.Cog):
 
     @commands.group(aliases = ["stop","eliminate","remove"],invoke_without_command = True,case_insensitive = True)
     async def deactivate(self,ctx):
-        deactivator_embed = discord.Embed(description = ":one: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:two: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:three: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:nine: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:keycap_ten: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
+        deactivator_embed = discord.Embed(color = 0x714ec4,description = ":one: `.o deactivate countup`\nThis command removes **Countup Channel**.\n\n :two: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:three: `.o deactivate tictactoe`\nThis command removes **TicTacToe Channel**.\n\n:four: `.o deactivate battleship`\nThis command removes **Battleship Channel**.\n\n:five: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:six: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
         deactivator_embed.set_author(name = "DEACTIVATE COMMANDS", icon_url= self.client.user.avatar_url)
         await ctx.send(embed = deactivator_embed)
 
@@ -70,6 +66,27 @@ class D_1(commands.Cog):
                 cooked = fc_cur.find_one({"guild":ctx.guild.id})
                 ch = self.client.get_channel(cooked["channel"])
                 fc_cur.delete_one({"guild":ctx.guild.id})
+                await ctx.send(f"{ch.mention} is no longer a **Fibonacci** channel.")
+            else:
+                await ctx.send("No channel is set as **Fibonacci** channel.")
+
+        else:
+            await ctx.send("**Access Denied!**\nThis command requires `manage_channel` permission in order to execute.")
+    @deactivate.command(aliases = ["count"])
+    async def countup(self,ctx):
+        raw = c_cur.find({"guild":ctx.guild.id})
+        guilds = []
+        try:
+            x = [i for i in raw]
+            guilds = [x[i]["guild"] for i in range(len(x))]
+        except:
+            pass
+        if ctx.author.guild_permissions.manage_channels:
+
+            if ctx.guild.id in guilds:
+                cooked = c_cur.find_one({"guild":ctx.guild.id})
+                ch = self.client.get_channel(cooked["channel"])
+                c_cur.delete_one({"guild":ctx.guild.id})
                 await ctx.send(f"{ch.mention} is no longer a **Fibonacci** channel.")
             else:
                 await ctx.send("No channel is set as **Fibonacci** channel.")

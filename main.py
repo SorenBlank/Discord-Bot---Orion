@@ -24,19 +24,15 @@ import urllib
 import requests
 import pymongo
 from pymongo import MongoClient
+from youtube_search import YoutubeSearch
 
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
-m1_cur = base["m1guilds"] #Formation = [_id, Guild]
-c1_cur = base["c1channels"] #Formation = [_id, Guild, Channel, createtime, timegap]
-anch_cur = base["anch"] #Formation = [_id, Guild, Channel]
-anc_cur = base["anc"] #Formation = [_id, Guild, Channel]
 fc_cur = base["fc"] #Formation = [_id, Guild, Channel, Past_Number, Last_Number, Author]
 tc_cur = base["tc"] #Formation = [_id, Guild, Channel]
 bc_cur = base["bc"] #Formation = [_id, Guild, Channel]
 ta_cur = base["ta"] #Formation = [_id, Guild, Channel, time, announcement]
-wc_cur = base["wc"] #Formation = [_id, Guild, Channel]
 weclome_cur = base["welcome"] #Formation = [_id, Guild, Channel, Message]
 bye_cur = base["bye"] #Formation = [_id, Guild, Channel, Message]
 
@@ -72,21 +68,11 @@ client.load_extension('cogs.utility_1')
 client.load_extension('cogs.chess_all')
 client.load_extension('cogs.anime_1')
 client.load_extension('cogs.google_1')
+client.load_extension('cogs.countup_1')
 
 
 @client.event
 async def on_guild_remove(guild):
-    #m1_removal
-    m1_cur.delete_many({"guild":guild.id})
-
-    #c1removal
-    c1_cur.delete_many({"guild":guild.id})
-    
-    #Announce_chremoval
-    anch_cur.delete_many({"guild":guild.id})
-
-    #ANCremoval
-    anc_cur.delete_many({"guild":guild.id})
 
     #FC Removal
     fc_cur.delete_many({"guild":guild.id})
@@ -100,11 +86,11 @@ async def on_guild_remove(guild):
     #Timer Announce Removal
     ta_cur.delete_many({"guild":guild.id})
 
-    #WC
-    wc_cur.delete_many({"guild":guild.id})
-
     #WELCOME Removal
     weclome_cur.delete_many({"guild":guild.id})
+
+    #BYE Removal
+    bye_cur.delete_many({"guild":guild.id})
 
 
 @client.event
@@ -179,9 +165,6 @@ async def _8ball(ctx, *, que):
     else:
         await ctx.send(random.choice(responses))
 
-########################################################## ANNOUNCE PART ##########################################################
-
-##################################################################################################################################
 
 @client.command()
 async def wanted(ctx, member : discord.Member = None):
@@ -198,11 +181,12 @@ async def wanted(ctx, member : discord.Member = None):
 
 @client.command()
 async def invite(ctx):
-    embed = discord.Embed(title= "= = = = = = = =| :mailbox_with_mail: Invite :mailbox_with_mail:  |= = = = = = = =")
-    embed.add_field(name=":large_blue_diamond: BOT INVITATION LINK",
-                    value=":small_blue_diamond: [Click here](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) to invite me in your server.\n឵឵",
+    embed = discord.Embed()
+    embed.set_author(name = "INVITE",icon_url= client.user.avatar_url)
+    embed.add_field(name="BOT INVITATION LINK",
+                    value="[Click here](https://discord.com/api/oauth2/authorize?client_id=777095257262522399&permissions=8&scope=bot) to invite me in your server.\n឵឵",
                     inline = False)
-    embed.add_field(name=":large_blue_diamond: SERVER INVITATION LINK",
+    embed.add_field(name="SERVER INVITATION LINK",
                     value = ":small_blue_diamond: [Click here](https://discord.gg/JJtUtgMjBv) to join my creator's server.",
                     inline = False)
     embed.set_footer(icon_url=ctx.author.avatar_url,text=f"Thank you very much {ctx.author.name}")
@@ -214,13 +198,21 @@ async def invite(ctx):
 
 @client.command()
 async def youtube(ctx, *, search):
-    query_string = urllib.parse.urlencode({'search_query': search})
-    html_content = urllib.request.urlopen('http://www.youtube.com/results?' + query_string)
-    search_content= html_content.read().decode()
-    search_results = re.findall(r'\/watch\?v=\w+', search_content)
-    #print(search_results)
-    link_msg = await ctx.send('https://www.youtube.com' + search_results[0])
+    # query_string = urllib.parse.urlencode({'search_query': search})
+    # html_content = urllib.request.urlopen('http://www.youtube.com/results?' + query_string)
+    # search_content= html_content.read().decode()
+    # search_results = re.findall(r'\/watch\?v=\w+', search_content)
+    # link_msg = await ctx.send('https://www.youtube.com' + search_results[0])
 
+    results = YoutubeSearch(search, max_results=15).to_json()
+    results = json.loads(results)
+    search_results = []
+    number = len(results['videos'])
+    for i in range(number):
+        x = results['videos'][i]['url_suffix']
+        search_results.append(x)
+
+    link_msg = await ctx.send('https://www.youtube.com' + search_results[0])
     def react_check(reaction, user): #reaction check function
         emojis = ["🚫","➡️","⬅️"]
         return user.id == ctx.author.id and reaction.message.id == link_msg.id and str(reaction.emoji) in emojis
@@ -281,12 +273,12 @@ async def youtube(ctx, *, search):
                 if react_check(user_react,user):
                     await link_msg.clear_reactions()
                     break
-                
-        
+
         except asyncio.TimeoutError:
             try:
                 for emoji in link_msg.reactions:
                     await link_msg.clear_reaction(emoji)
+                break
             except:
                 pass
 
