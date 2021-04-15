@@ -6,7 +6,6 @@ from pymongo import MongoClient
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 
-m1_cur = base["m1guilds"]
 
 
 class M1(commands.Cog):
@@ -51,13 +50,6 @@ class M1(commands.Cog):
     #unban_command
     @commands.command()
     async def unban(self, ctx, *, member):
-        raw = m1_cur.find({})
-        guilds = []
-        try:
-            x = [i for i in raw]
-            guilds = [x[i]["guild"] for i in range(len(x))]
-        except:
-            pass
         
         banned_entries = await ctx.guild.bans()
         member_name, member_tag = member.split("#")
