@@ -41,101 +41,104 @@ class AN_1(commands.Cog):
 
     @commands.command()
     async def announce(self,ctx, channel:discord.TextChannel, time = None):
-        raw = ta_cur.find({})
-        y = [x["guild"] for x in raw]
+        if ctx.author.guild_permissions.manage_guild:
+            raw = ta_cur.find({})
+            y = [x["guild"] for x in raw]
 
-        au = ctx.author.id
-        ch = ctx.channel.id
+            au = ctx.author.id
+            ch = ctx.channel.id
 
-        await ctx.send("Recording your text. Please type down the announcement below -")
-        text = await self.client.wait_for("message")
-
-        while not (text.author.id == au and text.channel.id == ch):
+            await ctx.send("Recording your text. Please type down the announcement below -")
             text = await self.client.wait_for("message")
-            pass
 
-        lower = text.content.lower()
-        if lower != "eliminate":
-            if text.author.id == au and text.channel.id ==ch:
-                if time == None:
-                    att=[]
-                    if text.attachments != []:
-                        if text.content != None:
+            while not (text.author.id == au and text.channel.id == ch):
+                text = await self.client.wait_for("message")
+                pass
+
+            lower = text.content.lower()
+            if lower != "eliminate":
+                if text.author.id == au and text.channel.id ==ch:
+                    if time == None:
+                        att=[]
+                        if text.attachments != []:
+                            if text.content != None:
+                                await channel.send(text.content)
+                                for a in text.attachments:
+                                    att.append(await a.to_file())
+                                for at in att:
+                                    await channel.send(file=at)
+
+                            if text.content == None:
+                                for a in text.attachments:
+                                    att.append(await a.to_file())
+                                for at in att:
+                                    await channel.send(file=at)
+                        else:
                             await channel.send(text.content)
-                            for a in text.attachments:
-                                att.append(await a.to_file())
-                            for at in att:
-                                await channel.send(file=at)
+                    if time != None:
+                        if time.isdigit():
+                            raw = ta_cur.find({})
+                            all = [x for x in raw]
+                            up = {"_id":len(all),
+                                "guild":ctx.guild.id,
+                                "channel":channel.id,
+                                "time":time,
+                                "announcement":text.content}
+                            ta_cur.insert_one(up)
+                            await ctx.send(f"Given input will be announced in {time} seconds.")
+                        if time.isdigit() == False:
+                            list_time = [i for i in time]
+                            joined_time = ''.join(list_time[:-1])
+                            actual_time = 0
+                            try:
+                                actual_time = int(joined_time)
+                                x = list_time[len(list_time)-1]
+                                if x.lower() == "s":
+                                    up = {"_id":len(y),
+                                            "guild":ctx.guild.id,
+                                            "channel":channel.id,
+                                            "time":actual_time,
+                                            "announcement":text.content}
+                                    ta_cur.insert_one(up)
+                                    if actual_time == 1:
+                                        await ctx.send(f"Given input will be announced after {actual_time} second.")
+                                    else:
+                                        await ctx.send(f"Given input will be announced after {actual_time} seconds.")
+                                if x.lower() == "m":
+                                    m_time = actual_time*60
+                                    up = {"_id":len(y),
+                                            "guild":ctx.guild.id,
+                                            "channel":channel.id,
+                                            "time":m_time,
+                                            "announcement":text.content}
+                                    ta_cur.insert_one(up)
+                                    if actual_time == 1:
+                                        await ctx.send(f"Given input will be announced after {actual_time} minute.")
+                                    else:
+                                        await ctx.send(f"Given input will be announced after {actual_time} minute.")
+                                if x.lower() == "h":
+                                    h_time = actual_time*3600
+                                    
+                                    up = {"_id":len(y),
+                                            "guild":ctx.guild.id,
+                                            "channel":channel.id,
+                                            "time":h_time,
+                                            "announcement":text.content}
+                                    ta_cur.insert_one(up)
+                                    if actual_time == 1:
+                                        await ctx.send(f"Given input will be announced after {actual_time} hour.")
+                                    else:
+                                        await ctx.send(f"Given input will be announced after {actual_time} hours.")
+                            except:
+                                await ctx.send("Argument Error!")
 
-                        if text.content == None:
-                            for a in text.attachments:
-                                att.append(await a.to_file())
-                            for at in att:
-                                await channel.send(file=at)
-                    else:
-                        await channel.send(text.content)
-                if time != None:
-                    if time.isdigit():
-                        raw = ta_cur.find({})
-                        all = [x for x in raw]
-                        up = {"_id":len(all),
-                              "guild":ctx.guild.id,
-                              "channel":channel.id,
-                              "time":time,
-                              "announcement":text.content}
-                        ta_cur.insert_one(up)
-                        await ctx.send(f"Given input will be announced in {time} seconds.")
-                    if time.isdigit() == False:
-                        list_time = [i for i in time]
-                        joined_time = ''.join(list_time[:-1])
-                        actual_time = 0
-                        try:
-                            actual_time = int(joined_time)
-                            x = list_time[len(list_time)-1]
-                            if x.lower() == "s":
-                                up = {"_id":len(y),
-                                        "guild":ctx.guild.id,
-                                        "channel":channel.id,
-                                        "time":actual_time,
-                                        "announcement":text.content}
-                                ta_cur.insert_one(up)
-                                if actual_time == 1:
-                                    await ctx.send(f"Given input will be announced after {actual_time} second.")
-                                else:
-                                    await ctx.send(f"Given input will be announced after {actual_time} seconds.")
-                            if x.lower() == "m":
-                                m_time = actual_time*60
-                                up = {"_id":len(y),
-                                        "guild":ctx.guild.id,
-                                        "channel":channel.id,
-                                        "time":m_time,
-                                        "announcement":text.content}
-                                ta_cur.insert_one(up)
-                                if actual_time == 1:
-                                    await ctx.send(f"Given input will be announced after {actual_time} minute.")
-                                else:
-                                    await ctx.send(f"Given input will be announced after {actual_time} minute.")
-                            if x.lower() == "h":
-                                h_time = actual_time*3600
-                                
-                                up = {"_id":len(y),
-                                        "guild":ctx.guild.id,
-                                        "channel":channel.id,
-                                        "time":h_time,
-                                        "announcement":text.content}
-                                ta_cur.insert_one(up)
-                                if actual_time == 1:
-                                    await ctx.send(f"Given input will be announced after {actual_time} hour.")
-                                else:
-                                    await ctx.send(f"Given input will be announced after {actual_time} hours.")
-                        except:
-                            await ctx.send("Argument Error!")
+            if lower == "eliminate":
+                await ctx.send("Command Dismissed")
 
-        if lower == "eliminate":
-            await ctx.send("Command Dismissed")
-
-        if channel == None:
-            await ctx.send("Argument Error!")
+            if channel == None:
+                await ctx.send("Argument Error!")
+        else:
+            await ctx.send("**Access Denied!** \nThis command requires `manage_guild` permission in order to execute.")
 
 def setup(client):
     client.add_cog(AN_1(client))

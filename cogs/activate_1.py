@@ -324,7 +324,7 @@ class A_1(commands.Cog):
             await ctx.send("**Access Denied!** \nThis command requires `manage_channel` permission in order to execute.")
 
     @activate.command()
-    async def welcome(self,ctx,channel:discord.TextChannel = None,*,message):
+    async def welcome(self,ctx,channel:discord.TextChannel = None,*,message = None):
         raw = weclome_cur.find({})
         guilds = []
         channels = []
@@ -336,31 +336,30 @@ class A_1(commands.Cog):
             pass
 
         if ctx.author.guild_permissions.manage_guild:
-            try:
-                if ctx.guild.id not in guilds:
-                        up = {"_id":len(guilds),
-                              "guild":ctx.guild.id,
-                              "channel":channel.id,
-                              "message":message}
-                        weclome_cur.insert_one(up)
-                        await ctx.send(f"**WELCOME** channel has been set to {channel.mention}.\n**WELCOME** message is ```{message}```")
+            # try:
+            if ctx.guild.id not in guilds:
+                up = {"guild":ctx.guild.id,
+                      "channel":channel.id,
+                      "message":message}
+                weclome_cur.insert_one(up)
+                await ctx.send(f"**WELCOME** channel has been set to {channel.mention}.\n**WELCOME** message is ```{message}```")
 
-                if ctx.guild.id in guilds and channel.id in channels:
-                    weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
-                    await ctx.send(f"**WELCOME** message is ```{message}```")
+            if ctx.guild.id in guilds and channel.id in channels:
+                weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
+                await ctx.send(f"**WELCOME** message is ```{message}```")
 
-                if ctx.guild.id in guilds and channel.id not in channels:
-                        weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
-                        weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
-                        await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.\n**WELCOME** message is ```{message}```")
-            except:
-                ctx.send("Argument ERROR!")
+            if ctx.guild.id in guilds and channel.id not in channels:
+                weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
+                weclome_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
+                await ctx.send(f"**WELCOME** channel has been updated to {channel.mention}.\n**WELCOME** message is ```{message}```")
+            # except:
+            #     await ctx.send("Argument ERROR!")
         else:
             await ctx.send("**Access Denied!** \nThis command requires `manage_guild` permission in order to execute.")
 
 
     @activate.command()
-    async def bye(self,ctx,channel:discord.TextChannel = None,*,message):
+    async def bye(self,ctx,channel:discord.TextChannel = None,*,message = None):
         raw = bye_cur.find({})
         guilds = []
         channels = []
@@ -375,23 +374,22 @@ class A_1(commands.Cog):
         if ctx.author.guild_permissions.manage_guild:
             try:
                 if ctx.guild.id not in guilds:
-                        up = {"_id":len(guilds),
-                              "guild":ctx.guild.id,
-                              "channel":channel.id,
-                              "message":message}
-                        bye_cur.insert_one(up)
-                        await ctx.send(f"**BYE** channel has been set to {channel.mention}.\n**BYE** message is ```{message}```")
+                    up = {"guild":ctx.guild.id,
+                          "channel":channel.id,
+                          "message":message}
+                    bye_cur.insert_one(up)
+                    await ctx.send(f"**BYE** channel has been set to {channel.mention}.\n**BYE** message is ```{message}```")
 
                 if ctx.guild.id in guilds and channel.id in channels:
                     bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
                     await ctx.send(f"**BYE** message is ```{message}```")
 
                 if ctx.guild.id in guilds and channel.id not in channels:
-                        bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
-                        bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
-                        await ctx.send(f"**BYE** channel has been updated to {channel.mention}.\n**BYE** message is ```{message}```")
+                    bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"channel":channel.id}})
+                    bye_cur.update_one({"guild":ctx.guild.id}, {"$set":{"message":message}})
+                    await ctx.send(f"**BYE** channel has been updated to {channel.mention}.\n**BYE** message is ```{message}```")
             except:
-                ctx.send("Argument ERROR!")
+                await ctx.send("Argument ERROR!")
         else:
             await ctx.send("**Access Denied!** \nThis command requires `manage_guild` permission in order to execute.")
 
