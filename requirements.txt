@@ -1,5 +1,6 @@
 async-timeout==3.0.1
 asyncio==3.4.3
+async-timeout
 chardet==3.0.4
 DateTime==4.3
 discord.py
