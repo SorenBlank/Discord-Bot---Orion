@@ -399,7 +399,7 @@ class U_1(commands.Cog):
                         roles.remove(role)
                         break
         
-        game = discord.Embed(color = 0x714ec4, title = user)
+        game = discord.Embed(color = 0x714ec4,title = user.name)
         game.set_author(name = "IGNS", icon_url= self.client.user.avatar_url)
 
         x = ign_cur.find_one({"dc_id":user.id})
@@ -421,15 +421,12 @@ class U_1(commands.Cog):
 
 
         if val_user_name == None and chess_user_name == None:
-            temp = discord.Embed(title = user,description = "This account is not linked with any game", color = 0x714ec4)
+            temp = discord.Embed(title = user.name,description = "This account is not linked with any game", color = 0x714ec4)
             temp.set_author(name = "IGNS", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = temp)
         else:
             await ctx.send(embed = game)
 
-
-
-        
 
 
     @commands.command(aliases = ["avatar"])
