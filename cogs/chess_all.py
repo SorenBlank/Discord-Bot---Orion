@@ -16,8 +16,8 @@ import re
 import pymongo
 from pymongo import MongoClient
 from chessdotcom import get_player_profile, get_player_stats
-from chessdotcom.aio import Client as chessClient
-from chessdotcom.aio import get_player_stats,get_player_profile
+from chessdotcom import Client as chessClient
+from chessdotcom import get_player_stats,get_player_profile
 from asyncio import gather
 chessClient.aio = True
 
