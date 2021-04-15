@@ -24,6 +24,7 @@ chessClient.aio = True
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
 ign_cur = base["ign"]
+chess_cur = base["chessaccount"]
 
 
 class CHESS(commands.Cog):
@@ -34,7 +35,6 @@ class CHESS(commands.Cog):
     async def on_ready(self):
         print("CHESS is Loaded ----")
 
-    
     # @commands.group(invoke_without_command = True,case_insensitive=True)
     # async def chess(self,ctx):
     #     pass
@@ -228,6 +228,6 @@ class CHESS(commands.Cog):
             elif raw == None:
                 await ctx.send(f"`{user}` isn't linked with any **chess.com** account.")
 
-        
+    
 def setup(client):
     client.add_cog(CHESS(client))
