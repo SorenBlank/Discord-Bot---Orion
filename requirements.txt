@@ -10,5 +10,5 @@ wikipedia==1.4.0
 dnspython
 pymongo
 nest_asyncio
-chess.com==1.7.4
+chess.com
 youtube-search==2.1.0
