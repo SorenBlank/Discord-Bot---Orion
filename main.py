@@ -196,6 +196,25 @@ async def invite(ctx):
         await ctx.send(f"{ctx.author.mention} Please check your DM.")
         await ctx.author.send(embed = embed)
 
+
+#YOUTUBE SEARCH#
+# import json
+# from youtube_search import YoutubeSearch
+# import pprint
+
+# printer = pprint.PrettyPrinter()
+
+# ask = input("Search: ")
+
+# results = YoutubeSearch(ask, max_results=15).to_json()
+# results = json.loads(results)
+
+# print(len(results['videos']))
+
+# for i in range(15):
+# 	print(results['videos'][i]['url_suffix'])
+
+
 @client.command()
 async def youtube(ctx, *, search):
     # query_string = urllib.parse.urlencode({'search_query': search})
