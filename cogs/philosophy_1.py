@@ -9,6 +9,7 @@ import math
 import os
 import pymongo
 from pymongo import MongoClient
+import random
 
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
@@ -838,6 +839,18 @@ Here are installation guides for some popular Linux distributions\n\n\
         embed.set_author(name = random.choice(messages))
         embed.set_image(url = gif)
         await ctx.send(embed = embed)
+    
+    @commands.command()
+    async def flip(self,ctx):
+        embed = discord.Embed(color = 0x714ec4)
+        embed.set_author(name = "Flipping......", icon_url = "https://cdn.discordapp.com/emojis/842024350948392990.gif?v=1")
+        link_msg = await ctx.send(embed = embed)
+        await asyncio.sleep(3)
+        win = random.choice(["Heads","Tails"])
+        temp = discord.Embed(color = 0x714ec4)
+        temp.set_author(name = f"Winner: {win}")
+        await link_msg.edit(embed = temp)
+
 
 def setup(client):
     client.add_cog(P1(client))

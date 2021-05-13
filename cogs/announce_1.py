@@ -62,12 +62,14 @@ class AN_1(commands.Cog):
                         att=[]
                         if text.attachments != []:
                             if text.content != None:
-                                await channel.send(text.content)
                                 for a in text.attachments:
                                     att.append(await a.to_file())
-                                for at in att:
-                                    await channel.send(file=at)
-
+                                await channel.send(text.content, file=att[0])
+                                if len(att) > 0:
+                                    att.pop(0)
+                                    for i in att:
+                                        await channel.send(file = i)
+                
                             if text.content == None:
                                 for a in text.attachments:
                                     att.append(await a.to_file())

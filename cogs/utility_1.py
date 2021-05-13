@@ -44,7 +44,9 @@ class U_1(commands.Cog):
                 except:
                     pass
             if not user:
-                await ctx.send('Could not find user.')
+                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                await ctx.send(embed = embed)
                 return
         else:
             user = ctx.message.author
@@ -184,12 +186,16 @@ class U_1(commands.Cog):
 
             val_user_name = None
             chess_user_name = None
+            lichess_user_name = None
 
             if x != None:
                 if 'val_user' in x.keys():
                     val_user_name = x["val_user"]
                 if 'chess_user' in x.keys():
                     chess_user_name = x["chess_user"]
+                
+                if 'lichess_user' in x.keys():
+                    lichess_user_name = x["lichess_user"]
     
             if len(devices)>0:
                 em.add_field(name='ACTIVE ON', value=", \n".join(devices) + "\n―", inline=True)
@@ -198,14 +204,26 @@ class U_1(commands.Cog):
                 em.add_field(name='ACTIVE ON', value="None\n―", inline=True)
             
             lists = []
-            emo = {"val":"<:valorant:814455293328228394>", "chess":"<:chess:830030544661119056>"}
+            emo = {"val":"<:valorant:814455293328228394>", "chess":"<:chess:830030544661119056>", "lichess":"<:lichess:837249373167026196>"}
 
             if val_user_name != None:
-                s = f"{emo['val']} - {val_user_name}"
+                try:
+                    splited = val_user_name.split("#")
+                    name = splited[0].replace(" ","%20")
+                    tag = splited[1]
+                    
+                    s = f"{emo['val']} - [{val_user_name}](https://tracker.gg/valorant/profile/riot/{name}%23{tag}/overview)"
+                except:
+                    s = s = f"{emo['val']} - {val_user_name}"
+                    
                 lists.append(s)
             if chess_user_name != None:
-                j = f"{emo['chess']} - {chess_user_name}"
+                j = f"{emo['chess']} - [{chess_user_name}](https://www.chess.com/member/{chess_user_name})"
                 lists.append(j)
+            
+            if lichess_user_name != None:
+                k = f"{emo['lichess']} - [{lichess_user_name}](https://lichess.org/@/{lichess_user_name})"
+                lists.append(k)
             
             if len(lists) != 0:
                 text = "\n".join(lists)
@@ -216,8 +234,10 @@ class U_1(commands.Cog):
 
 
             if len(roles)>0:
-                em.add_field(name=f"ROLES ({len(roles)})", 
-                            value=f"```\n{', '.join([role.name for role in roles])}```", inline=False)
+                x = [role.name for role in roles]
+                x.reverse()
+                em.add_field(name=f"ROLES ({len(x)})", 
+                            value=f"```\n{', '.join(x)}```", inline=False)
             elif len(roles)==0:
                 em.add_field(name=f"ROLES ({len(roles)})", 
                             value="```\nNone```", inline=False)
@@ -257,7 +277,7 @@ class U_1(commands.Cog):
             em.add_field(name='NICK NAME', value=f"```\n{nn}```", inline=False)
 
 
-            em.add_field(name='VERSION', value= "`V2.0`", inline=True)
+            em.add_field(name='VERSION', value= "`V2.5`", inline=True)
             dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":":nine:","10":":one::zero:"}
             num = str(len(self.client.guilds))
             if len(num) > 1:
@@ -292,9 +312,8 @@ class U_1(commands.Cog):
 
             em.add_field(name='DEVELOPER TEAM', value=f"```diff\n> {mem1} \n-worked on design and development.\n\n> {(mem2)}\n-worked on development.\n\n> {mem3}\n-helped with ideas and suggestions.```", inline=False)
 
-            
-
             if len(roles)>0:
+                roles.reverse()
                 em.add_field(name=f"ROLES ({len(roles)})", 
                             value=f"```\n{', '.join([role.name for role in roles])}```", inline=False)
             elif len(roles)==0:
@@ -328,7 +347,9 @@ class U_1(commands.Cog):
                         server = i
                         break
                 if not server:
-                    return await ctx.send('Could not find server.')
+                    embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                    embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                    await ctx.send(embed = embed)
         else:
             server = ctx.message.guild
 
@@ -369,9 +390,9 @@ class U_1(commands.Cog):
 
         form='%d/%m/%Y %H:%M:%S'
         em.add_field(name='SERVER CREATED ON (D/M/Y)', value=f"```\n{server.created_at.__format__(form)}```",inline=False)
-        em.set_thumbnail(url=server.icon_url)
+        av = server.icon_url_as(static_format='png')
+        em.set_thumbnail(url= av)
         em.set_author(name="SERVER INFO", icon_url=self.client.user.avatar_url)
-        av=ctx.author.avatar_url_as(static_format='png')
         await ctx.send(embed=em)
     
     @commands.command()
@@ -382,9 +403,14 @@ class U_1(commands.Cog):
             except IndexError:
                 user = ctx.guild.get_member_named(name)
             if not user:
-                user = ctx.guild.get_member(int(name))
+                try:
+                    user = ctx.guild.get_member(int(name))
+                except:
+                    pass
             if not user:
-                await ctx.send('Could not find user.')
+                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                await ctx.send(embed = embed)
                 return
         else:
             user = ctx.message.author
@@ -398,7 +424,9 @@ class U_1(commands.Cog):
                     if role.name=="@everyone":
                         roles.remove(role)
                         break
-        
+        embed = discord.Embed(color = 0x714ec4, description = "`📡 loading data......`") 
+        link_msg = await ctx.send(embed = embed)
+
         game = discord.Embed(color = 0x714ec4,title = user.name)
         game.set_author(name = "IGNS", icon_url= self.client.user.avatar_url)
 
@@ -406,26 +434,38 @@ class U_1(commands.Cog):
 
         val_user_name = None
         chess_user_name = None
+        lichess_user_name = None
 
         if x != None:
             if 'val_user' in x.keys():
                 val_user_name = x["val_user"]
             if 'chess_user' in x.keys():
                 chess_user_name = x["chess_user"]
+            
+            if 'lichess_user' in x.keys():
+                lichess_user_name = x["lichess_user"]
+
 
             if val_user_name != None:
                 game.add_field(name = "<:valorant:814455293328228394> valorant", value = f"```\n{val_user_name}```", inline= False)
         
             if chess_user_name != None:
                 game.add_field(name = "<:chess:830030544661119056> chess.com", value = f"```\n{chess_user_name}```", inline = False)
+            
+            if lichess_user_name != None:
+                game.add_field(name = "<:lichess:837249373167026196> lichess", value = f"```\n{lichess_user_name}```", inline = False)
 
 
-        if val_user_name == None and chess_user_name == None:
-            temp = discord.Embed(title = user.name,description = "This account is not linked with any game", color = 0x714ec4)
-            temp.set_author(name = "IGNS", icon_url= self.client.user.avatar_url)
-            await ctx.send(embed = temp)
-        else:
-            await ctx.send(embed = game)
+
+        if val_user_name == None:
+            if chess_user_name == None:
+                if lichess_user_name == None:
+                    temp = discord.Embed(title = user.name,description = "This account is not linked with any game", color = 0x714ec4)
+                    temp.set_author(name = "IGNS", icon_url= self.client.user.avatar_url)
+                    await link_msg.edit(embed = temp)
+        
+        if val_user_name != None or chess_user_name != None or lichess_user_name != None:
+            await link_msg.edit(embed = game)
 
 
 
@@ -437,9 +477,14 @@ class U_1(commands.Cog):
             except IndexError:
                 user = ctx.guild.get_member_named(name)
             if not user:
-                user = ctx.guild.get_member(int(name))
+                try:
+                    user = ctx.guild.get_member(int(name))
+                except:
+                    pass
             if not user:
-                await ctx.send('Could not find user.')
+                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                await ctx.send(embed = embed)
                 return
         else:
             user = ctx.message.author

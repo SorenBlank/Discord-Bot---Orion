@@ -30,8 +30,6 @@ cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.n
 base = cluster["OrionDB"]
 
 fc_cur = base["fc"] #Formation = [_id, Guild, Channel, Past_Number, Last_Number, Author]
-tc_cur = base["tc"] #Formation = [_id, Guild, Channel]
-bc_cur = base["bc"] #Formation = [_id, Guild, Channel]
 ta_cur = base["ta"] #Formation = [_id, Guild, Channel, time, announcement]
 weclome_cur = base["welcome"] #Formation = [_id, Guild, Channel, Message]
 bye_cur = base["bye"] #Formation = [_id, Guild, Channel, Message]
@@ -60,12 +58,12 @@ client.load_extension('cogs.mod_1')
 client.load_extension('cogs.announce_1')
 client.load_extension('cogs.announce_timer_check_1')
 client.load_extension('cogs.philosophy_1')
-client.load_extension('cogs.tic_1')
-client.load_extension('cogs.bs_1')
+# client.load_extension('cogs.tic_1')
+# client.load_extension('cogs.bs_1')
 client.load_extension('cogs.fibo_1')
 client.load_extension('cogs.show_1')
 client.load_extension('cogs.utility_1')
-client.load_extension('cogs.chess_all')
+client.load_extension('cogs.games_all')
 client.load_extension('cogs.anime_1')
 client.load_extension('cogs.google_1')
 client.load_extension('cogs.countup_1')
@@ -102,14 +100,17 @@ async def on_member_join(member):
         guilds = [x[i]["guild"] for i in range(len(x))]
     except:
         pass
-
-    if member.guild.id in guilds:
-        raw = weclome_cur.find_one({"guild":member.guild.id})
-        channel = raw["channel"]
-        channel = client.get_channel(channel)
-        msg = raw["message"]
-        testmsg = msg.replace("#member",member.mention)
-        await channel.send(testmsg)
+    
+    try:
+        if member.guild.id in guilds:
+            raw = weclome_cur.find_one({"guild":member.guild.id})
+            channel = raw["channel"]
+            channel = client.get_channel(channel)
+            msg = raw["message"]
+            testmsg = msg.replace("#member",member.mention)
+            await channel.send(testmsg)
+    except:
+        pass
 
 @client.event
 async def on_member_remove(member):
@@ -351,4 +352,4 @@ nest_asyncio.apply()
 #client.run(os.environ['TOKEN'])
 #client.run("TOKEN")
 client.run(str(os.environ.get('TOKEN')))
-#client.run("Nzc3MDk1MjU3MjYyNTIyMzk5.X6-cWw.Gdy_Tiu-YLFKPvhYgacL9T0wktE")
+#client.run("ODE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")
