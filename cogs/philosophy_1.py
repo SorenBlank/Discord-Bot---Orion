@@ -27,7 +27,7 @@ class P1(commands.Cog):
 
     @commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["r","re","resources"])
     async def resource(self,ctx):
-        rs = discord.Embed(color = 0x714ec4)
+        rs = discord.Embed(color = 0x5865F2)
         rs.set_author(name = "LEARNING RESOURCES",icon_url= self.client.user.avatar_url)
         rs.add_field(name = "<:python:814811189241970718> PYTHON LEARNING RESOURCES",
                      value= ":small_orange_diamond: Here you will find some useful python learning resources that will help you go master or advance your python skills.\n**__Command:__** `.o resource python`",
@@ -351,7 +351,7 @@ If you want to follow the newest research I suggest reading some of the [papers 
 
     @resource.command(aliases = ["pro"])
     async def programming(self,ctx):
-        pro = discord.Embed(color = 0x714ec4,
+        pro = discord.Embed(color = 0x5865F2,
                             description = "Here are some general resources that you all will find useful, they aren't based on one specific topic. So there should be something here for everyone.\n\
 -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
 
@@ -471,7 +471,7 @@ Here are installation guides for some popular Linux distributions\n\n\
             summary = page.summary
             summary = summary.split(".")
             summary = ". ".join(summary[:5])
-            embed = discord.Embed(color = 0x714ec4,title = page.title, url = page.url,
+            embed = discord.Embed(color = 0x5865F2,title = page.title, url = page.url,
             description = f"{summary}......[more]({page.url})")
             embed.set_author(name="Wikipedia", icon_url="https://cdn.discordapp.com/attachments/777124925219536911/829261559216734218/1200px-Wikipedia-logo-v2.svg.png")
             
@@ -496,7 +496,7 @@ Here are installation guides for some popular Linux distributions\n\n\
             for i in all_pages[page]:
                 text = text + str(num) +' - '+ i + "\n"
                 num += 1
-            embed = discord.Embed(color = 0x714ec4,description = "Use the command `.o wiki <search>` to search.")
+            embed = discord.Embed(color = 0x5865F2,description = "Use the command `.o wiki <search>` to search.")
             embed.set_author(name="Wikipedia", icon_url="https://cdn.discordapp.com/attachments/777124925219536911/829261559216734218/1200px-Wikipedia-logo-v2.svg.png")
             embed.add_field(name = f'"{message}" might refer to-',
             value = text,
@@ -628,7 +628,7 @@ Here are installation guides for some popular Linux distributions\n\n\
         
         messages = [f"{ctx.author.name} kissed {user.name}!!?",f"Did just {ctx.author.name} kissed {user.name}!!? OwO",f"{ctx.author.name} kissed {user.name}!!? Really?",f"{ctx.author.name} just kissed {user.name}. >//<", f"Awwww {ctx.author.name} kissed {user.name}."]
         gif = random.choice(kiss)
-        embed = discord.Embed(color = 0x714ec4)
+        embed = discord.Embed(color = 0x5865F2)
         embed.set_author(name = random.choice(messages))
         embed.set_image(url = gif)
         await ctx.send(embed = embed)
@@ -680,7 +680,7 @@ Here are installation guides for some popular Linux distributions\n\n\
         
         messages = [f"Awww {ctx.author.name} just pat {user.name}'s head. >.<",f"Adorable >.< {ctx.author.name} just gave {user.name} a head pat.",f"{ctx.author.name} pats {user.name}! So cute! >//<"]
         gif = random.choice(pat)
-        embed = discord.Embed(color = 0x714ec4)
+        embed = discord.Embed(color = 0x5865F2)
         embed.set_author(name = random.choice(messages))
         embed.set_image(url = gif)
         await ctx.send(embed = embed)
@@ -728,7 +728,7 @@ Here are installation guides for some popular Linux distributions\n\n\
 
         messages = [f"Awww {ctx.author.name} hugged {user.name}. >.<",f"Cute! >.< {ctx.author.name} just hugged {user.name}.",f"{ctx.author.name} Squeeze harder! >//<", f"AWWWW! {ctx.author.name} {user.name}, you are so cute."]
         gif = random.choice(hug)
-        embed = discord.Embed(color = 0x714ec4)
+        embed = discord.Embed(color = 0x5865F2)
         embed.set_author(name = random.choice(messages))
         embed.set_image(url = gif)
         await ctx.send(embed = embed)
@@ -771,7 +771,7 @@ Here are installation guides for some popular Linux distributions\n\n\
 
         messages = [f"Awww {ctx.author.name} licked {user.name}. >.<",f"Cute! >.< {ctx.author.name} just licked {user.name} so hard.",f"{ctx.author.name} don't lick too much! >//<", f"AWWWW! {ctx.author.name} {user.name}, stop licking. ><"]
         gif = random.choice(lick)
-        embed = discord.Embed(color = 0x714ec4)
+        embed = discord.Embed(color = 0x5865F2)
         embed.set_author(name = random.choice(messages))
         embed.set_image(url = gif)
         await ctx.send(embed = embed)
@@ -802,7 +802,7 @@ Here are installation guides for some popular Linux distributions\n\n\
 
         messages = [f'{ctx.author.name} is crying. :"(', f'{ctx.author.name} needs a warm hug.',f"{ctx.author.name} don't cry. Everything will be alright.",f"{ctx.author.name} is crying. Somebody hug...",f"{ctx.author.name} please don't cry. ;-; I am here."]
         gif = random.choice(cry)
-        embed = discord.Embed(color = 0x714ec4)
+        embed = discord.Embed(color = 0x5865F2)
         embed.set_author(name = random.choice(messages))
         embed.set_image(url = gif)
         await ctx.send(embed = embed)
@@ -835,19 +835,19 @@ Here are installation guides for some popular Linux distributions\n\n\
         
         messages = [f'{ctx.author.name} is tickling {user.name} ><!',f'{ctx.author.name} is tickling {user.name} ><! Save her!',f'{ctx.author.name} is tickling hard {user.name} :))',f'{user.name} RIP. :))']
         gif = random.choice(tickle)
-        embed = discord.Embed(color = 0x714ec4)
+        embed = discord.Embed(color = 0x5865F2)
         embed.set_author(name = random.choice(messages))
         embed.set_image(url = gif)
         await ctx.send(embed = embed)
     
     @commands.command()
     async def flip(self,ctx):
-        embed = discord.Embed(color = 0x714ec4)
+        embed = discord.Embed(color = 0x5865F2)
         embed.set_author(name = "Flipping......", icon_url = "https://cdn.discordapp.com/emojis/842024350948392990.gif?v=1")
         link_msg = await ctx.send(embed = embed)
         await asyncio.sleep(3)
         win = random.choice(["Heads","Tails"])
-        temp = discord.Embed(color = 0x714ec4)
+        temp = discord.Embed(color = 0x5865F2)
         temp.set_author(name = f"Winner: {win}")
         await link_msg.edit(embed = temp)
 

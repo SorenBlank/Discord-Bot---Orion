@@ -48,53 +48,7 @@ class A_1(commands.Cog):
 
     @commands.group(invoke_without_command = True,aliases = ["initiate","start","set","setup"],case_insensitive=True)
     async def activate(self,ctx):
-        activator_embed = discord.Embed(title='\
-= = = = = = =| Help - [Activate] |= = = = = = =',description="\
-:white_small_square: The `[` and `]` around the argument mean it’s required.\n\
-:white_small_square: The `(` and `)` around the argument mean it’s optional.\n\
--   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -")
-
-
-        #SECOND FIELD
-        activator_embed.add_field(name=":card_box:SERVER UTILITIES:card_box:",
-                                  value = "------------ :arrow_down_small: ------------",
-                                  inline= False)
-
-        activator_embed.add_field(name = ":hammer_pick: Welcome Message",
-                                  value = ":small_orange_diamond: A channel and message where Orion will welcome new comers.\nType '#member' inside the message in order to mention the member.\n**__Command:__** `.o set welcome [channel] [message]`",
-                                  inline = False)
-
-        activator_embed.add_field(name=":hammer_pick: Bye Message",
-                                  value = ":small_orange_diamond: A channel and message where Orion will send bye message.\nType '#member' inside the message in order to mention the member.\n**__Command:__** `.o set bye [channel] [message]`",
-                                  inline = False)
-
-        activator_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-
-
-        #THIRD FIELD
-        activator_embed.add_field(name=":video_game:GAMES:video_game:",
-                                  value="------ :arrow_down_small: -----",
-                                  inline=False)
-        activator_embed.add_field(name=":large_blue_diamond: Fibonacci/Fibo",
-                                  value=":small_blue_diamond: A channel where you can count up but in Fibonacci series.\n**__Command:__** `.o activate fibo (channel)`",inline=False)
-        activator_embed.add_field(name=":large_blue_diamond: TicTacToe",
-                                  value=":small_blue_diamond: A channel for playing tictactoe.\n**__Command:__** `.o activate tic (channel)`",
-                                  inline=False)
-        activator_embed.add_field(name=":large_blue_diamond: Battleship (BETA)",
-                                  value=':small_blue_diamond: A channel for playing battleship.\n**__Command:__** `.o activate battleship (channel)`',
-                                  inline = False)
-        
-        activator_embed.add_field(name=" ឵឵ ",value=" ឵឵ ",inline=False)
-
-
-        activator_embed.add_field(name=":book:PHILOSOPHY:book:",
-                                  value="---------- :arrow_down_small: ---------",
-                                  inline=False)
-        activator_embed.add_field(name=":orange_book: Wikipedia",
-                                  value=":small_orange_diamond: A channel for wikipedia search.\n**__Command:__** `.o activate wiki (channel)`",
-                                  inline=False)
-
-        await ctx.send(embed = activator_embed)
+        return
 
 
     @activate.command(aliases = ["fibo"])

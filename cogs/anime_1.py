@@ -43,7 +43,7 @@ class ANIME(commands.Cog):
         if x[0] == "Final":
             des = d[0] + "."
 
-        anime_em = discord.Embed(title = title,url = url, description = des,color = 0x714ec4)
+        anime_em = discord.Embed(title = title,url = url, description = des,color = 0x5865F2)
         
         anime_em.set_thumbnail(url = all_data['image_url'])
 
@@ -107,7 +107,7 @@ class ANIME(commands.Cog):
         if x[0] == "Final":
             des = d[0] + "."
 
-        manga_em = discord.Embed(color = 0x714ec4,title = title,url = url, description = des)
+        manga_em = discord.Embed(color = 0x5865F2,title = title,url = url, description = des)
         
         manga_em.set_thumbnail(url = all_data['image_url'])
 

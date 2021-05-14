@@ -32,7 +32,7 @@ class H_1(commands.Cog):
     @commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["h"])
     async def help(self,ctx):
 
-        help_embed = discord.Embed(color = 0x714ec4)
+        help_embed = discord.Embed(color = 0x5865F2)
         avi = self.client.user.avatar_url_as(static_format='png')
         help_embed.set_author(name = "HELP COMMANDS",icon_url = avi)
         help_embed.set_thumbnail(url= avi)
@@ -61,7 +61,7 @@ class H_1(commands.Cog):
 
     @help.command(aliases=["games","g","tictactoe","tic","tac","fibo","Fibonacci"])
     async def game(self,ctx):
-        game_embed = discord.Embed(color = 0x714ec4)
+        game_embed = discord.Embed(color = 0x5865F2)
         game_embed.set_author(name = "GAME COMMANDS",icon_url = self.client.user.avatar_url)
         game_embed.add_field(name=':1234: Countup',
                              value="`.o set countup (#channel)`")
@@ -90,7 +90,7 @@ class H_1(commands.Cog):
 
     @help.command(aliases = ["initiate","start","set","setup","activation"])
     async def Activate(self,ctx):
-        activator_embed = discord.Embed(color = 0x714ec4)
+        activator_embed = discord.Embed(color = 0x5865F2)
         activator_embed.set_author(name = "ACTIVATE COMMANDS", icon_url=self.client.user.avatar_url)
 
         #SECOND FIELD
@@ -122,7 +122,7 @@ class H_1(commands.Cog):
 
     @help.command(aliases = ["stop","eliminate","remove","deactivation"])
     async def Deactivate(self,ctx):
-        deactivator_embed = discord.Embed(color = 0x714ec4,description = ":one: `.o deactivate countup`\nThis command removes **Countup Channel**.\n\n :two: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:three: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:four: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
+        deactivator_embed = discord.Embed(color = 0x5865F2,description = ":one: `.o deactivate countup`\nThis command removes **Countup Channel**.\n\n :two: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:three: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:four: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
         deactivator_embed.set_author(name = "DEACTIVATE COMMANDS", icon_url= self.client.user.avatar_url)
         await ctx.send(embed = deactivator_embed)
 
@@ -130,7 +130,7 @@ class H_1(commands.Cog):
     async def server_utilities(self,ctx,msg = None):
         try:
             if msg.lower() == "utility" or msg.lower() == "utilities" or msg.lower() == "u":
-                su_embed = discord.Embed(color = 0x714ec4,description = "Use the command `.o help <option>` to view more info.")
+                su_embed = discord.Embed(color = 0x5865F2,description = "Use the command `.o help <option>` to view more info.")
                 su_embed.set_author(name = "SERVER UTILITY COMMANDS",icon_url = self.client.user.avatar_url)
                 su_embed.add_field(name=":white_check_mark: Activation",
                                      value="`.o help activate`",
@@ -156,7 +156,7 @@ class H_1(commands.Cog):
 
                 await ctx.send(embed= su_embed)
         except:
-            su_embed = discord.Embed(color = 0x714ec4,description = "Use the command `.o help <option>` to view more info.")
+            su_embed = discord.Embed(color = 0x5865F2,description = "Use the command `.o help <option>` to view more info.")
             su_embed.set_author(name = "SERVER UTILITY COMMANDS",icon_url = self.client.user.avatar_url)
             su_embed.add_field(name=":white_check_mark: Activation",
                                     value="`.o help activate`",
@@ -184,7 +184,7 @@ class H_1(commands.Cog):
 
     @help.command(aliases = ["utility","u"])
     async def utilities(self,ctx):
-        u_embed = discord.Embed(color = 0x714ec4)
+        u_embed = discord.Embed(color = 0x5865F2)
         u_embed.set_author(name = "UTILITY COMMANDS",icon_url = self.client.user.avatar_url)
         u_embed.add_field(name=":frame_photo: Avatar",
                           value = "`.o av (@member)`")
@@ -203,7 +203,7 @@ class H_1(commands.Cog):
 
     @help.command(aliases=['activity','wiki','wikipedia','act'])
     async def activities(self,ctx):
-        act_embed = discord.Embed(color = 0x714ec4)
+        act_embed = discord.Embed(color = 0x5865F2)
         act_embed.set_author(name = "ACTIVITY COMMANDS",icon_url = self.client.user.avatar_url)
         act_embed.add_field(name=":mag: SEARCH",value="Use the command `.o <platform> <search>` to search.", inline= False)
         act_embed.add_field(name = "<:google:829098461306683443> Google", value = "`.o google [search]`")

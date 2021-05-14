@@ -44,7 +44,7 @@ class U_1(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
@@ -61,7 +61,7 @@ class U_1(commands.Cog):
                         roles.remove(role)
                         break
             
-            em = discord.Embed(color = 0x714ec4)
+            em = discord.Embed(color = 0x5865F2)
             em.set_author(name = "USER INFO", icon_url= self.client.user.avatar_url)
             em.add_field(name="USER NAME",value=f"```\n{user}```", inline=True)
             em.add_field(name = "USER ID",value = f"```\n{user.id}```",inline= True)
@@ -264,7 +264,7 @@ class U_1(commands.Cog):
                         roles.remove(role)
                         break
             
-            em = discord.Embed(color = 0x714ec4)
+            em = discord.Embed(color = 0x5865F2)
             em.set_author(name = "USER INFO", icon_url= self.client.user.avatar_url)
             em.add_field(name="USER NAME",value=f"```\n{user}```", inline=True)
             em.add_field(name = "USER ID",value = f"```\n{user.id}```",inline= True)
@@ -347,7 +347,7 @@ class U_1(commands.Cog):
                         server = i
                         break
                 if not server:
-                    embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                    embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                     embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
         else:
@@ -375,7 +375,7 @@ class U_1(commands.Cog):
         humans = server.member_count - bots
 
 
-        em = discord.Embed(color = 0x714ec4)
+        em = discord.Embed(color = 0x5865F2)
         em.add_field(name = "SERVER NAME", value = f"```\n{server.name}```",inline=True)
         em.add_field(name='SERVER OWNER', value=f"```\n{server.owner}```", inline=True)
         em.add_field(name=f'SERVER MEMBERS - {server.member_count}', value=f"```\nMembers: {humans} | Bots: {bots}```",inline=False)
@@ -408,7 +408,7 @@ class U_1(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
@@ -424,10 +424,10 @@ class U_1(commands.Cog):
                     if role.name=="@everyone":
                         roles.remove(role)
                         break
-        embed = discord.Embed(color = 0x714ec4, description = "`📡 loading data......`") 
+        embed = discord.Embed(color = 0x5865F2, description = "`📡 loading data......`") 
         link_msg = await ctx.send(embed = embed)
 
-        game = discord.Embed(color = 0x714ec4,title = user.name)
+        game = discord.Embed(color = 0x5865F2,title = user.name)
         game.set_author(name = "IGNS", icon_url= self.client.user.avatar_url)
 
         x = ign_cur.find_one({"dc_id":user.id})
@@ -460,7 +460,7 @@ class U_1(commands.Cog):
         if val_user_name == None:
             if chess_user_name == None:
                 if lichess_user_name == None:
-                    temp = discord.Embed(title = user.name,description = "This account is not linked with any game", color = 0x714ec4)
+                    temp = discord.Embed(title = user.name,description = "This account is not linked with any game", color = 0x5865F2)
                     temp.set_author(name = "IGNS", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
         
@@ -482,7 +482,7 @@ class U_1(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
@@ -496,7 +496,7 @@ class U_1(commands.Cog):
                 if role.name=="@everyone":
                     roles.remove(role)
 
-        embed = discord.Embed(title=f"{user.name}",color = 0x714ec4)
+        embed = discord.Embed(title=f"{user.name}",color = 0x5865F2)
         embed.set_image(url = avi)
         await ctx.send(embed = embed)
 

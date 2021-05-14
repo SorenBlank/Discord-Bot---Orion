@@ -47,7 +47,7 @@ class D_1(commands.Cog):
 
     @commands.group(aliases = ["stop","eliminate","remove"],invoke_without_command = True,case_insensitive = True)
     async def deactivate(self,ctx):
-        deactivator_embed = discord.Embed(color = 0x714ec4,description = ":one: `.o deactivate countup`\nThis command removes **Countup Channel**.\n\n :two: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:three: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:four: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
+        deactivator_embed = discord.Embed(color = 0x5865F2,description = ":one: `.o deactivate countup`\nThis command removes **Countup Channel**.\n\n :two: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:three: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:four: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
         deactivator_embed.set_author(name = "DEACTIVATE COMMANDS", icon_url= self.client.user.avatar_url)
         await ctx.send(embed = deactivator_embed)
 

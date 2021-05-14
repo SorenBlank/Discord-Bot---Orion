@@ -63,7 +63,7 @@ class GAMES(commands.Cog):
                 if "chess_user" in raw.keys():
                     exist = True
                     
-                    embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nA linked `chess` account already exists. Type `.o unlink chess` to unlink.")
+                    embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nA linked `chess` account already exists. Type `.o unlink chess` to unlink.")
                     embed.set_author(name = "ERROR", icon_url = self.client.user.avatar_url)
                     await ctx.send(embed = embed)
 
@@ -76,16 +76,16 @@ class GAMES(commands.Cog):
                         if y["location"] == str(ctx.author):
                             up = {"dc_id":ctx.author.id,"chess_user":username}
                             ign_cur.insert_one(up)
-                            embed = discord.Embed(color = 0x714ec4,description = "You have successfully linked a `chess.com` account.")
+                            embed = discord.Embed(color = 0x5865F2,description = "You have successfully linked a `chess.com` account.")
                             embed.set_author(name = "Linked Successful!", icon_url= self.client.user.avatar_url)
                             await ctx.send(embed = embed)
 
                         else:
-                            embed = discord.Embed(color = 0x714ec4,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your chess.com profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your chess.com Location here:\nhttps://www.chess.com/settings")
+                            embed = discord.Embed(color = 0x5865F2,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your chess.com profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your chess.com Location here:\nhttps://www.chess.com/settings")
                             embed.set_image(url = "https://i.imgur.com/IoAWrk4.png")
                             await ctx.send(embed = embed)
                     except:
-                        embed = discord.Embed(color = 0x714ec4,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your chess.com profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your chess.com Location here:\nhttps://www.chess.com/settings")
+                        embed = discord.Embed(color = 0x5865F2,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your chess.com profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your chess.com Location here:\nhttps://www.chess.com/settings")
                         embed.set_image(url = "https://i.imgur.com/IoAWrk4.png")
                         await ctx.send(embed = embed)
                 if raw != None:
@@ -98,12 +98,12 @@ class GAMES(commands.Cog):
                             raw.pop("_id",None)
                             ign_cur.delete_many({"dc_id":ctx.author.id})
                             ign_cur.insert_one(raw)
-                            embed = discord.Embed(color = 0x714ec4,description = "You have successfully linked a `chess.com` account.")
+                            embed = discord.Embed(color = 0x5865F2,description = "You have successfully linked a `chess.com` account.")
                             embed.set_author(name = "Linked Successful!", icon_url= self.client.user.avatar_url)
                             await ctx.send(embed = embed)
 
                         else:
-                            embed = discord.Embed(color = 0x714ec4, title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your chess.com profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your chess.com Location here:\nhttps://www.chess.com/settings")
+                            embed = discord.Embed(color = 0x5865F2, title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your chess.com profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your chess.com Location here:\nhttps://www.chess.com/settings")
                             embed.set_image(url = "https://i.imgur.com/IoAWrk4.png")
                             await ctx.send(embed = embed)
                     except:
@@ -111,7 +111,7 @@ class GAMES(commands.Cog):
                         embed.set_image(url = "https://i.imgur.com/IoAWrk4.png")
                         await ctx.send(embed = embed)
         else:
-            embed = discord.Embed(color = 0x714ec4,description = "Argument ERROR!")
+            embed = discord.Embed(color = 0x5865F2,description = "Argument ERROR!")
             embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
 
@@ -125,7 +125,7 @@ class GAMES(commands.Cog):
             if raw != None:
                 if "lichess_user" in raw.keys():
                     exist = True
-                    embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nA linked `lichess` account already exists. Type `.o unlink lichess` to unlink.")
+                    embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nA linked `lichess` account already exists. Type `.o unlink lichess` to unlink.")
                     embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
 
@@ -136,15 +136,15 @@ class GAMES(commands.Cog):
                         if user["profile"]["location"] == str(ctx.author):
                             up = {"dc_id":ctx.author.id,"lichess_user":username}
                             ign_cur.insert_one(up)
-                            embed = discord.Embed(color = 0x714ec4,description = "You have successfully linked a `lichess` account.")
+                            embed = discord.Embed(color = 0x5865F2,description = "You have successfully linked a `lichess` account.")
                             embed.set_author(name = "Linked Successful!", icon_url= self.client.user.avatar_url)
                             await ctx.send(embed = embed)
                         else:
-                            embed = discord.Embed(color = 0x714ec4,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
+                            embed = discord.Embed(color = 0x5865F2,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
                             embed.set_image(url = "https://i.imgur.com/kWaOcfT.png")
                             await ctx.send(embed = embed)
                     except:
-                        embed = discord.Embed(color = 0x714ec4,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
+                        embed = discord.Embed(color = 0x5865F2,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
                         embed.set_image(url = "https://i.imgur.com/kWaOcfT.png")
                         await ctx.send(embed = embed)
 
@@ -155,20 +155,20 @@ class GAMES(commands.Cog):
                             raw["lichess_user"] = username
                             ign_cur.delete_many({"dc_id":ctx.author.id})
                             ign_cur.insert_one(raw)
-                            embed = discord.Embed(color = 0x714ec4,description = "You have successfully linked a `lichess` account.")
+                            embed = discord.Embed(color = 0x5865F2,description = "You have successfully linked a `lichess` account.")
                             embed.set_author(name = "Linked Successful!", icon_url= self.client.user.avatar_url)
                             await ctx.send(embed = embed)
                         else:
-                            embed = discord.Embed(color = 0x714ec4,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.message.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
+                            embed = discord.Embed(color = 0x5865F2,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.message.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
                             embed.set_image(url = "https://i.imgur.com/kWaOcfT.png")
                             await ctx.send(embed = embed)
 
                     except:
-                        embed = discord.Embed(color = 0x714ec4,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
+                        embed = discord.Embed(color = 0x5865F2,title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your lichess profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your lichess Location here:\nhttps://lichess.org/account/profile")
                         embed.set_image(url = "https://i.imgur.com/kWaOcfT.png")
                         await ctx.send(embed = embed)
         else:
-            embed = discord.Embed(color = 0x714ec4,description = "Argument ERROR!")
+            embed = discord.Embed(color = 0x5865F2,description = "Argument ERROR!")
             embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
         
@@ -188,18 +188,18 @@ class GAMES(commands.Cog):
             if raw != None:
                 if "val_user" in raw.keys():
                     exist = True
-                    embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nA linked `valorant` account already exists. Type `.o unlink val` to unlink.")
+                    embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nA linked `valorant` account already exists. Type `.o unlink val` to unlink.")
                     embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
 
             if exist == False:
-                embed = discord.Embed(color = 0x714ec4, description = "`📡 verifying data......`")
+                embed = discord.Embed(color = 0x5865F2, description = "`📡 verifying data......`")
                 link_msg = await ctx.send(embed = embed)
                 if raw == None:
                     try:
                         splited = username.split("#")
                     except:
-                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                         await link_msg.edit(embed = temp)
                         return
                     
@@ -207,7 +207,7 @@ class GAMES(commands.Cog):
                     try:
                         tag = splited[1]
                     except:
-                        temp = discord.Embed(title = ctx.author.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x714ec4)
+                        temp = discord.Embed(title = ctx.author.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
                         return
@@ -219,11 +219,11 @@ class GAMES(commands.Cog):
 
                         up = {"dc_id":ctx.author.id,"val_user":username}
                         ign_cur.insert_one(up)
-                        embed = discord.Embed(color = 0x714ec4,description = "You have successfully linked a `valorant` account.")
+                        embed = discord.Embed(color = 0x5865F2,description = "You have successfully linked a `valorant` account.")
                         embed.set_author(name = "Linked Successful!", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = embed)
                     else:
-                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                         await link_msg.edit(embed = temp)
                         return
                 
@@ -231,7 +231,7 @@ class GAMES(commands.Cog):
                     try:
                         splited = username.split("#")
                     except:
-                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                         await link_msg.edit(embed = temp)
                         return
                     
@@ -239,7 +239,7 @@ class GAMES(commands.Cog):
                     try:
                         tag = splited[1]
                     except:
-                        temp = discord.Embed(title = ctx.author.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x714ec4)
+                        temp = discord.Embed(title = ctx.author.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
                         return
@@ -252,15 +252,15 @@ class GAMES(commands.Cog):
                         raw["val_user"] = username
                         ign_cur.delete_many({"dc_id": ctx.author.id})
                         ign_cur.insert_one(raw)
-                        embed = discord.Embed(color = 0x714ec4,description = "You have successfully linked a `valorant` account.")
+                        embed = discord.Embed(color = 0x5865F2,description = "You have successfully linked a `valorant` account.")
                         embed.set_author(name = "Linked Successful!", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = embed)
                     else: 
-                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                        temp = discord.Embed(title = ctx.author.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                         await link_msg.edit(embed = temp)
                         return
         else:
-            embed = discord.Embed(color = 0x714ec4, description = "Argument ERROR!")
+            embed = discord.Embed(color = 0x5865F2, description = "Argument ERROR!")
             embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
 
@@ -277,15 +277,15 @@ class GAMES(commands.Cog):
                 raw.pop("chess_user",None)
                 ign_cur.delete_many({"dc_id":ctx.author.id})
                 ign_cur.insert_one(raw)
-                embed = discord.Embed(color = 0x714ec4,description = "You have successfully unlinked `chess.com` account.")
+                embed = discord.Embed(color = 0x5865F2,description = "You have successfully unlinked `chess.com` account.")
                 embed.set_author(name = "Unlinked Successful!", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
             else:
-                embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nThis account is not linked with any `chess.com` account.")
+                embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `chess.com` account.")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
         elif raw == None:
-            embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nThis account is not linked with any `chess.com` account.")
+            embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `chess.com` account.")
             embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
     
@@ -297,15 +297,15 @@ class GAMES(commands.Cog):
                 raw.pop("val_user",None)
                 ign_cur.delete_many({"dc_id":ctx.author.id})
                 ign_cur.insert_one(raw)
-                embed = discord.Embed(color = 0x714ec4,description = "You have successfully unlinked `valorant` account.")
+                embed = discord.Embed(color = 0x5865F2,description = "You have successfully unlinked `valorant` account.")
                 embed.set_author(name = "Unlinked Successful!", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
             else:
-                embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nThis account is not linked with any `valorant` account.")
+                embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `valorant` account.")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
         elif raw == None:
-            embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nThis account is not linked with any `valorant` account.")
+            embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `valorant` account.")
             embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
     
@@ -317,15 +317,15 @@ class GAMES(commands.Cog):
                 raw.pop("lichess_user",None)
                 ign_cur.delete_many({"dc_id":ctx.author.id})
                 ign_cur.insert_one(raw)
-                embed = discord.Embed(color = 0x714ec4,description = "You have successfully unlinked `lichess` account.")
+                embed = discord.Embed(color = 0x5865F2,description = "You have successfully unlinked `lichess` account.")
                 embed.set_author(name = "Unlinked Successful!", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
             else:
-                embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nThis account is not linked with any `lichess` account.")
+                embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `lichess` account.")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
         elif raw == None:
-            embed = discord.Embed(color = 0x714ec4,description = "Overwrite ERROR!\n\nThis account is not linked with any `lichess` account.")
+            embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `lichess` account.")
             embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
 
@@ -347,7 +347,7 @@ class GAMES(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
@@ -357,7 +357,7 @@ class GAMES(commands.Cog):
         raw = ign_cur.find_one({"dc_id": user.id})
 
         if raw != None:
-            embed = discord.Embed(color = 0x714ec4, description = "`📡 fetching data......`") 
+            embed = discord.Embed(color = 0x5865F2, description = "`📡 fetching data......`") 
             link_msg = await ctx.send(embed = embed)
             if "chess_user" in raw.keys():
                 # try:
@@ -367,7 +367,7 @@ class GAMES(commands.Cog):
                 player = data["player"]
                 stats = data2["stats"]
 
-                profile_em = discord.Embed(color = 0x714ec4)
+                profile_em = discord.Embed(color = 0x5865F2)
                 profile_em.set_author(name = "CHESS PROFILE",icon_url= self.client.user.avatar_url, url = player["url"])
                 try:
                     profile_em.add_field(name = 'NAME',
@@ -413,15 +413,15 @@ class GAMES(commands.Cog):
 
                 await link_msg.edit(embed = profile_em)
                 # except:
-                #     temp = discord.Embed(title = user.name,description = "chess.com Account not found.\n\nPlease unlink and link your account and try again.", color = 0x714ec4)
+                #     temp = discord.Embed(title = user.name,description = "chess.com Account not found.\n\nPlease unlink and link your account and try again.", color = 0x5865F2)
                 #     temp.set_author(name = "CHESS PROFILE", icon_url= self.client.user.avatar_url)
                 #     await link_msg.edit(embed = temp)
             else:
-                temp = discord.Embed(title = user.name,description = "This account is not linked with any chess.com account.", color = 0x714ec4)
+                temp = discord.Embed(title = user.name,description = "This account is not linked with any chess.com account.", color = 0x5865F2)
                 temp.set_author(name = "CHESS PROFILE", icon_url= self.client.user.avatar_url)
                 await link_msg.edit(embed = temp)
         elif raw == None:
-            temp = discord.Embed(title = user.name,description = "This account is not linked with any chess.com account.", color = 0x714ec4)
+            temp = discord.Embed(title = user.name,description = "This account is not linked with any chess.com account.", color = 0x5865F2)
             temp.set_author(name = "CHESS PROFILE", icon_url= self.client.user.avatar_url)
             await link_msg.edit(embed = temp)
 
@@ -438,7 +438,7 @@ class GAMES(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
@@ -448,14 +448,14 @@ class GAMES(commands.Cog):
         raw = ign_cur.find_one({"dc_id": user.id})
 
         if raw != None:
-            embed = discord.Embed(color = 0x714ec4, description = "`📡 fetching data......`") 
+            embed = discord.Embed(color = 0x5865F2, description = "`📡 fetching data......`") 
             link_msg = await ctx.send(embed = embed)
             if "lichess_user" in raw.keys():
                 try:
                     user = lichess.api.user(raw["lichess_user"])
                     user_profile = user["profile"]
                     username = user["username"]
-                    profile_em = discord.Embed(color = 0x714ec4)
+                    profile_em = discord.Embed(color = 0x5865F2)
                     profile_em.set_author(name = "LICHESS PROFILE",icon_url= self.client.user.avatar_url, url = user["url"])
                     firstname = ""
                     lastname = ""
@@ -491,15 +491,15 @@ class GAMES(commands.Cog):
 
                     await link_msg.edit(embed = profile_em)
                 except:
-                    temp = discord.Embed(title = user.name,description = "Lichess Account not found.\n\nPlease unlink and link your account and try again.", color = 0x714ec4)
+                    temp = discord.Embed(title = user.name,description = "Lichess Account not found.\n\nPlease unlink and link your account and try again.", color = 0x5865F2)
                     temp.set_author(name = "LICHESS PROFILE", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
             else:
-                temp = discord.Embed(title = user.name,description = "This account is not linked with any chess.com account.", color = 0x714ec4)
+                temp = discord.Embed(title = user.name,description = "This account is not linked with any chess.com account.", color = 0x5865F2)
                 temp.set_author(name = "LICHESS PROFILE", icon_url= self.client.user.avatar_url)
                 await link_msg.edit(embed = temp)
         elif raw == None:
-            temp = discord.Embed(title = user.name,description = "This account is not linked with any lichess account.", color = 0x714ec4)
+            temp = discord.Embed(title = user.name,description = "This account is not linked with any lichess account.", color = 0x5865F2)
             temp.set_author(name = "LICHESS PROFILE", icon_url= self.client.user.avatar_url)
             await link_msg.edit(embed = temp)
 
@@ -517,7 +517,7 @@ class GAMES(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                 embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
@@ -527,13 +527,13 @@ class GAMES(commands.Cog):
         raw = ign_cur.find_one({"dc_id": user.id})
 
         if raw != None:
-            embed = discord.Embed(color = 0x714ec4, description = "`📡 fetching data......`") 
+            embed = discord.Embed(color = 0x5865F2, description = "`📡 fetching data......`") 
             link_msg = await ctx.send(embed = embed)
             if 'val_user' in raw.keys():
                 try:
                     splited = raw['val_user'].split("#")
                 except:
-                    temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                    temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                     temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
                     return
@@ -542,7 +542,7 @@ class GAMES(commands.Cog):
                 try:
                     tag = splited[1]
                 except:
-                    temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x714ec4)
+                    temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x5865F2)
                     temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
                     return
@@ -608,7 +608,7 @@ class GAMES(commands.Cog):
                         kill3 = weapons[2].find('span','value').text.replace(",","")
 
 
-                        val = discord.Embed(color = 0x714ec4)
+                        val = discord.Embed(color = 0x5865F2)
                         val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
                         val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                         value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
@@ -629,21 +629,21 @@ class GAMES(commands.Cog):
 
                         await link_msg.edit(embed = val)
                     except:
-                        temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x714ec4)
+                        temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
                         return
                 if str(req) == "<Response [404]>":
-                    temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                    temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                     temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
                 
                 if str(req) == "<Response [451]>":
-                    temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x714ec4)
+                    temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
                     temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
             else:
-                temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x714ec4)
+                temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
                 temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                 await link_msg.edit(embed = temp)
         
@@ -663,7 +663,7 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                         embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
@@ -673,14 +673,14 @@ class GAMES(commands.Cog):
                 raw = ign_cur.find_one({"dc_id": user.id})
 
                 if raw != None:
-                    embed = discord.Embed(color = 0x714ec4, description = "`📡 fetching data......`") 
+                    embed = discord.Embed(color = 0x5865F2, description = "`📡 fetching data......`") 
                     link_msg = await ctx.send(embed = embed)
                     if 'val_user' in raw.keys():
 
                         try:
                             splited = raw['val_user'].split("#")
                         except:
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -689,7 +689,7 @@ class GAMES(commands.Cog):
                         try:
                             tag = splited[1]
                         except:
-                            temp = discord.Embed(title = user.name,description = "Invalid valorant IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "Invalid valorant IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -755,7 +755,7 @@ class GAMES(commands.Cog):
                                 weapon3 = weapons[2].find('div','weapon__name').text
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
-                                val = discord.Embed(color = 0x714ec4)
+                                val = discord.Embed(color = 0x5865F2)
                                 val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
@@ -777,21 +777,21 @@ class GAMES(commands.Cog):
 
                                 await link_msg.edit(embed = val)
                             except:
-                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x714ec4)
+                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
                                 temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                         if str(req) == "<Response [404]>":
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                         
                         if str(req) == "<Response [451]>":
-                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
-                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x714ec4)
+                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
     
@@ -811,7 +811,7 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                         embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
@@ -821,14 +821,14 @@ class GAMES(commands.Cog):
                 raw = ign_cur.find_one({"dc_id": user.id})
 
                 if raw != None:
-                    embed = discord.Embed(color = 0x714ec4, description = "`📡 fetching data......`") 
+                    embed = discord.Embed(color = 0x5865F2, description = "`📡 fetching data......`") 
                     link_msg = await ctx.send(embed = embed)
                     if 'val_user' in raw.keys():
 
                         try:
                             splited = raw['val_user'].split("#")
                         except:
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -837,7 +837,7 @@ class GAMES(commands.Cog):
                         try:
                             tag = splited[1]
                         except:
-                            temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -904,7 +904,7 @@ class GAMES(commands.Cog):
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
 
-                                val = discord.Embed(color = 0x714ec4)
+                                val = discord.Embed(color = 0x5865F2)
                                 val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
@@ -922,22 +922,22 @@ class GAMES(commands.Cog):
 
                                 await link_msg.edit(embed = val)
                             except:
-                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x714ec4)
+                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
                                 temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                             
                         if str(req) == "<Response [404]>":
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                         
                         if str(req) == "<Response [451]>":
-                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
-                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x714ec4)
+                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
 
@@ -956,7 +956,7 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                         embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
@@ -966,14 +966,14 @@ class GAMES(commands.Cog):
                 raw = ign_cur.find_one({"dc_id": user.id})
 
                 if raw != None:
-                    embed = discord.Embed(color = 0x714ec4, description = "`📡 fetching data......`") 
+                    embed = discord.Embed(color = 0x5865F2, description = "`📡 fetching data......`") 
                     link_msg = await ctx.send(embed = embed)
                     if 'val_user' in raw.keys():
 
                         try:
                             splited = raw['val_user'].split("#")
                         except:
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -982,7 +982,7 @@ class GAMES(commands.Cog):
                         try:
                             tag = splited[1]
                         except:
-                            temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -1049,7 +1049,7 @@ class GAMES(commands.Cog):
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
 
-                                val = discord.Embed(color = 0x714ec4)
+                                val = discord.Embed(color = 0x5865F2)
                                 val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
@@ -1067,22 +1067,22 @@ class GAMES(commands.Cog):
 
                                 await link_msg.edit(embed = val)
                             except:
-                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x714ec4)
+                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
                                 temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                             
                         if str(req) == "<Response [404]>":
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                         
                         if str(req) == "<Response [451]>":
-                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
-                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x714ec4)
+                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
         
@@ -1101,7 +1101,7 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x714ec4,description = "Index ERROR!")
+                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
                         embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
@@ -1111,14 +1111,14 @@ class GAMES(commands.Cog):
                 raw = ign_cur.find_one({"dc_id": user.id})
 
                 if raw != None:
-                    embed = discord.Embed(color = 0x714ec4, description = "`📡 fetching data......`") 
+                    embed = discord.Embed(color = 0x5865F2, description = "`📡 fetching data......`") 
                     link_msg = await ctx.send(embed = embed)
                     if 'val_user' in raw.keys():
 
                         try:
                             splited = raw['val_user'].split("#")
                         except:
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -1127,7 +1127,7 @@ class GAMES(commands.Cog):
                         try:
                             tag = splited[1]
                         except:
-                            temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "Invalid `valorant` IGN.\n\nPlease make sure you provided your tag along with the username.\nExample: `.o link val SorenBlank#1570`", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                             return
@@ -1194,7 +1194,7 @@ class GAMES(commands.Cog):
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
 
-                                val = discord.Embed(color = 0x714ec4)
+                                val = discord.Embed(color = 0x5865F2)
                                 val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
@@ -1212,22 +1212,22 @@ class GAMES(commands.Cog):
 
                                 await link_msg.edit(embed = val)
                             except:
-                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x714ec4)
+                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
                                 temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                             
                         if str(req) == "<Response [404]>":
-                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                         
                         if str(req) == "<Response [451]>":
-                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x714ec4)
+                            temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
-                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x714ec4)
+                        temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
 
