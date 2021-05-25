@@ -185,9 +185,7 @@ class Battleship(commands.Cog):
                                     blank1.save('qwerty.png')
                                     await ch.send(file=discord.File("qwerty.png"))
                                     os.remove('qwerty.png')
-                                    
 
-                            #
                             await ctx.send("Alright! I got both your ship positions. Now we\'ll have a toss. Whoever wins, gets to start first.")
                             toss=random.choice(col)
                             await ctx.send(toss)

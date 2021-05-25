@@ -101,7 +101,6 @@ class GAMES(commands.Cog):
                             embed = discord.Embed(color = 0x5865F2,description = "You have successfully linked a `chess.com` account.")
                             embed.set_author(name = "Linked Successful!", icon_url= self.client.user.avatar_url)
                             await ctx.send(embed = embed)
-
                         else:
                             embed = discord.Embed(color = 0x5865F2, title = ":vertical_traffic_light: Additional Verification Step :vertical_traffic_light:",description = f"In your chess.com profile, please paste your Discord tag ({ctx.author}) into the Location field temporarily to verify you have ownership of the account and re-run the command. After linking your account, you can revert your Location back to any value.\n\nYou can set your chess.com Location here:\nhttps://www.chess.com/settings")
                             embed.set_image(url = "https://i.imgur.com/IoAWrk4.png")

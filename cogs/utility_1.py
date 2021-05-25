@@ -51,7 +51,6 @@ class U_1(commands.Cog):
         else:
             user = ctx.message.author
 
-
         if user.id != 777095257262522399:
             avi = user.avatar_url_as(static_format='png')
             if isinstance(user, discord.Member):
@@ -72,11 +71,11 @@ class U_1(commands.Cog):
                 nn=user.nick
 
             em.add_field(name='NICK NAME', value=f"```\n{nn}```", inline=False)
-            
+
             st="None"
             activ=""
             listen,stream,playy,watch="","","",""
-            ACT=[]
+            ACT=[]  
             vits=list(user.activities)
             for act in vits:
                 if act.type==AT.custom:
@@ -358,7 +357,6 @@ class U_1(commands.Cog):
         total_channels=textchannels+voicechannels
         num_roles = len(server.roles)
         num_emojis= len(server.emojis)
-
         
         bots=0
         online, idle, dnd = 0,0,0
@@ -373,7 +371,6 @@ class U_1(commands.Cog):
                 dnd+=1
         num_offline = server.member_count - online - idle - dnd
         humans = server.member_count - bots
-
 
         em = discord.Embed(color = 0x5865F2)
         em.add_field(name = "SERVER NAME", value = f"```\n{server.name}```",inline=True)
@@ -394,7 +391,7 @@ class U_1(commands.Cog):
         em.set_thumbnail(url= av)
         em.set_author(name="SERVER INFO", icon_url=self.client.user.avatar_url)
         await ctx.send(embed=em)
-    
+
     @commands.command()
     async def ign(self,ctx, *, name=""):
         if name:
@@ -414,7 +411,6 @@ class U_1(commands.Cog):
                 return
         else:
             user = ctx.message.author
-
 
         if user.id != 777095257262522399:
             avi = user.avatar_url_as(static_format='png')
@@ -455,8 +451,6 @@ class U_1(commands.Cog):
             if lichess_user_name != None:
                 game.add_field(name = "<:lichess:837249373167026196> lichess", value = f"```\n{lichess_user_name}```", inline = False)
 
-
-
         if val_user_name == None:
             if chess_user_name == None:
                 if lichess_user_name == None:
@@ -466,8 +460,6 @@ class U_1(commands.Cog):
         
         if val_user_name != None or chess_user_name != None or lichess_user_name != None:
             await link_msg.edit(embed = game)
-
-
 
     @commands.command(aliases = ["avatar"])
     async def av(self,ctx, *, name=""):
@@ -499,8 +491,6 @@ class U_1(commands.Cog):
         embed = discord.Embed(title=f"{user.name}",color = 0x5865F2)
         embed.set_image(url = avi)
         await ctx.send(embed = embed)
-
-    
 
 def setup(client):
     client.add_cog(U_1(client))

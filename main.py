@@ -166,7 +166,6 @@ async def _8ball(ctx, *, que):
     else:
         await ctx.send(random.choice(responses))
 
-
 @client.command()
 async def wanted(ctx, member : discord.Member = None):
     if member == None:
@@ -253,7 +252,7 @@ async def youtube(ctx, *, search):
                 await link_msg.add_reaction(emoji) # add emoji to link_msg
         
             clean_emoji = True
-            
+
         elif page == pages-1:
             if not clean_emoji:
                 for i in emojis:
@@ -262,7 +261,7 @@ async def youtube(ctx, *, search):
             emojis = ["⬅️","🚫"]
             for emoji in emojis:
                 await link_msg.add_reaction(emoji)
-            
+
             clean_emoji = True
         else:
             if clean_emoji:
@@ -272,12 +271,11 @@ async def youtube(ctx, *, search):
             emojis = ["⬅️","➡️"]
             for emoji in emojis:
                 await link_msg.add_reaction(emoji)
-        
+
             clean_emoji = False
-        
+
         try: # to handle timeout error
             user_react,user = await client.wait_for("reaction_add", check = react_check, timeout=60)
-            
             
             if user_react.emoji == "➡️" and page != pages-1:
                 page += 1
@@ -338,7 +336,6 @@ async def on_message(message):
             au = int(exact_txt_splitted[1])
             au_o = client.get_user(au)
             await au_o.send(" ".join(exact_txt_spl[2:]))
-
 
 #######################################################################################################
 #######################################################################################################
