@@ -152,6 +152,8 @@ async def on_member_join(member):
                 pfp = cv.imdecode(hmm, cv.IMREAD_COLOR)
 
             colors = {"blurple":(242,101,88),
+                        "blurpleold":(218,137,114),
+                        "blurple-old":(218,137,114),
                         "green":(135,242,87),
                         "red":(69,66,237),
                         "yellow":(92,231,254),

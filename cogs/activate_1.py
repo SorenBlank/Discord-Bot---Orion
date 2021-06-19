@@ -469,7 +469,7 @@ class A_1(commands.Cog):
                 await ctx.send(embed = embed)
                 return
             else:
-                colors = ["blurple","red","green","yellow","fuchsia","black","white","cyan","cyan1","cyan2"]
+                colors = ["blurple","blurple-old","blurpleold","red","green","yellow","fuchsia","black","white","cyan","cyan1","cyan2"]
                 if color.lower() in colors:
                     banner_cur.update_one({"guild":ctx.guild.id}, {"$set":{"circle_color":color.lower()}})
                     embed = discord.Embed(color = 0x5865F2, description = f"`ringcolor` has been updated successfully.")
@@ -477,7 +477,7 @@ class A_1(commands.Cog):
                     await ctx.send(embed = embed)
 
                 elif color.lower() not in colors:
-                    embed = discord.Embed(color = 0x5865F2,description = "Please pick any color from `blurple` `red` `green` `yellow` `fuchsia` `black` `white` `cyan`.")
+                    embed = discord.Embed(color = 0x5865F2,description = "Please pick any color from `blurple` `blurple-old` `red` `green` `yellow` `fuchsia` `black` `white` `cyan`.")
                     embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
                     return
@@ -496,7 +496,7 @@ class A_1(commands.Cog):
                 await ctx.send(embed = embed)
                 return
             else:
-                colors = ["blurple","red","green","yellow","fuchsia","black","white","cyan","cyan1","cyan2"]
+                colors = ["blurple","blurple-old","blurpleold","red","green","yellow","fuchsia","black","white","cyan","cyan1","cyan2"]
                 if color.lower() in colors:
                     banner_cur.update_one({"guild":ctx.guild.id}, {"$set":{"welcome_color":color.lower()}})
                     embed = discord.Embed(color = 0x5865F2, description = f"`welcomecolor` has been updated successfully.")
@@ -504,7 +504,7 @@ class A_1(commands.Cog):
                     await ctx.send(embed = embed)
 
                 elif color.lower() not in colors:
-                    embed = discord.Embed(color = 0x5865F2,description = "Please pick any color from `blurple` `red` `green` `yellow` `fuchsia` `black` `white` `cyan`.")
+                    embed = discord.Embed(color = 0x5865F2,description = "Please pick any color from `blurple` `blurple-old` `red` `green` `yellow` `fuchsia` `black` `white` `cyan`.")
                     embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
                     return
@@ -523,7 +523,7 @@ class A_1(commands.Cog):
                 await ctx.send(embed = embed)
                 return
             else:
-                colors = ["blurple","red","green","yellow","fuchsia","black","white","cyan","cyan1","cyan2"]
+                colors = ["blurple","blurple-old","blurpleold","red","green","yellow","fuchsia","black","white","cyan","cyan1","cyan2"]
                 if color.lower() in colors:
                     banner_cur.update_one({"guild":ctx.guild.id}, {"$set":{"name_color":color.lower()}})
                     embed = discord.Embed(color = 0x5865F2, description = f"`namecolor` has been updated successfully.")
@@ -531,7 +531,7 @@ class A_1(commands.Cog):
                     await ctx.send(embed = embed)
 
                 elif color.lower() not in colors:
-                    embed = discord.Embed(color = 0x5865F2,description = "Please pick any color from `blurple` `red` `green` `yellow` `fuchsia` `black` `white` `cyan`.")
+                    embed = discord.Embed(color = 0x5865F2,description = "Please pick any color from `blurple` `blurple-old` `red` `green` `yellow` `fuchsia` `black` `white` `cyan`.")
                     embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
                     return
@@ -588,6 +588,8 @@ class A_1(commands.Cog):
                 pfp = cv.imdecode(hmm, cv.IMREAD_COLOR)
 
             colors = {"blurple":(242,101,88),
+                        "blurpleold":(218,137,114),
+                        "blurple-old":(218,137,114),
                         "green":(135,242,87),
                         "red":(69,66,237),
                         "yellow":(92,231,254),
