@@ -525,7 +525,7 @@ class A_1(commands.Cog):
             else:
                 colors = ["blurple","red","green","yellow","fuchsia","black","white","cyan","cyan1","cyan2"]
                 if color.lower() in colors:
-                    banner_cur.update_one({"guild":ctx.guild.id}, {"$set":{"welcome_color":color.lower()}})
+                    banner_cur.update_one({"guild":ctx.guild.id}, {"$set":{"name_color":color.lower()}})
                     embed = discord.Embed(color = 0x5865F2, description = f"`namecolor` has been updated successfully.")
                     embed.set_author(name = "Updated Successfully!", icon_url = self.client.user.avatar_url)
                     await ctx.send(embed = embed)
