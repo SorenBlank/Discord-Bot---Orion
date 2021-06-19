@@ -4,6 +4,7 @@ from discord.ext import commands
 from discord.ext import commands, tasks
 import random
 import asyncio
+from discord.ext.commands.core import command
 import wikipedia
 import math
 import os
@@ -851,6 +852,127 @@ Here are installation guides for some popular Linux distributions\n\n\
         temp.set_author(name = f"Winner: {win}")
         await link_msg.edit(embed = temp)
 
+    @commands.command()
+    async def topic(self,ctx,option = ""):
+        starter = ["Tell me about yourself.","Have you done anything exciting lately?",
+                   "What made you smile today?","What’s your favorite form of social media?",
+                   "What was the last good book you read?","Do you listen to any podcasts? Which is your favorite?",
+                   "What do you think is the best show on Netflix right now?","Have you been on any interesting trips lately?",
+                   "What do you think has been the best movie of the year so far?","What song do you wish you could put on right now?",
+                   "Are you a cat person or a dog person?","Do you think you’re an introvert or an extrovert?",
+                   "What’s your strangest hidden talent?","What is something people are always surprised to learn about you?",
+                   "Where do you want to be in five years?","What superpower do you wish you could have?",
+                   "Where would you go on vacation if you had no budget?","If you could travel back in time, what decade would you choose to live in?",
+                   "What’s the last concert you went to?","What is one thing you can’t live without?",
+                   "What’s the strangest dream you’ve had recently?","What is your favorite book of all time?",
+                   "How many countries have you been to?","Would you rather travel via plane or boat?",
+                   "Would you rather be really hot or really cold?","Who is your favorite celebrity couple ever?",
+                   "What’s your favorite sport?","What sport do you wish you were really good at?",
+                   "How did you spend your last birthday?","Do you believe men and women can ever just be friends?",
+                   "What’s one interesting thing about yourself no one really knows?","What’s the best food you’ve had so far?",
+                   "What is your biggest regret in life?","Tell me about the most life-changing piece of advice you’ve ever heard.",
+                   "When are you the most happy?","Who is the most important person in your life right now?",
+                   "What do you wish your phone could do?","Who in your life is the worst at using technology?",
+                   "What makes you really certain about that you are not wasting your time and life?","What’s the best / worst thing about your work/school?",
+                   "What do you think the world will be like 20 years in the future?","What is something you’ve failed at recently?",
+                   "Have you ever played Valorant? Do you like it? If you do then why?","Do you ever sing in the shower?",
+                   "What is the worst piece of advice you’ve ever gotten?","",
+                   "What’s the most embarrassing thing that’s happened to you recently?","Tell me about the worst pickup line you’ve ever gotten.",
+                   "What is your favorite celebrity scandal right now?","What’s the worst thing you’ve ever worn?",
+                   "What is the stupidest joke you’ve ever heard?","When was the last time you laughed so hard you cried?",
+                   "What’s the best prank you’ve ever played on someone?","Who/What always makes you laugh, even when you’re upset?",
+                   "Who is your favorite comedian?","Is a hot dog a sandwich?",
+                   "What’s the weirdest thing you loved as a child?","What is something that’s really popular right now that will be ridiculous in five years?",
+                   "Describe your perfect weekend.","What’s the biggest risk you’ve ever taken?",
+                   "What are your long-term goals?","Tell me three fun facts about yourself.",
+                   "If you could make up a school subject, what would it be?","What do you most like about yourself?",
+                   "Do you know anyone who is living their life to the fullest?","What does success mean to you?",
+                   "What scares you most about your future?","",
+                   "If you could be famous, would you want to? Why?","Have you ever lost a friend? Why?",
+                   "If you had $100, what would you spend it on?","If you could go anywhere in the world, where would you choose and why?",
+                   "What is something you wish you could do everyday?","Have you ever stalked someone on social media?"]
+        deep = ["What has been the lowest point of your life?","If you could ask for a miracle, what would it be?",
+                "Where do you see yourself in five years?","Do you know anyone who is living their life to the fullest?",
+                "What is the biggest risk you’ve ever taken?","What is your idea of the perfect day?",
+                "What book had a big influence on you?","Who has been the most influential person in your life and why?",
+                "What does success mean to you?","What is the most difficult thing you’ve ever done?",
+                "What scares you most about your future?","What keeps you up at night?",
+                "What are your long-term goals?","Who is your role model?",
+                "What did you want to be when you were a kid?","What is your biggest regret in life?",
+                "What are the top three things on your bucket list?","What has been your biggest accomplishment so far?",
+                "What is one thing you wish you could do that you know you probably never will?","What are you most afraid of?",
+                "What’s the biggest risk you’ve ever taken?","Tell me about the most life-changing piece of advice you’ve ever heard.",
+                "When are you the most happy?","What always calms you down when you’re really stressed out and upset?",
+                "Who in your life has had the most influence on you?","What’s the hardest thing you’ve ever done?",
+                "How have your priorities changed in the last 10 years?","What’s the nicest thing anyone has ever done for you?",
+                "Describe your perfect weekend.","What’s the most controversial opinion you have?",
+                "If you could change one thing about your personality, what would it be?","What’s the first thing you would do if you won the lottery?",
+                "If you could invite one famous person to dinner, who would it be?","Who do you miss the most from your past?",
+                "If you could go back in time, what is one situation you would do differently?","Who is the most important person in your life right now?",
+                "What did you think you would be doing at this age when you were a kid?","What piece of technology could you live without?",
+                "What do you think the world will be like 20 years in the future?","What is something you’ve failed at recently?",
+                "What would you change about yourself if you could?","What motivates you to work hard?",
+                "What form of public transportation do you prefer? (air, boat, train, bus, car, etc.)","What’s the most spontaneous thing you’ve done lately?",
+                "What two radio stations do you listen to in the car the most?","If you could hire someone to help you, would it be with cleaning, cooking, or yard work?",
+                "If you could live anywhere, where would it be?","Who is your hero? ",
+                "What is your family member’s proudest accomplishment?","What is your favorite book to read?",
+                "What are your hobbies?","What is your biggest fear?",
+                "If you could choose to do anything for a day, what would it be?","What is the best gift you have been given?",
+                "If you could choose to do anything for a day, what would it be?","In the evening, would you rather play a game, visit a relative, watch a movie, or read?",
+                "What is your favorite game or sport to watch and play?","Would you rather have one wish granted today or 10 wishes granted 20 years from now?",
+                "Would you rather be criticized or be ignored?","Would you rather be so afraid of heights that you can’t go to the second floor of a building or be so afraid of the sun that you can only leave the house on rainy days?",
+                "Would you rather be color blind or lose your sense of taste?","Would you rather know when you’re going to die or how you’re going to die?",
+                "What makes you think that you are not wasting your life?","Do you have any dream? If you have then what is it? or What are they?"]
+        funny = ["Do you ever sing in the shower?","What is the worst piece of advice you’ve ever gotten?",
+                 "What’s the most embarrassing thing that’s happened to you recently?","Tell me about the worst pickup line you’ve ever gotten.",
+                 "What is your favorite celebrity scandal right now?","What’s the worst thing you’ve ever worn?",
+                 "If you could do anything illegal without getting in trouble, what would it be?","What is the stupidest joke you’ve ever heard?",
+                 "When was the last time you laughed so hard you cried?","What’s the best prank you’ve ever played on someone?",
+                 "What do you think is the funniest movie ever?","What always makes you laugh, even when you’re upset?",
+                 "Who is your favorite comedian?","What weird conspiracy theory do you believe?",
+                 "Is a hot dog a sandwich?","Which celebrity would play you in a movie about your life?",
+                 "What’s the worst trend you’ve ever taken part in?","What’s the weirdest thing you loved as a child?",
+                 "Which celebrity would play you in a movie about your life?","Toilet paper, over or under?",
+                 "How many chickens would it take to kill an elephant?","Which body part do you wish you could detach and why?",
+                 "What used to be considered trashy but now is very classy?","What’s the weirdest thing a guest has done at your house?",
+                 "What is the weirdest thing you have seen in someone else’s home?","What would be the worst thing for the government to make illegal?",
+                 "If peanut butter wasn’t called peanut butter, what would it be called?","If valorant wasn't called valorant, what would it be called?",
+                 "What two totally normal things become really weird if you do them back to back?","What set of items could you buy that would make the cashier the most uncomfortable?",
+                 "What would be the creepiest thing you could say while passing a stranger on the street?","What is something that you just recently realized that you are embarrassed you didn’t realize earlier?",
+                 "What would be the best-worst name for different types of businesses? (dry cleaners, amusement parks, etc.)","Who do you know that really reminds you of a character in a TV show or movie?",
+                 "What would the world be like if it was filled with male and female copies of you?","What are some things that are okay to occasionally do but definitely not okay to do every day?",
+                 "If you were arrested with no explanation, what would your friends and family assume you had done?","You’re a mad scientist, what scientific experiment would you run if money and ethics weren’t an issue?",
+                 "What are some fun ways to answer everyday questions like “how’s it going” or “what do you do”?","If your five-year-old self suddenly found themselves inhabiting your current body, what would your five-year-old self do first?",
+                 "First think of a product. Now, what would be the absolute worst brand name for one of those products?","What movie completely changes its plot when you change one letter in its title? What’s the new movie about?",
+                 "If the all the States in the USA were represented by food, what food would each state be represented by?","What is something that is really popular now, but in 5 years everyone will look back on and be embarrassed by?",
+                 "If you were transported 400 years into the past with no clothes or anything else, how would you prove that you were from the future?","",
+                 "Who is the messiest person you know?","What’s the most useless talent you have?",
+                 "What celebrity would you rate as a perfect 10?","What’s a body part that you wouldn’t mind losing?",
+                 "What is the dumbest way you’ve been injured?","If you had to change your name, what would your new name be, and why would you choose that name?",
+                 "What’s your biggest screw up in the kitchen?","What are some things that sound like compliments but are actually insults?",
+                 "When did you screw everything up, but no one ever found out it was you?","What’s something your brain tries to make you do and you have to will yourself not to do it?",
+                 "If you could know the absolute and total truth to one question, what question would you ask?","What ridiculous thing has someone tricked you into doing or believing?"]
+
+        options = [starter,funny,deep]
+
+        if not option:
+            main = random.choice(options)
+            await ctx.send(f"> {random.choice(main)}")
+
+        if option:
+            if option.lower() == "starter":
+                await ctx.send(f"> {random.choice(random)}")
+
+            if option.lower() == "deep":
+                await ctx.send(f"> {random.choice(deep)}")
+
+            if option.lower() == "funny":
+                await ctx.send(f"> {random.choice(funny)}")
+
+            if option.lower() != "starter" and option.lower() != "deep" and option.lower() != "funny":
+                embed = discord.Embed(color = 0x5865F2, description = "Please provide required arguments.")
+                embed.set_author(name = "Argument EROOR",icon_url = self.client.user.avatar_url)
+                await ctx.send(embed = embed)
 
 def setup(client):
     client.add_cog(P1(client))

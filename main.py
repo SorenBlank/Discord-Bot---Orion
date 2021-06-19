@@ -25,6 +25,12 @@ import requests
 import pymongo
 from pymongo import MongoClient
 from youtube_search import YoutubeSearch
+import cv2 as cv
+import matplotlib.pyplot as plt
+from PIL import Image
+from io import BytesIO
+import imageio
+
 
 cluster = MongoClient("mongodb+srv://soren:cdD2_qWUYRk-d4G@orion.iztml.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 base = cluster["OrionDB"]
@@ -33,9 +39,14 @@ fc_cur = base["fc"] #Formation = [_id, Guild, Channel, Past_Number, Last_Number,
 ta_cur = base["ta"] #Formation = [_id, Guild, Channel, time, announcement]
 weclome_cur = base["welcome"] #Formation = [_id, Guild, Channel, Message]
 bye_cur = base["bye"] #Formation = [_id, Guild, Channel, Message]
+banner_cur = base["banner"]
 
+intents = Intents.default()
+intents.bans = True
+intents.guild_messages = True
+intents.members = True
 #set up of command prefix
-client = commands.Bot(command_prefix = [".o ",".O "], case_insensitive=True, intents = Intents.all())
+client = commands.Bot(command_prefix = [".o ",".O "], case_insensitive=True, intents = intents)
 client.remove_command("help")
 
 au = 0
@@ -76,10 +87,10 @@ async def on_guild_remove(guild):
     fc_cur.delete_many({"guild":guild.id})
 
     #TC Removal
-    tc_cur.delete_many({"guild":guild.id})
+    # tc_cur.delete_many({"guild":guild.id})
 
-    #BC Removal
-    bc_cur.delete_many({"guild":guild.id})
+    # #BC Removal
+    # bc_cur.delete_many({"guild":guild.id})
 
     #Timer Announce Removal
     ta_cur.delete_many({"guild":guild.id})
@@ -100,17 +111,191 @@ async def on_member_join(member):
         guilds = [x[i]["guild"] for i in range(len(x))]
     except:
         pass
-    
-    try:
-        if member.guild.id in guilds:
-            raw = weclome_cur.find_one({"guild":member.guild.id})
-            channel = raw["channel"]
-            channel = client.get_channel(channel)
-            msg = raw["message"]
-            testmsg = msg.replace("#member",member.mention)
+
+    # try:
+    if member.guild.id in guilds:
+        raw = weclome_cur.find_one({"guild":member.guild.id})
+        channel = raw["channel"]
+        channel = client.get_channel(channel)
+        msg = raw["message"]
+        testmsg = msg.replace("#member",member.mention)
+        banner_guild = banner_cur.find_one({"guild":member.guild.id})
+
+        if banner_guild != None:
+
+            banner = BytesIO(banner_guild["banner"])
+            circle_color = banner_guild["circle_color"]
+            welcome_color = banner_guild["welcome_color"]
+            name_color = banner_guild["name_color"]
+
+            hmm = np.asarray(bytearray(banner.read()), dtype=np.uint8)
+
+            img = cv.imdecode(hmm, cv.IMREAD_COLOR)
+
+            pfp_url = str(member.avatar_url_as(static_format='png'))
+            response = requests.get(pfp_url)
+
+            if ".gif" in pfp_url:
+                imdata = response.content
+                fname = "tmp.gif"
+                imbytes = bytearray(imdata)
+                open(fname,"wb+").write(imdata)
+
+                gif = imageio.mimread(fname)
+
+                pfp = cv.cvtColor(gif[0], cv.COLOR_RGB2BGR)
+                os.remove(fname)
+
+            if ".gif" not in pfp_url:
+                bruh = BytesIO(response.content)
+                hmm = np.asarray(bytearray(bruh.read()), dtype=np.uint8)
+                pfp = cv.imdecode(hmm, cv.IMREAD_COLOR)
+
+            colors = {"blurple":(242,101,88),
+                        "green":(135,242,87),
+                        "red":(69,66,237),
+                        "yellow":(92,231,254),
+                        "fuchsia":(158,69,235),
+                        "white":(255,255,255),
+                        "black":(42,39,35),
+                        "cyan1":(227,255,37),
+                        "cyan":(227,255,37),
+                        "cyan2":(255,252,159)}
+
+            # bg_image_path = r"P:\Projects\Jobs\Discord-Bot-XEN\bg.jpg"
+            # bg = cv.imread(bg_image_path)
+
+            RATIO = (1024 + 1) / (500 + 1) # width/height
+
+            def crop(img, ratio):
+                height, width = img.shape[0:2]
+                if width / height == ratio:
+                    return img
+                new_height, new_width = 0, 0
+                if width / height > ratio:
+                    new_width = int(ratio * height)
+                    new_height = height
+                elif width / height < ratio:
+                    new_height = int(ratio * width)
+                    new_width = width
+                top = int((height - new_height)/2)
+                left = int((width - new_width)/2)
+                return img[top : top + new_height, left : left + new_width]
+
+            bg_crop = crop(img, ratio = RATIO)
+
+            # show(bg_crop)
+
+            bg_crop.shape
+
+            bg_resize = cv.resize(bg_crop, (1024 + 1, 500 + 1))
+
+            # show(bg_resize, showTicks = True)
+
+            height, width = bg_resize.shape[0:2]
+            center_coord = (width // 2, height // 3)
+            radius = height // 3 - 20
+
+            def transparent_circle(img):
+                height, width = img.shape[:2]
+                height = int(height)
+                width = int(width)
+
+                circ = np.zeros((height, width, 1), np.uint8)
+                circ = cv.circle(circ, (width // 2, height // 2), min(height, width) // 2, (1), -1, lineType = cv.LINE_AA)
+
+                result = np.zeros((height, width, 4), np.uint8)
+
+                result[:, :, 0] = np.multiply(img[:, :, 0], circ[:, :, 0])
+                result[:, :, 1] = np.multiply(img[:, :, 1], circ[:, :, 0])
+                result[:, :, 2] = np.multiply(img[:, :, 2], circ[:, :, 0])
+
+                circ[circ == 1] = 255
+                result[:, :, 3] = circ[:, :, 0]
+
+                return result
+
+            # pfp_path = "P:\Projects\Jobs\Discord-Bot-XEN\pfp.jpg"
+            # pfp = cv.imread(pfp_path)
+            
+            pfp_resize = cv.resize(pfp, (radius * 2, radius * 2))
+
+
+            pfp_png = transparent_circle(pfp_resize)
+
+            #
+            # show(bg_resize)
+            #
+            # pfp_png[0][0]
+            # 
+
+
+            def copyTransparent(mainImage, transparentImage, x, y):
+                y1, y2 = y, y + transparentImage.shape[0]
+                x1, x2 = x, x + transparentImage.shape[1]
+
+                alpha_s = transparentImage[:, :, 3] / 255.0
+                alpha_l = 1.0 - alpha_s
+
+                for c in range(0, 3):
+                    mainImage[y1:y2, x1:x2, c] = (alpha_s * transparentImage[:, :, c] + alpha_l * mainImage[y1:y2, x1:x2, c])
+
+                return mainImage
+
+            xc = center_coord[0] - radius
+            yc = center_coord[1] - radius
+            transparent_copied = copyTransparent(bg_resize.copy(), pfp_png, xc, yc)
+
+            # show(transparent_copied)
+
+            # circle_border_color = (0,0,255) # in BGR
+            cv.circle(transparent_copied, center_coord, radius, colors[circle_color], 5,lineType = cv.LINE_AA)
+            # show(transparent_copied)
+
+            from PIL import Image, ImageFont, ImageDraw
+
+
+            def customTextCenter(img, string, fontPath, textSize, fontColor, h):
+                font = ImageFont.truetype(fontPath, textSize)
+
+                img_pil = Image.fromarray(img)
+                im_width, im_height = img_pil.size
+
+                draw = ImageDraw.Draw(img_pil)
+
+                text_width = draw.textsize(string, font = font)[0]
+                textCoord = ((im_width - text_width)/2, h)
+
+                draw.text(textCoord, string, font = font, fill = fontColor)
+                return np.array(img_pil)
+
+            #
+
+            FONT_PATH = "./Uni Sans Heavy.ttf"
+
+            # member_name = "atonu_#1514"
+            # server_name = "Atonu and Comrades"
+            # member_count = str(69)
+
+            hello_string = f"WELCOME"
+            welcome_string = f"{member}"
+            # count_string = f"You are the {member_count}-th member of this server."
+
+            after_hello = customTextCenter(transparent_copied, hello_string, FONT_PATH, 90, colors[welcome_color], 2 * (height // 3) - 5)
+            # show(after_hello)
+
+            after_welcome = customTextCenter(after_hello, welcome_string, FONT_PATH, 50, colors[name_color], 2 * (height // 3) + 80)
+            # show(after_welcome)
+
+            # after_count = customTextCenter(after_welcome, count_string, FONT_PATH, 30, text_col, 2 * (height // 3) + 115)
+            # show(after_count)
+            cv.imwrite('qwerty.png',after_welcome)
+            await channel.send(testmsg, file = discord.File("qwerty.png"))
+            os.remove('qwerty.png')
+        else:
             await channel.send(testmsg)
-    except:
-        pass
+    # except:
+    #     pass
 
 @client.event
 async def on_member_remove(member):
@@ -124,7 +309,6 @@ async def on_member_remove(member):
 
     if member.guild.id in guilds:
         raw = bye_cur.find_one({"guild":member.guild.id})
-
         channel = raw["channel"]
         channel = client.get_channel(channel)
         msg = raw["message"]
@@ -214,6 +398,11 @@ async def invite(ctx):
 # for i in range(15):
 # 	print(results['videos'][i]['url_suffix'])
 
+
+@client.command()
+async def check_permission(ctx,channel1: discord.TextChannel, user:discord.Member):
+    x = user.permissions_in(channel1)
+    print(dict(x))
 
 @client.command()
 async def youtube(ctx, *, search):
@@ -348,5 +537,6 @@ nest_asyncio.apply()
 #Token
 #client.run(os.environ['TOKEN'])
 #client.run("TOKEN")
-client.run(str(os.environ.get('TOKEN')))
-#client.run("ODE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")
+#client.run(str(os.environ.get('TOKEN')))
+client.run("ODE1OTA4MDk3Mjg4OTYyMDk5.YDzPoQ.t3z2n6e4ggEPYNlHUn1sKZLn0aQ")
+#client.run("Nzc3MDk1MjU3MjYyNTIyMzk5.X6-cWw.ahKAOUSsDo6-H9ITAa30h_kcE6o")

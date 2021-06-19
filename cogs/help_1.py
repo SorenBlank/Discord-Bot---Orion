@@ -28,6 +28,7 @@ class H_1(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("H1 is Loaded ----")
+    
 
     @commands.group(invoke_without_command = True,case_insensitive=True,aliases = ["h"])
     async def help(self,ctx):
@@ -90,27 +91,29 @@ class H_1(commands.Cog):
 
     @help.command(aliases = ["initiate","start","set","setup","activation"])
     async def Activate(self,ctx):
-        activator_embed = discord.Embed(color = 0x5865F2)
-        activator_embed.set_author(name = "ACTIVATE COMMANDS", icon_url=self.client.user.avatar_url)
+        activator_embed = discord.Embed(color = 0x5865F2,description = "**__Welcome Text:__**\n```py\n.o set welcome [channel] [message]```__**Farewell Text:**__\n```py\n.o set farewell [channel] [message]```\n> Use `#member` keyword to mention the member.\n\n__**Welcome Banner:**__\n```py\n.o set banner [link]```\n__**Welcome Banner Colors:**__\n```py\n.o set [section] [color]```\n> Sections: `ringcolor` `welcomecolor` `namecolor`\n> \n> Colors: `blurple` `red` `green` `yellow` `fuchsia` `black` `white` `cyan` `cyan1`\n ឵឵ ")
+        activator_embed.set_author(name = "ACTIVATE COMMANDS",icon_url=self.client.user.avatar_url)
 
         #SECOND FIELD
-        activator_embed.add_field(name=":card_box:SERVER UTILITIES:card_box:",
-                                  value = "Use the command `!set [option] (#channel)` to set channels.",
-                                  inline= False)
+        # activator_embed.add_field(name=":card_box: SERVER UTILITIES :card_box:",
+        #                           value = "**__Welcome Text:__**\n```py\n.o set welcome [channel] [message]```__**Farewell Text:**__\n```py\n.o set farewell [channel] [message]```\n> Use `#member` keyword to mention the member.\n\n__**Welcome Banner:**__\n```py\n.o set banner [ringcolor] [welcomecolor] [namecolor] [link]```\n> Colors: `blurple` `red` `green` `yellow` `fuchsia` `black` `white` `cyan` `cyan1`\n ឵឵ ",
+        #                           inline= False)
 
-        activator_embed.add_field(name = ":hammer_pick: Welcome/Bye Message",
-                                  value = "```py\n.o set welcome [#channel] [message] \n# to set a greeting channel & message\n\n.o set bye [#channel] [message] \n# to set a farewell channel & message```Use `#member` keyword to mention the member.\n\n ឵឵ ",
-                                  inline = False)
+        # activator_embed.add_field(name = "welcome/farewell message",
+        #                           value = "```py\n.o set welcome [#channel] [message]\n\n.o set farewell [channel] [message]```Use `#member` keyword to mention the member.",
+        #                           inline = False)
+        # activator_embed.add_field(name = "welcome banner",
+        #                           value= "```py\n.o set banner [ringcolor] [welcomecolor] [namecolor] [link]```Color Options: `blurple` `red` `green` `yellow` `fuchsia` `black` `white` `cyan` `cyan1`\n\n> **Note:** welcome banner will be send along with welcome message.\n ឵឵ ")
 
         #THIRD FIELD
-        activator_embed.add_field(name=":video_game:GAMES:video_game:",
-                                  value="Use the command `!set [option] (#channel)` to set channels for games.",
+        activator_embed.add_field(name="__Games__",
+                                  value="```py\n.o set [option] (#channel)```\n> Options: `countup` `fibo-countup`",
                                   inline=False)
 
-        activator_embed.add_field(name=":1234: Countup",
-                                  value="`.o set countup (#channel)`")                     
-        activator_embed.add_field(name=":1234: Fibonacci Countup",
-                                  value="`.o set fibo (#channel)`")
+        # activator_embed.add_field(name=":1234: Countup",
+        #                           value="`.o set countup (#channel)`")                     
+        # activator_embed.add_field(name=":1234: Fibonacci Countup",
+        #                           value="`.o set fibo (#channel)`")
         # activator_embed.add_field(name=":bangbang:  TicTacToe",
         #                           value="`.o set tic (#channel)`")
         # activator_embed.add_field(name=":ship: Battleship (BETA)",
@@ -122,7 +125,7 @@ class H_1(commands.Cog):
 
     @help.command(aliases = ["stop","eliminate","remove","deactivation"])
     async def Deactivate(self,ctx):
-        deactivator_embed = discord.Embed(color = 0x5865F2,description = ":one: `.o deactivate countup`\nThis command removes **Countup Channel**.\n\n :two: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:three: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:four: `.o deactivate bye`\nThis command removes  **Bye Channel**.")
+        deactivator_embed = discord.Embed(color = 0x5865F2,description = ":one: `.o deactivate countup`\nThis command removes **Countup Channel**.\n\n :two: `.o deactivate fibo`\nThis command removes **Fibonacci Channel**.\n\n:three: `.o deactivate welcome`\nThis command removes  **Welcome Channel**.\n\n:four: `.o deactivate bye`\nThis command removes  **Bye Channel**.\n\n:five: `.o deactivate banner`\nThis command removes **Welcome Banner**.")
         deactivator_embed.set_author(name = "DEACTIVATE COMMANDS", icon_url= self.client.user.avatar_url)
         await ctx.send(embed = deactivator_embed)
 
@@ -214,8 +217,9 @@ class H_1(commands.Cog):
         act_embed.add_field(name = " ឵឵ \n:ping_pong: ACTION",
                       value = "`kiss` `hug` `cry` `pat` `tickle` `lick` `flip`",
                       inline= False)
+        act_embed.add_field(name = " ឵឵ \n:tada: FUN",value="`topic`")
         act_embed.add_field(name = " ឵឵ \n📚 RESOURCES",
-                      value = "Use the command `.o re` or `.o re <option>` for resources.\n`programming` `python` `webdev` `androiddev` `iosdev` `ml` `linux`",
+                      value = "Use the command `.o re` or `.o re [option]` for resources.\n`programming` `python` `webdev` `androiddev` `iosdev` `ml` `linux`",
                       inline= False)
         await ctx.send(embed = act_embed)
 

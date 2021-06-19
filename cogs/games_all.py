@@ -63,8 +63,8 @@ class GAMES(commands.Cog):
                 if "chess_user" in raw.keys():
                     exist = True
                     
-                    embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nA linked `chess` account already exists. Type `.o unlink chess` to unlink.")
-                    embed.set_author(name = "ERROR", icon_url = self.client.user.avatar_url)
+                    embed = discord.Embed(color = 0x5865F2,description = "A linked `chess` account already exists. Type `.o unlink chess` to unlink.")
+                    embed.set_author(name = "Overwrite ERROR", icon_url = self.client.user.avatar_url)
                     await ctx.send(embed = embed)
 
             if exist == False:
@@ -110,8 +110,8 @@ class GAMES(commands.Cog):
                         embed.set_image(url = "https://i.imgur.com/IoAWrk4.png")
                         await ctx.send(embed = embed)
         else:
-            embed = discord.Embed(color = 0x5865F2,description = "Argument ERROR!")
-            embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+            embed = discord.Embed(color = 0x5865F2, description = "Please provide required arguments.")
+            embed.set_author(name = "Argument EROOR",icon_url = self.client.user.avatar_url)
             await ctx.send(embed = embed)
 
     @link.command()
@@ -124,8 +124,8 @@ class GAMES(commands.Cog):
             if raw != None:
                 if "lichess_user" in raw.keys():
                     exist = True
-                    embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nA linked `lichess` account already exists. Type `.o unlink lichess` to unlink.")
-                    embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                    embed = discord.Embed(color = 0x5865F2,description = "A linked `lichess` account already exists. Type `.o unlink lichess` to unlink.")
+                    embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
 
             if exist == False:
@@ -167,8 +167,8 @@ class GAMES(commands.Cog):
                         embed.set_image(url = "https://i.imgur.com/kWaOcfT.png")
                         await ctx.send(embed = embed)
         else:
-            embed = discord.Embed(color = 0x5865F2,description = "Argument ERROR!")
-            embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+            embed = discord.Embed(color = 0x5865F2, description = "Please provide required arguments.")
+            embed.set_author(name = "Argument EROOR",icon_url = self.client.user.avatar_url)
             await ctx.send(embed = embed)
         
 
@@ -187,8 +187,8 @@ class GAMES(commands.Cog):
             if raw != None:
                 if "val_user" in raw.keys():
                     exist = True
-                    embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nA linked `valorant` account already exists. Type `.o unlink val` to unlink.")
-                    embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                    embed = discord.Embed(color = 0x5865F2,description = "A linked `valorant` account already exists. Type `.o unlink val` to unlink.")
+                    embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
                     await ctx.send(embed = embed)
 
             if exist == False:
@@ -259,8 +259,8 @@ class GAMES(commands.Cog):
                         await link_msg.edit(embed = temp)
                         return
         else:
-            embed = discord.Embed(color = 0x5865F2, description = "Argument ERROR!")
-            embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+            embed = discord.Embed(color = 0x5865F2, description = "Please provide required arguments.")
+            embed.set_author(name = "Argument EROOR",icon_url = self.client.user.avatar_url)
             await ctx.send(embed = embed)
 
     @commands.group(invoke_without_command = True,case_insensitive=True)
@@ -280,12 +280,12 @@ class GAMES(commands.Cog):
                 embed.set_author(name = "Unlinked Successful!", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
             else:
-                embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `chess.com` account.")
-                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                embed = discord.Embed(color = 0x5865F2,description = "This account is not linked with any `chess.com` account.")
+                embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
         elif raw == None:
-            embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `chess.com` account.")
-            embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+            embed = discord.Embed(color = 0x5865F2,description = "This account is not linked with any `chess.com` account.")
+            embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
     
     @unlink.command(aliases = ["valorant"])
@@ -300,12 +300,12 @@ class GAMES(commands.Cog):
                 embed.set_author(name = "Unlinked Successful!", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
             else:
-                embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `valorant` account.")
-                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                embed = discord.Embed(color = 0x5865F2,description = "This account is not linked with any `valorant` account.")
+                embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
         elif raw == None:
-            embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `valorant` account.")
-            embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+            embed = discord.Embed(color = 0x5865F2,description = "This account is not linked with any `valorant` account.")
+            embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
     
     @unlink.command()
@@ -320,12 +320,12 @@ class GAMES(commands.Cog):
                 embed.set_author(name = "Unlinked Successful!", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
             else:
-                embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `lichess` account.")
-                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                embed = discord.Embed(color = 0x5865F2,description = "This account is not linked with any `lichess` account.")
+                embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
         elif raw == None:
-            embed = discord.Embed(color = 0x5865F2,description = "Overwrite ERROR!\n\nThis account is not linked with any `lichess` account.")
-            embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+            embed = discord.Embed(color = 0x5865F2,description = "This account is not linked with any `lichess` account.")
+            embed.set_author(name = "Overwrite ERROR", icon_url= self.client.user.avatar_url)
             await ctx.send(embed = embed)
 
 
@@ -346,8 +346,8 @@ class GAMES(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
-                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                embed = discord.Embed(color = 0x5865F2,description = "Profile not found.")
+                embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
         else:
@@ -437,8 +437,8 @@ class GAMES(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
-                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                embed = discord.Embed(color = 0x5865F2,description = "Profile not found.")
+                embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
         else:
@@ -516,8 +516,8 @@ class GAMES(commands.Cog):
                 except:
                     pass
             if not user:
-                embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
-                embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                embed = discord.Embed(color = 0x5865F2,description = "Profile not found.")
+                embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                 await ctx.send(embed = embed)
                 return
         else:
@@ -662,8 +662,8 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
-                        embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                        embed = discord.Embed(color = 0x5865F2,description = "Profile not found.")
+                        embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
                 else:
@@ -810,8 +810,8 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
-                        embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                        embed = discord.Embed(color = 0x5865F2,description = "Profile not found.")
+                        embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
                 else:
@@ -955,8 +955,8 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
-                        embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                        embed = discord.Embed(color = 0x5865F2,description = "Profile not found.")
+                        embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
                 else:
@@ -1100,8 +1100,8 @@ class GAMES(commands.Cog):
                         except:
                             pass
                     if not user:
-                        embed = discord.Embed(color = 0x5865F2,description = "Index ERROR!")
-                        embed.set_author(name = "ERROR", icon_url= self.client.user.avatar_url)
+                        embed = discord.Embed(color = 0x5865F2,description = "Profile not found.")
+                        embed.set_author(name = "Index ERROR", icon_url= self.client.user.avatar_url)
                         await ctx.send(embed = embed)
                         return
                 else:

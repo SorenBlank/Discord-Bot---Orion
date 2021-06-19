@@ -72,114 +72,114 @@ class U_1(commands.Cog):
 
             em.add_field(name='NICK NAME', value=f"```\n{nn}```", inline=False)
 
-            st="None"
-            activ=""
-            listen,stream,playy,watch="","","",""
-            ACT=[]  
-            vits=list(user.activities)
-            for act in vits:
-                if act.type==AT.custom:
-                    st=act
-                elif act.type==AT.listening:
-                    listen=act
-                elif act.type==AT.streaming:
-                    stream=act
-                elif act.type==AT.playing:
-                    playy=act
-                elif act.type==AT.watching:
-                    watch=act
+            # st="None"
+            # activ=""
+            # listen,stream,playy,watch="","","",""
+            # ACT=[]  
+            # vits=list(user.activities)
+            # for act in vits:
+            #     if act.type==AT.custom:
+            #         st=act
+            #     elif act.type==AT.listening:
+            #         listen=act
+            #     elif act.type==AT.streaming:
+            #         stream=act
+            #     elif act.type==AT.playing:
+            #         playy=act
+            #     elif act.type==AT.watching:
+            #         watch=act
 
-            if listen != "" and hasattr(listen,"title") and hasattr(listen,"artists"):
-                ACT.append(f'<:spotify:814185511655964682> Listening to `{listen.title}`  by **{", ".join(listen.artists)}**')
-            if playy != "":
-                if playy.name == "VALORANT":
-                    ACT.append(f"<:valorant:814455293328228394> Playing **{playy.name}**")
-                elif playy.name == "Apex Legends":
-                    ACT.append(f"<:apex:814455315399442444> Playing **{playy.name}**")
-                elif playy.name == "Minecraft":
-                    ACT.append(f"<:block:814428039206535180> Playing **{playy.name}**")
-                elif playy.name == "Call of Duty®: Modern Warfare®":
-                    ACT.append(f"<:mw:814458659827744788> Playing **{playy.name}**")
-                elif playy.name == "Fortnite":
-                    ACT.append(f"<:fortnite:814459933234954241> Playing **{playy.name}**")
-                elif playy.name == "Tom Clancy's Rainbow Six Siege":
-                    ACT.append(f"<:rainbow:814460454260834306> Playing **{playy.name}**")
-                elif playy.name == "Grand Theft Auto V":
-                    ACT.append(f"<:gtav:814461284636295218> Playing **{playy.name}**")
-                elif playy.name == "BlueStacks":
-                    ACT.append(f"<:bs:814461697568800768> Playing **{playy.name}**")
-                elif playy.name == "Genshin Impact":
-                    ACT.append(f"<:genshin:814462612346503188> Playing **{playy.name}**")
-                elif playy.name == "Brawlhalla":
-                    ACT.append(f"<:brawlhalla:814463603745751050> Playing **{playy.name}**")
+            # if listen != "" and hasattr(listen,"title") and hasattr(listen,"artists"):
+            #     ACT.append(f'<:spotify:814185511655964682> Listening to `{listen.title}`  by **{", ".join(listen.artists)}**')
+            # if playy != "":
+            #     if playy.name == "VALORANT":
+            #         ACT.append(f"<:valorant:814455293328228394> Playing **{playy.name}**")
+            #     elif playy.name == "Apex Legends":
+            #         ACT.append(f"<:apex:814455315399442444> Playing **{playy.name}**")
+            #     elif playy.name == "Minecraft":
+            #         ACT.append(f"<:block:814428039206535180> Playing **{playy.name}**")
+            #     elif playy.name == "Call of Duty®: Modern Warfare®":
+            #         ACT.append(f"<:mw:814458659827744788> Playing **{playy.name}**")
+            #     elif playy.name == "Fortnite":
+            #         ACT.append(f"<:fortnite:814459933234954241> Playing **{playy.name}**")
+            #     elif playy.name == "Tom Clancy's Rainbow Six Siege":
+            #         ACT.append(f"<:rainbow:814460454260834306> Playing **{playy.name}**")
+            #     elif playy.name == "Grand Theft Auto V":
+            #         ACT.append(f"<:gtav:814461284636295218> Playing **{playy.name}**")
+            #     elif playy.name == "BlueStacks":
+            #         ACT.append(f"<:bs:814461697568800768> Playing **{playy.name}**")
+            #     elif playy.name == "Genshin Impact":
+            #         ACT.append(f"<:genshin:814462612346503188> Playing **{playy.name}**")
+            #     elif playy.name == "Brawlhalla":
+            #         ACT.append(f"<:brawlhalla:814463603745751050> Playing **{playy.name}**")
 
-                elif playy.name == "osu!":
-                    ACT.append(f"<:osu:814465391077359666> Playing **{playy.name}**")
+            #     elif playy.name == "osu!":
+            #         ACT.append(f"<:osu:814465391077359666> Playing **{playy.name}**")
 
-                elif playy.name == "ROBLOX":
-                    ACT.append(f"<:roblox:814466647128670240> Playing **{playy.name}**")
+            #     elif playy.name == "ROBLOX":
+            #         ACT.append(f"<:roblox:814466647128670240> Playing **{playy.name}**")
 
-                elif playy.name == "VRChat":
-                    ACT.append(f"<:vrchat:814506984523038740> Playing **{playy.name}**")
+            #     elif playy.name == "VRChat":
+            #         ACT.append(f"<:vrchat:814506984523038740> Playing **{playy.name}**")
 
-                elif playy.name == "Counter-Strike: Global Offensive":
-                    ACT.append(f"<:csgo:814472867026567250> Playing **{playy.name}**")
+            #     elif playy.name == "Counter-Strike: Global Offensive":
+            #         ACT.append(f"<:csgo:814472867026567250> Playing **{playy.name}**")
 
-                elif playy.name == "Sublime Text":
-                    ACT.append(f"<:sublime:814475264330694746> Playing **{playy.name}**")
+            #     elif playy.name == "Sublime Text":
+            #         ACT.append(f"<:sublime:814475264330694746> Playing **{playy.name}**")
 
-                elif playy.name == "Dota 2":
-                    ACT.append(f"<:dota2:814477802204037130> Playing **{playy.name}**")
+            #     elif playy.name == "Dota 2":
+            #         ACT.append(f"<:dota2:814477802204037130> Playing **{playy.name}**")
 
-                elif playy.name == "Rocket League":
-                    ACT.append(f"<:RocketLeague:814483353091833908> Playing **{playy.name}**")
+            #     elif playy.name == "Rocket League":
+            #         ACT.append(f"<:RocketLeague:814483353091833908> Playing **{playy.name}**")
 
-                elif playy.name == "Batman: Arkham Knight":
-                    ACT.append(f"<:batman:814492074106945616> Playing **{playy.name}**")
+            #     elif playy.name == "Batman: Arkham Knight":
+            #         ACT.append(f"<:batman:814492074106945616> Playing **{playy.name}**")
 
-                elif playy.name == "Assassin's Creed Brotherhood":
-                    ACT.append(f"<:assasin:814494128506798200> Playing **{playy.name}**")
+            #     elif playy.name == "Assassin's Creed Brotherhood":
+            #         ACT.append(f"<:assasin:814494128506798200> Playing **{playy.name}**")
 
-                elif playy.name == "Brawl Stars":
-                    ACT.append(f"<:brawlstars:814495602959450132> Playing **{playy.name}**")
+            #     elif playy.name == "Brawl Stars":
+            #         ACT.append(f"<:brawlstars:814495602959450132> Playing **{playy.name}**")
 
-                elif playy.name == "Visual Studio Code":
-                    ACT.append(f"<:vscode:814499769065799741> Playing **{playy.name}**")
+            #     elif playy.name == "Visual Studio Code":
+            #         ACT.append(f"<:vscode:814499769065799741> Playing **{playy.name}**")
 
-                elif playy.name == "Dolphin Emulator":
-                    ACT.append(f"<:dolphinemu:814500628588003389> Playing **{playy.name}**")
+            #     elif playy.name == "Dolphin Emulator":
+            #         ACT.append(f"<:dolphinemu:814500628588003389> Playing **{playy.name}**")
 
-                elif playy.name == "Citra":
-                    ACT.append(f"<:citra:814501683639353394> Playing **{playy.name}**")
+            #     elif playy.name == "Citra":
+            #         ACT.append(f"<:citra:814501683639353394> Playing **{playy.name}**")
 
-                elif playy.name == "Cemu":
-                    ACT.append(f"<:Cemu:814502100288405555> Playing **{playy.name}**")
+            #     elif playy.name == "Cemu":
+            #         ACT.append(f"<:Cemu:814502100288405555> Playing **{playy.name}**")
 
-                elif playy.name == "League of Legends":
-                    ACT.append(f"<:lol:814619672975638559> Playing **{playy.name}**")
+            #     elif playy.name == "League of Legends":
+            #         ACT.append(f"<:lol:814619672975638559> Playing **{playy.name}**")
 
-                elif playy.name == "Overwatch":
-                    ACT.append(f"<:overwatch:814483380321910784> Playing **{playy.name}**")
+            #     elif playy.name == "Overwatch":
+            #         ACT.append(f"<:overwatch:814483380321910784> Playing **{playy.name}**")
 
-                else:
-                    ACT.append(f":grey_question: Playing **{playy.name}**")
+            #     else:
+            #         ACT.append(f":grey_question: Playing **{playy.name}**")
 
-            if watch != "":
-                ACT.append(f"Watching {watch.name}")
-            if stream != "":
-                ACT.append(f"Streaming {stream.name}")
-            if ACT != []:
-                activ=" \n\n".join(ACT)
+            # if watch != "":
+            #     ACT.append(f"Watching {watch.name}")
+            # if stream != "":
+            #     ACT.append(f"Streaming {stream.name}")
+            # if ACT != []:
+            #     activ=" \n\n".join(ACT)
 
 
-            em.add_field(name='ACTIVITY', value=f"{activ}\n―" if activ!="" else "None \n―", inline=False)
+            # em.add_field(name='ACTIVITY', value=f"{activ}\n―" if activ!="" else "None \n―", inline=False)
             devices=[]
             if str(user.desktop_status)!='offline':
-                devices.append(":desktop: - Desktop Client")
+                devices.append("Desktop Client")
             if str(user.web_status)!='offline':
-                devices.append(":globe_with_meridians: - Web")
+                devices.append("Web")
             if str(user.mobile_status)!='offline':
-                devices.append(":mobile_phone: - Mobile App")
+                devices.append("Mobile")
             
             x = ign_cur.find_one({"dc_id":user.id})
 
@@ -196,11 +196,11 @@ class U_1(commands.Cog):
                 if 'lichess_user' in x.keys():
                     lichess_user_name = x["lichess_user"]
     
-            if len(devices)>0:
-                em.add_field(name='ACTIVE ON', value=", \n".join(devices) + "\n―", inline=True)
+            # if len(devices)>0:
+            #     em.add_field(name='ACTIVE ON', value=", \n".join(devices), inline=True)
 
-            elif len(devices)==0:
-                em.add_field(name='ACTIVE ON', value="None\n―", inline=True)
+            # elif len(devices)==0:
+            #     em.add_field(name='ACTIVE ON', value="unknown\n―", inline=True)
             
             lists = []
             emo = {"val":"<:valorant:814455293328228394>", "chess":"<:chess:830030544661119056>", "lichess":"<:lichess:837249373167026196>"}
@@ -226,11 +226,9 @@ class U_1(commands.Cog):
             
             if len(lists) != 0:
                 text = "\n".join(lists)
-                em.add_field(name = "IGNS", value = text)
+                em.add_field(name = "IGNS", value = text, inline=False)
             else:
-                em.add_field(name = "IGNS", value = "None")
-
-
+                em.add_field(name = "IGNS", value = "None", inline = False)
 
             if len(roles)>0:
                 x = [role.name for role in roles]

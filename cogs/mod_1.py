@@ -24,9 +24,11 @@ class M1(commands.Cog):
         if ctx.author.guild_permissions.kick_members:
             try:
                 await member.kick(reason=reason)
+                embed = discord.Embed(description = f"{member.mention} has been kicked.")
                 await ctx.send(f'{member.mention} is kicked')
             except:
-                await ctx.send(f"I dont have the power to kick.")
+                embed = discord.Embed(title= "**Access Denied!**",description = "Bot requires higher ranked role in order to execute.")
+                await ctx.send(embed = embed)
         else:
             embed = discord.Embed(title= "**Access Denied!**",description = "This command requires `kick_members` permission in order to execute.")
             await ctx.send(embed = embed)
@@ -34,7 +36,7 @@ class M1(commands.Cog):
     #ban_command
     @commands.command()
     async def ban(self, ctx, member: discord.Member, reason = None):
-        if ctx.author.guild_permissions.ban_members:
+        if ctx.author.guild_permissions.ban_members or ctx.author.guild_permissions.administration:
             try:
                 await member.ban(reason=reason)
                 if reason == None:
@@ -42,7 +44,8 @@ class M1(commands.Cog):
                 else:
                     await ctx.send(f'{member.mention} has been banned by {ctx.author.mention}. Reason: {reason}')
             except:
-                await ctx.send(f"I dont have the power to ban.")
+                embed = discord.Embed(title= "**Access Denied!**",description = "Bot requires higher ranked role in order to execute.")
+                await ctx.send(embed = embed)
         else:
             embed = discord.Embed(title= "**Access Denied!**",description = "This command requires `ban_members` permission in order to execute.")
             await ctx.send(embed = embed)
@@ -54,7 +57,7 @@ class M1(commands.Cog):
         banned_entries = await ctx.guild.bans()
         member_name, member_tag = member.split("#")
 
-        if ctx.author.guild_permissions.ban_members:
+        if ctx.author.guild_permissions.ban_members or ctx.author.guild_permissions.administration:
             for i in banned_entries:
                 user = i.user
                 if (user.name, user.discriminator) == (member_name,member_tag):
@@ -67,24 +70,29 @@ class M1(commands.Cog):
 
     @commands.command()
     async def purge(self,ctx,number=None):
-        if ctx.author.guild_permissions.manage_messages:
+        if ctx.author.guild_permissions.manage_messages or ctx.author.guild_permissions.administration:
             if number != None:
                 if number.isdigit():
                     await ctx.channel.purge(limit=int(number)+1)
             if number == None:
                 await ctx.channel.purge(limit=2)
         else:
-            await ctx.send("**Access Denied!** This command requires `manage_messages` permission in order to execute.")
+            embed = discord.Embed(title= "**Access Denied!**",description = "This command requires `ban_members` permission in order to execute.")
+            await ctx.send(embed = embed)
 
     @commands.command()
     async def chnick(self,ctx,member:discord.Member,*, nick):
 
-        if ctx.author.guild_permissions.change_nickname:
+        if ctx.author.guild_permissions.change_nickname or ctx.author.guild_permissions.administration:
             try:
                 await member.edit(nick=nick)
                 await ctx.send(f'Nickname was changed for {member.mention} ')
             except:
-                await ctx.send(f"**Access Denied!** This command requires `manage_nickname` permission in order to execute.")
+                embed = discord.Embed(title= "**Access Denied!**",description = "Bot requires higher ranked role in order to execute.")
+                await ctx.send(embed = embed)
+        else:
+            embed = discord.Embed(title= "**Access Denied!**",description = "This command requires `manage_nicknames` permission in order to execute.")
+            await ctx.send(embed = embed)
 
 
 def setup(client):
