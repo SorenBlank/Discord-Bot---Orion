@@ -608,7 +608,7 @@ class GAMES(commands.Cog):
 
 
                         val = discord.Embed(color = 0x5865F2)
-                        val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                        val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
                         val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                         value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                         
@@ -629,7 +629,7 @@ class GAMES(commands.Cog):
                         await link_msg.edit(embed = val)
                     except:
                         temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                        temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                        temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
                         return
                 if str(req) == "<Response [404]>":
@@ -639,7 +639,7 @@ class GAMES(commands.Cog):
                 
                 if str(req) == "<Response [451]>":
                     temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                    temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                    temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
             else:
                 temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
@@ -755,7 +755,7 @@ class GAMES(commands.Cog):
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
                                 val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                                 
@@ -777,7 +777,7 @@ class GAMES(commands.Cog):
                                 await link_msg.edit(embed = val)
                             except:
                                 temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                         if str(req) == "<Response [404]>":
@@ -787,7 +787,7 @@ class GAMES(commands.Cog):
                         
                         if str(req) == "<Response [451]>":
                             temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                            temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                            temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
                         temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
@@ -904,7 +904,7 @@ class GAMES(commands.Cog):
 
 
                                 val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                                 
@@ -922,7 +922,7 @@ class GAMES(commands.Cog):
                                 await link_msg.edit(embed = val)
                             except:
                                 temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                             
@@ -933,7 +933,7 @@ class GAMES(commands.Cog):
                         
                         if str(req) == "<Response [451]>":
                             temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                            temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                            temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
                         temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
@@ -1047,9 +1047,8 @@ class GAMES(commands.Cog):
                                 weapon3 = weapons[2].find('div','weapon__name').text
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
-
                                 val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                                 
@@ -1067,7 +1066,7 @@ class GAMES(commands.Cog):
                                 await link_msg.edit(embed = val)
                             except:
                                 temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                             
@@ -1078,7 +1077,7 @@ class GAMES(commands.Cog):
                         
                         if str(req) == "<Response [451]>":
                             temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                            temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                            temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
                         temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
@@ -1194,7 +1193,7 @@ class GAMES(commands.Cog):
 
 
                                 val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = "VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                                 
@@ -1212,18 +1211,17 @@ class GAMES(commands.Cog):
                                 await link_msg.edit(embed = val)
                             except:
                                 temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
-                            
+
                         if str(req) == "<Response [404]>":
                             temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)
                             temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
-                        
                         if str(req) == "<Response [451]>":
                             temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                            temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                            temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
                         temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)

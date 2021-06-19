@@ -273,8 +273,7 @@ class U_1(commands.Cog):
 
             em.add_field(name='NICK NAME', value=f"```\n{nn}```", inline=False)
 
-
-            em.add_field(name='VERSION', value= "`V2.5`", inline=True)
+            em.add_field(name='VERSION', value= "`V3.0`", inline=True)
             dic = {"0":":zero:","1":":one:","2":":two:","3":":three:","4":":four:","5":":five:","6":":six:","7":":seven:","8":":eight:","9":":nine:","10":":one::zero:"}
             num = str(len(self.client.guilds))
             if len(num) > 1:
@@ -316,8 +315,6 @@ class U_1(commands.Cog):
             elif len(roles)==0:
                 em.add_field(name=f"ROLES ({len(roles)})", 
                             value="```\nNone```", inline=False)
-
-    
 
             form='%d/%m/%Y %H:%M:%S'
             em.add_field(name='ACCOUNT CREATED ON (D/M/Y)', 
