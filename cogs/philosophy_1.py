@@ -890,7 +890,8 @@ Here are installation guides for some popular Linux distributions\n\n\
                    "What scares you most about your future?","",
                    "If you could be famous, would you want to? Why?","Have you ever lost a friend? Why?",
                    "If you had $100, what would you spend it on?","If you could go anywhere in the world, where would you choose and why?",
-                   "What is something you wish you could do everyday?","Have you ever stalked someone on social media?"]
+                   "What is something you wish you could do everyday?","Have you ever stalked someone on social media?",
+                   "Do you prefer texting or talking over voice call? And why?"]
         deep = ["What has been the lowest point of your life?","If you could ask for a miracle, what would it be?",
                 "Where do you see yourself in five years?","Do you know anyone who is living their life to the fullest?",
                 "What is the biggest risk you’ve ever taken?","What is your idea of the perfect day?",

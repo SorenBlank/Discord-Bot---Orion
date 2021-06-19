@@ -155,6 +155,7 @@ class H_1(commands.Cog):
                                     value = "`.o purge [number]`឵឵")
                 su_embed.add_field(name = ":crossed_swords: Change Nickname",
                                 value = "`.o chnick [@member] [nickname]`")
+                su_embed.add_field(name = "**-**\n:telescope: Preview (preview welcome, farewell message, banner)", value = "`.o preview`",inline= False)
                 su_embed.set_footer(text= "Pro tip: The ( and ) around the argument mean it’s optional.", icon_url= ctx.author.avatar_url)
 
                 await ctx.send(embed= su_embed)

@@ -14,3 +14,6 @@ chess.com
 youtube-search==2.1.0
 beautifulsoup4
 python-lichess==0.9
+imageio
+opencv-python-headless
+matplotlib
