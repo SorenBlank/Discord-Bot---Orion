@@ -733,11 +733,13 @@ class A_1(commands.Cog):
         embed.set_author(name = "PREVIEW", icon_url = self.client.user.avatar_url)
 
         if raw == None and raw1 == None and raw2 == None:
-            embed = discord.Embed(color = 0x5865F2)
+            embed = discord.Embed(color = 0x5865F2, description = "`welcome message`, `farewell message`, `welcome banner` not found.")
             embed.set_author(name = "PREVIEW", icon_url = self.client.user.avatar_url)
-        
-        await ctx.send(embed = embed, file = f)
+
+        if raw2 == None:
+            await ctx.send(embed = embed)
         if raw2 != None:
+            await ctx.send(embed = embed, file = f)
             os.remove('qwerty.png')
         else:
             pass
