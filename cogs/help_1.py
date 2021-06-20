@@ -142,10 +142,10 @@ class H_1(commands.Cog):
                                      value="`.o help deactivate`",
                                      inline=True)
                 su_embed.add_field(name="-\n:bell: Announce",
-                                  value="`.o announce [#channel] (time)`\nTime Plugin Example: `1s`, `1m`, `1h`",
+                                  value="```\n.o announce [#channel] (time)`\nTime Plugin Example: `1s`, `1m`, `1h` ```",
                                   inline=False)
-                su_embed.add_field(name = "-\n:pencil: Edit",
-                                    value = "`.o edit [message_id]`\n**-**",
+                su_embed.add_field(name = ":pencil: Edit",
+                                    value = "```\n.o edit [message_id]```\n**-**",
                                     inline= False)
                 su_embed.add_field(name = ":crossed_swords: Kick",
                                     value = "`.o kick [@member]`")
@@ -172,8 +172,11 @@ class H_1(commands.Cog):
                                     value="`.o help deactivate`",
                                     inline=True)
             su_embed.add_field(name="-\n:bell: Announce",
-                                value="```\n.o announce [#channel] (time)```Time Plugin Example: `1s`, `1m`, `1h`\n**-**",
+                                value="```\n.o announce [#channel] (time)`\nTime Plugin Example: `1s`, `1m`, `1h` ```",
                                 inline=False)
+            su_embed.add_field(name = ":pencil: Edit",
+                                value = "```\n.o edit [message_id]```\n**-**",
+                                inline= False)
             su_embed.add_field(name = ":crossed_swords: Kick",
                                 value = "`.o kick [@member]`")
             su_embed.add_field(name = ":crossed_swords: Ban",
