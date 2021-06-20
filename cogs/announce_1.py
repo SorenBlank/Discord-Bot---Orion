@@ -41,7 +41,7 @@ class AN_1(commands.Cog):
 
     @commands.command()
     async def announce(self,ctx, channel:discord.TextChannel, time = None):
-        if ctx.author.guild_permissions.manage_guild:
+        if ctx.author.guild_permissions.manage_guild or ctx.author.guild_permissions.administration:
             raw = ta_cur.find({})
             y = [x["guild"] for x in raw]
 
@@ -178,6 +178,7 @@ class AN_1(commands.Cog):
 
                 if lower in matches:
                     await ctx.send("Command Dismissed")
+                    return
 
                 if channel == None:
                     embed = discord.Embed(color = 0x5865F2, description = "Please provide required arguments.")
@@ -191,6 +192,56 @@ class AN_1(commands.Cog):
             embed = discord.Embed(color = 0x5865F2, description = f"This command requires `manage_guild` permission in order to execute.")
             embed.set_author(name = "Access Denied", icon_url = self.client.user.avatar_url)
             await ctx.send(embed = embed)
+
+    @commands.command()
+    async def edit(self,ctx,id:discord.Message=None):
+        au = ctx.author.id
+        ch = ctx.channel.id
+        if id.author == self.client.user.id:
+            avi = self.client.user.avatar_url_as(static_format='png')
+            if ctx.author.guild_permissions.manage_guild or ctx.author.guild_permissions.administration:
+                permission = dict(ctx.me.permissions_in(id.channel))
+                permission2 = dict(ctx.channel.permissions_for(ctx.me))
+                permission_channel = permission["send_messages"]
+                permission_current = permission2["manage_messages"]
+                if permission_channel and permission_current:
+                    embed = discord.Embed(color = 0x5865F2, description = "Recording your text. Type down the edited message below -")
+                    main_embed = await ctx.send(embed = embed)
+                    text = await self.client.wait_for("message")
+
+                    while not (text.author.id == au and text.channel.id == ch):
+                        text = await self.client.wait_for("message")
+                        pass
+
+                    lower = text.content.lower()
+                    matches = ["eliminate","terminate","stop"]
+                    if lower not in matches:
+                        if text.author.id == au and text.channel.id ==ch:
+                            await id.edit(content = text.content)
+        
+                            await text.delete()
+                            embed = discord.Embed(color = 0x5865F2, description = f"**__CONTENT__:** ```\n{text.content}```")
+                            embed.set_author(name = "EDIT LOG",icon_url = avi)
+                            embed.add_field(name="__AUTHOR__", value = f"Mention: {ctx.author.mention}\nID: `{ctx.author.id}`",)
+                            embed.add_field(name = "__CHANNEL__", value = f"Mention: {id.channel.mention}\nID: `{id.id}`")
+                            await main_embed.edit(embed = embed)
+                    if lower in matches:
+                        await ctx.send("Command Dismissed")
+                
+                else:
+                    embed = discord.Embed(color = 0x5865F2, description = f"For this command, bot requires `send_message` and `manage_messages` permission in order to execute.")
+                    embed.set_author(name = "Permission EROOR", icon_url = self.client.user.avatar_url)
+                    await ctx.send(embed = embed)
+
+            else:
+                embed = discord.Embed(color = 0x5865F2, description = f"This command requires `manage_guild` permission in order to execute.")
+                embed.set_author(name = "Access Denied", icon_url = self.client.user.avatar_url)
+                await ctx.send(embed = embed)
+        else:
+            embed = discord.Embed(color = 0x5865F2, description = f"Can not edit a message authored by another user.")
+            embed.set_author(name = "Permission EROOR", icon_url = self.client.user.avatar_url)
+            await ctx.send(embed = embed)
+        
 
 def setup(client):
     client.add_cog(AN_1(client))

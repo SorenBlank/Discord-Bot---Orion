@@ -374,7 +374,6 @@ class U_1(commands.Cog):
         em.add_field(name='SERVER ID', value=f"```\n{server.id}```", inline=True)
         em.add_field(name='SERVER REGION', value=f"```\n{str(server.region).capitalize()}```",inline=True)
         
-        
         em.add_field(name='SERVER CATEGORIES & CHANNELS', value=f"```\nCategories: {len(server.categories)} | Text: {textchannels} | Voice: {voicechannels}```",inline=False)
         em.add_field(name='SERVER VERIFICATION LEVEL', value=f"```\n{str(server.verification_level).capitalize()}```",inline=False)
         em.add_field(name = "SERVER BOOSTS", value = f"```\n{server.premium_subscription_count}```",inline=True)
