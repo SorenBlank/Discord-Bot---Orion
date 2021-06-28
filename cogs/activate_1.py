@@ -78,7 +78,7 @@ class A_1(commands.Cog):
             if channel == None:
                 id_channel = ctx.channel.id
                 if ctx.guild.id not in guilds:
-                    up = {"_id":len(guilds),
+                    up = {"_id":len(guilds)+1,
                           "guild":ctx.guild.id,
                           "channel":id_channel,
                           "past":0,
@@ -95,7 +95,7 @@ class A_1(commands.Cog):
                     await ctx.send(embed = embed)
 
                 if ctx.guild.id in guilds and id_channel not in channels:
-                    up = {"_id":len(guilds),
+                    up = {"_id":len(guilds)+1,
                           "guild":ctx.guild.id,
                           "channel":id_channel,
                           "past":0,
@@ -110,7 +110,7 @@ class A_1(commands.Cog):
                 try:
                     id_channel = channel.id
                     if ctx.guild.id not in guilds:
-                        up = {"_id":len(guilds),
+                        up = {"_id":len(guilds)+1,
                           "guild":ctx.guild.id,
                           "channel":id_channel,
                           "past":0,
@@ -159,7 +159,7 @@ class A_1(commands.Cog):
             if channel == None:
                 id_channel = ctx.channel.id
                 if ctx.guild.id not in guilds:
-                    up = {"_id":len(guilds),
+                    up = {"_id":len(guilds)+1,
                           "guild":ctx.guild.id,
                           "channel":id_channel,
                           "last":0,
@@ -185,7 +185,7 @@ class A_1(commands.Cog):
                 try:
                     id_channel = channel.id
                     if ctx.guild.id not in guilds:
-                        up = {"_id":len(guilds),
+                        up = {"_id":len(guilds)+1,
                           "guild":ctx.guild.id,
                           "channel":id_channel,
                           "last":0,

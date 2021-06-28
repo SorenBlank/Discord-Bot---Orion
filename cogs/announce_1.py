@@ -241,7 +241,7 @@ class AN_1(commands.Cog):
             embed = discord.Embed(color = 0x5865F2, description = f"Can not edit a message authored by another user.")
             embed.set_author(name = "Permission EROOR", icon_url = self.client.user.avatar_url)
             await ctx.send(embed = embed)
-        
-
+    
+    
 def setup(client):
     client.add_cog(AN_1(client))
