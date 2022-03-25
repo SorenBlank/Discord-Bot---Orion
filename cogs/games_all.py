@@ -561,7 +561,7 @@ class GAMES(commands.Cog):
                         
                         req = req.text
                         soup = BeautifulSoup(req, 'html.parser')
-                        title = soup.find('div',class_ = "segment-stats main-stats card bordered header-bordered responsive").find('h2').text
+                        title = soup.find('div',class_ = "segment-stats area-main-stats card bordered header-bordered responsive").find('h2').text
 
                         title = title.split(" ")[0]
                         
@@ -608,7 +608,9 @@ class GAMES(commands.Cog):
 
 
                         val = discord.Embed(color = 0x5865F2)
-                        val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
+                        val.set_author(name = f"VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                        val.add_field(name = "<:user:859519611892662302> User Name", value = f"```\n{user}```")
+                        val.add_field(name = "<:val:859521880755142746> In Game Name",value = f"```\n{splited[0]}#{tag}```")
                         val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                         value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                         
@@ -629,7 +631,7 @@ class GAMES(commands.Cog):
                         await link_msg.edit(embed = val)
                     except:
                         temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                        temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                        temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
                         return
                 if str(req) == "<Response [404]>":
@@ -639,7 +641,7 @@ class GAMES(commands.Cog):
                 
                 if str(req) == "<Response [451]>":
                     temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                    temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                    temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                     await link_msg.edit(embed = temp)
             else:
                 temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
@@ -709,7 +711,7 @@ class GAMES(commands.Cog):
                                 
                                 req = req.text
                                 soup = BeautifulSoup(req, 'html.parser')
-                                title = soup.find('div',class_ = "segment-stats main-stats card bordered header-bordered responsive").find('h2').text
+                                title = soup.find('div',class_ = "segment-stats area-main-stats card bordered header-bordered responsive").find('h2').text
 
                                 title = title.split(" ")[0]
                                 
@@ -755,7 +757,9 @@ class GAMES(commands.Cog):
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
                                 val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
+                                val.set_author(name = f"VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                                val.add_field(name = "<:user:859519611892662302> User Name", value = f"```\n{user}```")
+                                val.add_field(name = "<:val:859521880755142746> In Game Name",value = f"```\n{splited[0]}#{tag}```")
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                                 
@@ -777,7 +781,7 @@ class GAMES(commands.Cog):
                                 await link_msg.edit(embed = val)
                             except:
                                 temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                                temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                         if str(req) == "<Response [404]>":
@@ -787,14 +791,13 @@ class GAMES(commands.Cog):
                         
                         if str(req) == "<Response [451]>":
                             temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                            temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                            temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
                         temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
                         temp.set_author(name = "VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                         await link_msg.edit(embed = temp)
-    
-    
+
     @profile.command(aliases = ["ur"])
     async def unrated(self,ctx,game,*,name=""):
         if game:
@@ -857,7 +860,7 @@ class GAMES(commands.Cog):
                                 
                                 req = req.text
                                 soup = BeautifulSoup(req, 'html.parser')
-                                title = soup.find('div',class_ = "segment-stats main-stats card bordered header-bordered responsive").find('h2').text
+                                title = soup.find('div',class_ = "segment-stats area-main-stats card bordered header-bordered responsive").find('h2').text
 
                                 title = title.split(" ")[0]
                                 
@@ -904,7 +907,9 @@ class GAMES(commands.Cog):
 
 
                                 val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
+                                val.set_author(name = f"VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                                val.add_field(name = "<:user:859519611892662302> User Name", value = f"```\n{user}```")
+                                val.add_field(name = "<:val:859521880755142746> In Game Name",value = f"```\n{splited[0]}#{tag}```")
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                                 
@@ -922,7 +927,7 @@ class GAMES(commands.Cog):
                                 await link_msg.edit(embed = val)
                             except:
                                 temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                                temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                             
@@ -933,7 +938,7 @@ class GAMES(commands.Cog):
                         
                         if str(req) == "<Response [451]>":
                             temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                            temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                            temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
                         temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
@@ -1002,7 +1007,7 @@ class GAMES(commands.Cog):
                                 
                                 req = req.text
                                 soup = BeautifulSoup(req, 'html.parser')
-                                title = soup.find('div',class_ = "segment-stats main-stats card bordered header-bordered responsive").find('h2').text
+                                title = soup.find('div',class_ = "segment-stats area-main-stats card bordered header-bordered responsive").find('h2').text
 
                                 title = title.split(" ")[0] + " " + title.split(" ")[1]
                                 
@@ -1048,7 +1053,9 @@ class GAMES(commands.Cog):
                                 kill3 = weapons[2].find('span','value').text.replace(",","")
 
                                 val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
+                                val.set_author(name = f"VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                                val.add_field(name = "<:user:859519611892662302> User Name", value = f"```\n{user}```")
+                                val.add_field(name = "<:val:859521880755142746> In Game Name",value = f"```\n{splited[0]}#{tag}```")
                                 val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
                                 value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
                                 
@@ -1066,7 +1073,7 @@ class GAMES(commands.Cog):
                                 await link_msg.edit(embed = val)
                             except:
                                 temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                                temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                                 await link_msg.edit(embed = temp)
                                 return
                             
@@ -1077,7 +1084,7 @@ class GAMES(commands.Cog):
                         
                         if str(req) == "<Response [451]>":
                             temp = discord.Embed(title = user.name,description = f"Please sign up on [tracker.gg]({url}) with your Riot account to view your stats.", color = 0x5865F2)
-                            temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
+                            temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
                             await link_msg.edit(embed = temp)
                     else:
                         temp = discord.Embed(title = user.name,description = "This account is not linked with any `valorant` account.", color = 0x5865F2)
@@ -1133,87 +1140,89 @@ class GAMES(commands.Cog):
                         url = f"https://tracker.gg/valorant/profile/riot/{name}%23{tag}/overview?playlist=deathmatch"
                         req = requests.get(url)
                         if str(req) == "<Response [200]>":
-                            try:
+                            # try:
 
-                                def fill_space(number, spaces):
-                                    x = number
-                                    if len(number) < spaces:
-                                        num_of_spaces = spaces - len(number)
-                                        x = x + (num_of_spaces*" ")
-                                        return x
-                                    else:
-                                        return number
-                                
-                                req = req.text
-                                soup = BeautifulSoup(req, 'html.parser')
-                                title = soup.find('div',class_ = "segment-stats main-stats card bordered header-bordered responsive").find('h2').text
+                            def fill_space(number, spaces):
+                                x = number
+                                if len(number) < spaces:
+                                    num_of_spaces = spaces - len(number)
+                                    x = x + (num_of_spaces*" ")
+                                    return x
+                                else:
+                                    return number
+                            
+                            req = req.text
+                            soup = BeautifulSoup(req, 'html.parser')
+                            title = soup.find('div',class_ = "segment-stats area-main-stats card bordered header-bordered responsive").find('h2').text
 
-                                title = title.split(" ")[0]
-                                
-                                weapon = soup.find_all('div', class_ = 'weapon')
-                                playtime = soup.find('span', class_ = 'playtime').text[11:-19]
-                                matches = soup.find('span', class_ = 'matches').text.split(" ")[10]
+                            title = title.split(" ")[0]
+                            
+                            weapon = soup.find_all('div', class_ = 'weapon')
+                            playtime = soup.find('span', class_ = 'playtime').text[11:-19]
+                            matches = soup.find('span', class_ = 'matches').text.split(" ")[10]
 
-                                data_raw = soup.find_all('div', class_ = 'main')
-                                data_raw_2 = data_raw[0].find_all('span','value')
-                                wins = data_raw_2[0].text.replace(",","")
-                                kills = data_raw_2[1].text.replace(",","")
-                                headshots = data_raw_2[2].text.replace(",","")
-                                deaths = data_raw_2[3].text.replace(",","")
-                                assists = data_raw_2[4].text.replace(",","")
-                                clutches = data_raw_2[7].text.replace(",","")
+                            data_raw = soup.find_all('div', class_ = 'main')
+                            data_raw_2 = data_raw[0].find_all('span','value')
+                            wins = data_raw_2[0].text.replace(",","")
+                            kills = data_raw_2[1].text.replace(",","")
+                            headshots = data_raw_2[2].text.replace(",","")
+                            deaths = data_raw_2[3].text.replace(",","")
+                            assists = data_raw_2[4].text.replace(",","")
+                            clutches = data_raw_2[7].text.replace(",","")
 
-                                # for i in find:
-                                #     weapon = i.find('div','weapon__name').text
-                                #     kills = i.find('span','value').text
-                                #     x = x + f"{weapon} - {kills}\n"
+                            # for i in find:
+                            #     weapon = i.find('div','weapon__name').text
+                            #     kills = i.find('span','value').text
+                            #     x = x + f"{weapon} - {kills}\n"
 
-                                if title != "Deathmatch":
-                                    accuracy_stats_raw = (soup.find('table', class_ = "accuracy__stats")).find_all('tr')
+                            if title != "Deathmatch":
+                                accuracy_stats_raw = (soup.find('table', class_ = "accuracy__stats")).find_all('tr')
 
-                                    head_per = accuracy_stats_raw[0].find_all("span",class_ = "stat__value")[0].text
-                                    head_hit = accuracy_stats_raw[0].find_all("span",class_ = "stat__value")[1].text.replace(",","")
+                                head_per = accuracy_stats_raw[0].find_all("span",class_ = "stat__value")[0].text
+                                head_hit = accuracy_stats_raw[0].find_all("span",class_ = "stat__value")[1].text.replace(",","")
 
-                                    body_per = accuracy_stats_raw[1].find_all("span",class_ = "stat__value")[0].text
-                                    body_hit = accuracy_stats_raw[1].find_all("span",class_ = "stat__value")[1].text.replace(",","")
+                                body_per = accuracy_stats_raw[1].find_all("span",class_ = "stat__value")[0].text
+                                body_hit = accuracy_stats_raw[1].find_all("span",class_ = "stat__value")[1].text.replace(",","")
 
-                                    leg_per = accuracy_stats_raw[2].find_all("span",class_ = "stat__value")[0].text
-                                    leg_hit = accuracy_stats_raw[2].find_all("span",class_ = "stat__value")[1].text.replace(",","")
-                                
-                                weapons = find = soup.find_all('div', class_ = 'weapon')
+                                leg_per = accuracy_stats_raw[2].find_all("span",class_ = "stat__value")[0].text
+                                leg_hit = accuracy_stats_raw[2].find_all("span",class_ = "stat__value")[1].text.replace(",","")
+                            
+                            weapons = find = soup.find_all('div', class_ = 'weapon')
 
-                                weapon1 = weapons[0].find('div','weapon__name').text
-                                kill1 = weapons[0].find('span','value').text.replace(",","")
+                            weapon1 = weapons[0].find('div','weapon__name').text
+                            kill1 = weapons[0].find('span','value').text.replace(",","")
 
-                                weapon2 = weapons[1].find('div','weapon__name').text
-                                kill2 = weapons[1].find('span','value').text.replace(",","")
-                                
-                                weapon3 = weapons[2].find('div','weapon__name').text
-                                kill3 = weapons[2].find('span','value').text.replace(",","")
+                            weapon2 = weapons[1].find('div','weapon__name').text
+                            kill2 = weapons[1].find('span','value').text.replace(",","")
+                            
+                            weapon3 = weapons[2].find('div','weapon__name').text
+                            kill3 = weapons[2].find('span','value').text.replace(",","")
 
 
-                                val = discord.Embed(color = 0x5865F2)
-                                val.set_author(name = f"VALORANT PROFILE | {name}",icon_url= self.client.user.avatar_url,url= url)
-                                val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
-                                value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
-                                
-                                
-                                # val.add_field(name = f"<:matches:836871938927886366> Last 5 Matches",
-                                # value= "```diff\n   MAP    -  SCORE  -   K/D/A\n ——————————————————————————————\n+ Split   -  12/05  -  08/14/13\n+ Bind    -  13/00  -  02/01/00\n- Icebox  -  09/13  -  19/17/07\n+ Ascent  -  13/11  -  21/18/05```",inline = False)
-                                
-                                if title != "Deathmatch":
-                                    val.add_field(name = f"<:accuracy:836866509061226526> Accuracy",
-                                    value= f"```py\nHead - {fill_space(head_hit,3)} ({head_per})\nBody - {fill_space(body_hit,3)} ({body_per})\nLegs - {fill_space(leg_hit,3)} ({leg_per})```")
+                            val = discord.Embed(color = 0x5865F2)
+                            val.set_author(name = f"VALORANT PROFILE",icon_url= self.client.user.avatar_url,url= url)
+                            val.add_field(name = "<:user:859519611892662302> User Name", value = f"```\n{user}```")
+                            val.add_field(name = "<:val:859521880755142746> In Game Name",value = f"```\n{splited[0]}#{tag}```")
+                            val.add_field(name = f"<:overview:836858315664261121> {title} | <:clockval:837391041123975219> {playtime} | {matches} Matches", 
+                            value= f"```py\nWins     -  {fill_space(str(wins),5)} |  Assists   -   {assists}\nKills    -  {fill_space(str(kills),5)} |  Deaths    -   {deaths}\nCluthes  -  {fill_space(str(clutches),5)} |  Headshots -   {headshots}```", inline= False)
+                            
+                            
+                            # val.add_field(name = f"<:matches:836871938927886366> Last 5 Matches",
+                            # value= "```diff\n   MAP    -  SCORE  -   K/D/A\n ——————————————————————————————\n+ Split   -  12/05  -  08/14/13\n+ Bind    -  13/00  -  02/01/00\n- Icebox  -  09/13  -  19/17/07\n+ Ascent  -  13/11  -  21/18/05```",inline = False)
+                            
+                            if title != "Deathmatch":
+                                val.add_field(name = f"<:accuracy:836866509061226526> Accuracy",
+                                value= f"```py\nHead - {fill_space(head_hit,3)} ({head_per})\nBody - {fill_space(body_hit,3)} ({body_per})\nLegs - {fill_space(leg_hit,3)} ({leg_per})```")
 
-                                val.add_field(name = f"<:weapon:836861817170952255> Top Weapons",
-                                value = f"```py\n{fill_space(weapon1, 8)} -  {kill1}\n{fill_space(weapon2, 8)} -  {kill2}\n{fill_space(weapon3, 8)} -  {kill3}```")
+                            val.add_field(name = f"<:weapon:836861817170952255> Top Weapons",
+                            value = f"```py\n{fill_space(weapon1, 8)} -  {kill1}\n{fill_space(weapon2, 8)} -  {kill2}\n{fill_space(weapon3, 8)} -  {kill3}```")
 
-                                await link_msg.edit(embed = val)
-                            except:
-                                temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
-                                temp.set_author(name = f"VALORANT PROFILE | {name}", icon_url= self.client.user.avatar_url)
-                                await link_msg.edit(embed = temp)
-                                return
+                            await link_msg.edit(embed = val)
+                            # except:
+                            #     temp = discord.Embed(title = user.name,description = "No matches found for the specified mode.", color = 0x5865F2)
+                            #     temp.set_author(name = f"VALORANT PROFILE", icon_url= self.client.user.avatar_url)
+                            #     await link_msg.edit(embed = temp)
+                            #     return
 
                         if str(req) == "<Response [404]>":
                             temp = discord.Embed(title = user.name,description = "`Valorant` Account not found.", color = 0x5865F2)

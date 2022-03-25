@@ -194,13 +194,14 @@ class AN_1(commands.Cog):
             await ctx.send(embed = embed)
 
     @commands.command()
-    async def edit(self,ctx,id:discord.Message=None):
+    async def edit(self,ctx,channel:discord.TextChannel,id:int):
         au = ctx.author.id
         ch = ctx.channel.id
-        if id.author == self.client.user.id:
+        message = await channel.fetch_message(id)
+        if message.author.id == self.client.user.id:
             avi = self.client.user.avatar_url_as(static_format='png')
             if ctx.author.guild_permissions.manage_guild or ctx.author.guild_permissions.administration:
-                permission = dict(ctx.me.permissions_in(id.channel))
+                permission = dict(ctx.me.permissions_in(channel))
                 permission2 = dict(ctx.channel.permissions_for(ctx.me))
                 permission_channel = permission["send_messages"]
                 permission_current = permission2["manage_messages"]
@@ -217,13 +218,13 @@ class AN_1(commands.Cog):
                     matches = ["eliminate","terminate","stop"]
                     if lower not in matches:
                         if text.author.id == au and text.channel.id ==ch:
-                            await id.edit(content = text.content)
+                            await message.edit(content = text.content)
         
                             await text.delete()
                             embed = discord.Embed(color = 0x5865F2, description = f"**__CONTENT__:** ```\n{text.content}```")
                             embed.set_author(name = "EDIT LOG",icon_url = avi)
                             embed.add_field(name="__AUTHOR__", value = f"Mention: {ctx.author.mention}\nID: `{ctx.author.id}`",)
-                            embed.add_field(name = "__CHANNEL__", value = f"Mention: {id.channel.mention}\nID: `{id.id}`")
+                            embed.add_field(name = "__CHANNEL__", value = f"Mention: {channel.mention}\nID: `{message.id}`")
                             await main_embed.edit(embed = embed)
                     if lower in matches:
                         await ctx.send("Command Dismissed")

@@ -27,6 +27,8 @@ import pymongo
 from pymongo import MongoClient
 from youtube_search import YoutubeSearch
 import cv2 as cv
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from PIL import Image
 from io import BytesIO
